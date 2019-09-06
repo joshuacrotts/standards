@@ -1,3 +1,30 @@
+/*
+===========================================================================
+                   Standards Java Game Library Source Code
+           Copyright (C) 2017-2019 Joshua Crotts & Andrew Matzureff 
+Standards is free software: you can redistribute it and/or modify it under 
+the terms of the GNU General Public License as published by the Free Software 
+Foundation, either version 3 of the License, or (at your option) any later 
+version.
+
+Standards Source Code is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Standards Source Code. If not, see <http://www.gnu.org/licenses/>.
+
+Standards is the long-overdue update to the everlasting Standards 2.0 library
+Andrew Matzureff and I created two years ago. I am including it in this project
+to simplify the rendering and logic pipeline, but with a focus on the MVC
+paradigm.
+
+We connect to the Apache FastMath API for some of our trigonometric functions,
+and we use John Carmack's fast inverse square root function.
+===========================================================================
+ */
+
 package com.revivedstandards.handlers;
 
 import com.revivedstandards.main.StandardCamera;
@@ -7,19 +34,21 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import org.apache.commons.math3.util.FastMath;
 
-public class StandardCollisionHandler
-        extends StandardHandler {
+public class StandardCollisionHandler extends StandardHandler {
 
     public StandardCollisionHandler( StandardCamera c )
     {
         this.stdCamera = c;
     }
 
+    @Override
     public void tick()
     {
         double[] norm = new double[2];
         int vpo = 300;
-        Rectangle cam = new Rectangle( ( int ) ( this.stdCamera.x - vpo - this.stdCamera.vpw ), ( int ) ( this.stdCamera.y - this.stdCamera.vph ), this.stdCamera.vpw * 2 + vpo * 2, this.stdCamera.vph * 2 );
+        Rectangle cam = new Rectangle( ( int ) ( this.stdCamera.getX() - vpo - this.stdCamera.vpw ), 
+                                       ( int ) ( this.stdCamera.getY() - this.stdCamera.vph ), 
+                                        this.stdCamera.vpw * 2 + vpo * 2, this.stdCamera.vph * 2 );
         for ( int i = 0; i < this.entities.size(); i++ )
         {
 
@@ -36,7 +65,7 @@ public class StandardCollisionHandler
                         norm[0] = 0.0D;
                         norm[1] = 0.0D;
 
-                        if ( obj1 != obj2 && obj1.getId() != obj2.ignore && obj1.alive && obj2.alive )
+                        if ( obj1 != obj2 && obj1.getId() != obj2.getIgnoreID() && obj1.isAlive() && obj2.isAlive() )
                         {
                             if ( ( obj2.getId() == StandardID.Block || obj2.getId() == StandardID.Brick
                                     || obj2.getId() == StandardID.Obstacle || obj2.getId() == StandardID.NPC
@@ -59,7 +88,7 @@ public class StandardCollisionHandler
                                     }
                                 }
                                 double res = obj2.getRestitution();
-                                double dot = obj1.velX * norm[0] + obj1.velY * norm[1];
+                                double dot = obj1.getVelX() * norm[0] + obj1.getVelY() * norm[1];
                                 if ( dot > -1.2D )
                                 {
                                     //obj1.standing = true;
@@ -71,9 +100,9 @@ public class StandardCollisionHandler
                                 obj1.collide( obj2 );
                             }
                         }
-                        continue;
                     }
                 }
+                
                 obj1.tick();
             }
         }
@@ -86,10 +115,10 @@ public class StandardCollisionHandler
         double x2 = r2.getX();
         double y2 = r2.getY();
 
-        double w1 = r1.width;
-        double h1 = r1.height;
-        double w2 = r2.width;
-        double h2 = r2.height;
+        double w1 = r1.getWidth();
+        double h1 = r1.getHeight();
+        double w2 = r2.getWidth();
+        double h2 = r2.getHeight();
 
         Rectangle2D.Double b1 = new Rectangle2D.Double( x1, y1, w1, h1 );
         Rectangle2D.Double b2 = new Rectangle2D.Double( x2, y2, w2, h2 );
@@ -102,8 +131,8 @@ public class StandardCollisionHandler
             norm[1] = 0.0D;
             return;
         }
-        bx.x -= r1.velX;
-        b1.y -= r1.velY;
+        bx.x -= r1.getVelX();
+        b1.y -= r1.getVelY();
         if ( !bx.intersects( b2 ) )
         {
 
@@ -120,7 +149,6 @@ public class StandardCollisionHandler
 
             norm[0] = 0.0D;
             norm[1] = ( double ) ( ( b1.y < b2.y ) ? -1 : true );
-            return;
         }
     }
 

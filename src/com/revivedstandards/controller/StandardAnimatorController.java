@@ -1,3 +1,30 @@
+/*
+===========================================================================
+                   Standards Java Game Library Source Code
+           Copyright (C) 2017-2019 Joshua Crotts & Andrew Matzureff 
+Standards is free software: you can redistribute it and/or modify it under 
+the terms of the GNU General Public License as published by the Free Software 
+Foundation, either version 3 of the License, or (at your option) any later 
+version.
+
+Standards Source Code is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Standards Source Code. If not, see <http://www.gnu.org/licenses/>.
+
+Standards is the long-overdue update to the everlasting Standards 2.0 library
+Andrew Matzureff and I created two years ago. I am including it in this project
+to simplify the rendering and logic pipeline, but with a focus on the MVC
+paradigm.
+
+We connect to the Apache FastMath API for some of our trigonometric functions,
+and we use John Carmack's fast inverse square root function.
+===========================================================================
+ */
+
 package com.revivedstandards.controller;
 
 import com.revivedstandards.model.StandardGameObject;
@@ -6,19 +33,34 @@ import java.util.ArrayList;
 
 public class StandardAnimatorController {
 
+    //
+    //  List of available priorities for the animations
+    //
     public static final byte PRIORITY_1ST = 127;
     public static final byte PRIORITY_2ND = 63;
     public static final byte PRIORITY_3RD = 0;
     public static final byte PRIORITY_4TH = -64;
     public static final byte PRIORITY_5TH = -128;
+    
+    //
+    //  ArrayList of images
+    //  
     public ArrayList<BufferedImage> images;
+    
+    //
+    //  Debugging and time-stamp information for the relevant information
+    //  
     private byte priority;
     private long counter;
     private long delay;
     private long frame;
     private long time;
-    private StandardGameObject object;
     private boolean animating;
+
+    //
+    //  The StandardGameObject the animation is tied to
+    //  
+    private StandardGameObject object;
 
     public StandardAnimatorController( ArrayList<BufferedImage> images, double delay, StandardGameObject o, int priority )
     {
@@ -37,7 +79,7 @@ public class StandardAnimatorController {
 
     public boolean animate()
     {
-        if ( this.object.activeAnimation != null && ( ( this.object.activeAnimation.priority > this.priority && this.object.activeAnimation.animating ) || !this.animating ) )
+        if ( this.object.getAnimation() != null && ( ( this.object.getAnimation().priority > this.priority && this.object.getAnimation().animating ) || !this.animating ) )
         {
             return ( this.frame == ( this.images.size() - 1 ) );
         }
@@ -58,7 +100,7 @@ public class StandardAnimatorController {
 
     public boolean animate( int x )
     {
-        if ( this.object.activeAnimation != null && ( ( this.object.activeAnimation.priority > this.priority && this.object.activeAnimation.animating ) || !this.animating ) )
+        if ( this.object.getAnimation() != null && ( ( this.object.getAnimation().priority > this.priority && this.object.getAnimation().animating ) || !this.animating ) )
         {
             return ( this.frame == ( this.images.size() - 1 ) );
         }

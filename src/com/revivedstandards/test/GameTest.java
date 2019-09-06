@@ -25,31 +25,35 @@ and we use John Carmack's fast inverse square root function.
 ===========================================================================
  */
 
-package com.revivedstandards.input;
+package com.revivedstandards.test;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import com.revivedstandards.main.StandardDraw;
+import com.revivedstandards.main.StandardGame;
+import java.awt.Color;
 
-public class Keyboard extends InputDevice implements KeyListener
+public class GameTest extends StandardGame
 {
-    public static final int MAX_CHARS = 0x10000;
+    public GameTest()
+    {
+        super( 800, 600, "Game Test" );
+    }
+
+    @Override
+    public void tick ()
+    {
+        
+    }
+
+    @Override
+    public void render ()
+    {
+        StandardDraw.Renderer.setColor( Color.RED );
+        StandardDraw.Renderer.drawString( "Fuck!", 30, 30 );
+    }
     
-    public Keyboard()
+    public static void main ( String[] args )
     {
-        super("Default Keyboard", MAX_CHARS);
-    }
-    public void keyPressed (KeyEvent e)
-    {
-        int code = e.getKeyCode();
-        set(code, true);
-    }
-    public void keyReleased (KeyEvent e)
-    {
-        int code = e.getKeyCode();
-        set(code, false);
-    }
-    public void keyTyped (KeyEvent e)
-    {
-    	//add key to log
+        GameTest gameTest = new GameTest();
+        gameTest.StartGame();
     }
 }
