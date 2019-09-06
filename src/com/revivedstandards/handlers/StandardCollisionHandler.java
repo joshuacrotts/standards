@@ -5,6 +5,7 @@ import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.model.StandardID;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import org.apache.commons.math3.util.FastMath;
 
 public class StandardCollisionHandler
         extends StandardHandler {
@@ -80,8 +81,8 @@ public class StandardCollisionHandler
 
     public static void intersection( StandardGameObject r1, StandardGameObject r2, double[] norm )
     {
-        double x1 = r1.getX() - Math.signum( r1.getVelX() );
-        double y1 = r1.getY() - Math.signum( r1.getVelY() );
+        double x1 = r1.getX() - FastMath.signum( r1.getVelX() );
+        double y1 = r1.getY() - FastMath.signum( r1.getVelY() );
         double x2 = r2.getX();
         double y2 = r2.getY();
 

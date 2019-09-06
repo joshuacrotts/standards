@@ -3,109 +3,68 @@ package com.revivedstandards.input;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
-public class Mouse implements MouseListener, MouseMotionListener, InputDevice {
-
-    public int x = 0;
-    public int y = 0;
-
-    public final byte[] _Buttons = new byte[16];
-
-    public int getDeviceMask()
+/**
+ * Write a description of class Mouse here.
+ * 
+ * @author (Andrew Matzureff) 
+ * @version (10/3/2016)
+ */
+public class Mouse extends InputDevice implements MouseListener, MouseMotionListener, MouseWheelListener
+{
+    public static final int MAX_CHARS = 0x10;
+    public int x = -1;
+    public int y = -1;
+    public int ax = -1;
+    public int ay = -1;
+    public Mouse()
     {
-        return Integer.MIN_VALUE;
+    	super("Default Mouse", MAX_CHARS);
     }
-
-    public byte[] getBytes()
+    private void update(MouseEvent e)//would probably be inherited from Analogue Interface
     {
-        return this._Buttons;
+        x = e.getX();
+        y = e.getY();
+        ax = e.getXOnScreen();
+        ay = e.getYOnScreen();
     }
-
-    public void set( int k, int v )
+    public void mousePressed (MouseEvent e)
     {
-        if ( k >= 0 && k < this._Buttons.length )
-        {
-            this._Buttons[k] = ( byte ) v;
-        }
-    }
-
-    public int get( int code, int type )
-    {
-        if ( code >= 0 && code < this._Buttons.length )
-        {
-
-            switch ( type )
-            {
-
-                case 1:
-                    return this._Buttons[code] & true;
-
-                case 2:
-                    return this._Buttons[code] & 0xFE;
-            }
-            return this._Buttons[code];
-        }
-
-        return -1;
-    }
-
-    public boolean stateOn( int code )
-    {
-        if ( code >= 0 && code < this._Buttons.length )
-        {
-            return ( ( this._Buttons[code] & true ) != 0 );
-        }
-        return false;
-    }
-
-    public void update( MouseEvent e )
-    {
-        this.x = e.getX();
-        this.y = e.getY();
-    }
-
-    public void mousePressed( MouseEvent e )
-    {
-        update( e );
+        update(e);
         int code = e.getButton();
-        if ( code >= 0 && code < this._Buttons.length )
-        {
-            this._Buttons[code] = ( byte ) ( this._Buttons[code] | true );
-        }
+        set(code, true);
     }
-
-    public void mouseReleased( MouseEvent e )
+    public void mouseReleased (MouseEvent e)
     {
-        update( e );
+        update(e);
         int code = e.getButton();
-        if ( code >= 0 && code < this._Buttons.length )
-        {
-            this._Buttons[code] = ( byte ) ( this._Buttons[code] & 0xFFFFFFFE );
-        }
+        set(code, false);
     }
-
-    public void mouseClicked( MouseEvent e )
+    public void mouseClicked (MouseEvent e)
     {
-        update( e );
+        update(e);
     }
-
-    public void mouseEntered( MouseEvent e )
+    public void mouseEntered (MouseEvent e)
     {
-        update( e );
+        update(e);
     }
-
-    public void mouseExited( MouseEvent e )
+    public void mouseExited (MouseEvent e)
     {
-        update( e );
+        update(e);
     }
-
-    public void mouseMoved( MouseEvent e )
+    public void mouseMoved (MouseEvent e)
     {
-        update( e );
+        update(e);
     }
-
-    public void mouseDragged( MouseEvent e )
+    public void mouseDragged (MouseEvent e)
     {
-        update( e );
+        update(e);
     }
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

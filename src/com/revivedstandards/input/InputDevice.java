@@ -1,33 +1,58 @@
 package com.revivedstandards.input;
 
-public interface InputDevice {
-  public static final int COMMAND_MASK = 254;
-  
-  public static final int STATE_MASK = 1;
-  
-  public static final int MOUSE_MASK = -2147483648;
-  
-  public static final int KEYBOARD_MASK = 0;
-  
-  public static final int STATE = 1;
-  
-  public static final int COMMAND = 2;
-  
-  public static final int BOTH = 0;
-  
-  public static final int UNDEFINED = -1;
-  
-  public static final int TOGGLE = 1;
-  
-  public static final int CONTINUOUS = 0;
-  
-  byte[] getBytes();
-  
-  int getDeviceMask();
-  
-  void set(int paramInt1, int paramInt2);
-  
-  int get(int paramInt1, int paramInt2);
-  
-  boolean stateOn(int paramInt);
+import com.revivedstandards.commands.Command;
+
+
+
+/**
+ * Abstract class InputDevice - write a description of the class here
+ * 
+ * @author (Andrew Matzureff)
+ * @version (10/23/2018)
+ */
+public abstract class InputDevice
+{
+    private final BitArray keys;
+    private final String name;
+    private final int id;
+    private short alert;
+    
+    public InputDevice(String name, int size){
+        keys = new BitArray(size);
+        alert = 0;
+        id = Command.register(this);
+        this.name = new String(name);
+    }
+    public boolean alerted(){
+        return alert != 0;
+    }
+    public int alerts(){
+        return alert & 0xffff;
+    }
+    protected void alert(int k, boolean v){
+        if(keys.get(k) != v){
+            if(v)
+                alert++;
+            else
+                alert--;
+            keys.set(k, v);
+       }
+        return;
+    }
+    public String toString(){
+        return "InputDevice[" + id + "]: " + (name == null? "Unknown": name);
+    }
+    public boolean get(int key)
+    {
+        if(key >= 0 && key < keys.size()){
+            return keys.get(key);
+        }
+        return false;
+    }
+    protected void set(int k, boolean v)
+    {
+        if(k >= 0 && k < keys.size()){
+            alert(k, v);
+        }
+    }
 }

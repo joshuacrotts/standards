@@ -1,9 +1,10 @@
 package com.revivedstandards.model;
 
-import com.revivedstandards.StdOps;
 import com.revivedstandards.handlers.StandardHandler;
+import com.revivedstandards.util.StdOps;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import org.apache.commons.math3.util.FastMath;
 
 public class StandardDragParticle extends StandardParticle {
 
@@ -14,8 +15,8 @@ public class StandardDragParticle extends StandardParticle {
         double d = StdOps.rand( 0.0D, 6.283185307179586D );
         double h = StdOps.rand( 0.05D, 2.5D );
 
-        this.velX = h * Math.sin( d );
-        this.velY = h * Math.cos( d );
+        this.velX = h * FastMath.sin( d );
+        this.velY = h * FastMath.cos( d );
 
         this.color = new Color( 255, 255 - ( int ) this.death & 0x7F, 255 - ( int ) this.death & 0xFF, 255 );
     }
@@ -27,8 +28,8 @@ public class StandardDragParticle extends StandardParticle {
         double d = StdOps.rand( 0.0D, 6.283185307179586D );
         double h = StdOps.rand( 0.05D, 2.5D );
 
-        this.velX = h * Math.sin( d );
-        this.velY = h * Math.cos( d );
+        this.velX = h * FastMath.sin( d );
+        this.velY = h * FastMath.cos( d );
 
         this.color = new Color( 255, 255 - ( int ) this.death & 0x7F, 255 - ( int ) this.death & 0xFF, 255 );
     }
@@ -40,8 +41,8 @@ public class StandardDragParticle extends StandardParticle {
         double d = StdOps.rand( 0.0D, 6.283185307179586D );
         double h = StdOps.rand( 0.05D, 2.5D );
 
-        this.velX = h * Math.sin( d );
-        this.velY = h * Math.cos( d );
+        this.velX = h * FastMath.sin( d );
+        this.velY = h * FastMath.cos( d );
 
         this.color = c;
     }
@@ -51,8 +52,8 @@ public class StandardDragParticle extends StandardParticle {
         if ( this.alive )
         {
 
-            this.width = ( int ) ( this.velX * this.velX * Math.signum( this.velX ) ) + 1;
-            this.height = ( int ) ( this.velY * this.velY * Math.signum( this.velY ) ) + 1;
+            this.width = ( int ) ( this.velX * this.velX * FastMath.signum( this.velX ) ) + 1;
+            this.height = ( int ) ( this.velY * this.velY * FastMath.signum( this.velY ) ) + 1;
             this.x += this.velX;
             this.y += this.velY += 0.05D;
             this.alive = ( System.nanoTime() - this.death <= 0L );

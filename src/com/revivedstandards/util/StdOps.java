@@ -1,27 +1,31 @@
 /*
-===========================================================================
-                   Standards Java Game Library Source Code
-           Copyright (C) 2017-2019 Joshua Crotts & Andrew Matzureff 
-Standards is free software: you can redistribute it and/or modify it under 
-the terms of the GNU General Public License as published by the Free Software 
-Foundation, either version 3 of the License, or (at your option) any later 
-version.
-
-Standards Source Code is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Standards Source Code. If not, see <http://www.gnu.org/licenses/>.
-
-Standards is the long-overdue update to the everlasting Standards 2.0 library
-Andrew Matzureff and I created two years ago. I am including it in this project
-to simplify the rendering and logic pipeline, but with a focus on the MVC
-paradigm.
-===========================================================================
+ * ===========================================================================
+ * Standards Java Game Library Source Code
+ * Copyright (C) 2017-2019 Joshua Crotts & Andrew Matzureff
+ * Standards is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * Standards Source Code is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Standards Source Code. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Standards is the long-overdue update to the everlasting Standards 2.0 library
+ * Andrew Matzureff and I created two years ago. I am including it in this project
+ * to simplify the rendering and logic pipeline, but with a focus on the MVC
+ * paradigm.
+ *
+ * For mathematics, we rely on two external resources:
+ * 1. The external Apache FastMath API, and
+ * 2. The Quake III source code for sqrt(x) and 1/sqrt(x).
+ * ===========================================================================
  */
-package com.revivedstandards;
+package com.revivedstandards.util;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -40,9 +44,12 @@ import javax.imageio.ImageIO;
  * over a rectangle (area) - Added the ability to load in specific fonts at a
  * specific size. Pass in the String and the size, and it will be returned. -
  * Clamping a value to a specific range - Loading an image.
+ *
+ * - Fast math from Quake III (sqrt & inverse sqrt())
  */
-public abstract class StdOps
-{
+public abstract class StdOps {
+
+    private static final int SQRT_MAGIC = 0x5f3759df;
 
     /**
      * Returns a random integer between min and max.
@@ -51,7 +58,7 @@ public abstract class StdOps
      * @param max
      * @return random integer
      */
-    public static int rand ( int min, int max )
+    public static int rand( int min, int max )
     {
         if ( min >= max )
         {
@@ -67,7 +74,7 @@ public abstract class StdOps
      * @param max
      * @return
      */
-    public static double rand ( double min, double max )
+    public static double rand( double min, double max )
     {
         if ( min >= max )
         {
@@ -89,7 +96,7 @@ public abstract class StdOps
      * @param height - height of rectangle
      * @return
      */
-    public static boolean mouseOver ( int mx, int my, int x, int y, int width, int height )
+    public static boolean mouseOver( int mx, int my, int x, int y, int width, int height )
     {
         return ( ( mx > x ) && ( mx < x + width ) ) && ( ( my > y ) && ( my < y + height ) );
     }
@@ -101,19 +108,18 @@ public abstract class StdOps
      * @param min
      * @param max
      */
-    public static void clamp ( int num, int min, int max )
+    public static void clamp( int num, int min, int max )
     {
         if ( num < min )
         {
             num = min;
-        }
-        else if ( num > max )
+        } else if ( num > max )
         {
             num = max;
         }
     }
 
-    public static Font initFont ( String path, float size )
+    public static Font initFont( String path, float size )
     {
         Font f = null;
 
@@ -122,8 +128,7 @@ public abstract class StdOps
             f = Font.createFont( Font.TRUETYPE_FONT, new File( path ) ).deriveFont( size );
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont( Font.createFont( Font.TRUETYPE_FONT, new File( path ) ) );
-        }
-        catch ( FontFormatException | IOException e )
+        } catch ( FontFormatException | IOException e )
         {
             e.printStackTrace();
             return null;
@@ -131,17 +136,38 @@ public abstract class StdOps
         return f;
     }
 
-    public static BufferedImage loadImage ( String path )
+    public static BufferedImage loadImage( String path )
     {
         BufferedImage sprite = null;
         try
         {
             sprite = ImageIO.read( new File( path ) );
-        }
-        catch ( IOException e )
+        } catch ( IOException e )
         {
             e.printStackTrace();
         }
         return sprite;
+    }
+
+    /**
+     * Algorithm: http://ilab.usc.edu/wiki/index.php/Fast_Square_Root
+     */
+    public static float fastsqrt( float x )
+    {
+        float xhalf = 0.5f * x;
+        float u = x;
+        int i = 0;
+        i = StdOps.SQRT_MAGIC - ( i >> 1 );  // gives initial guess y0
+        return x * u * ( 1.5f - xhalf * u * u );// Newton step, repeating increases accuracy 
+    }
+
+    public static double fastInvSqrt( double x )
+    {
+        double xhalf = 0.5d * x;
+        long i = Double.doubleToLongBits( x );
+        i = 0x5fe6ec85e7de30daL - ( i >> 1 );
+        x = Double.longBitsToDouble( i );
+        x *= ( 1.5d - xhalf * x * x );
+        return x;
     }
 }

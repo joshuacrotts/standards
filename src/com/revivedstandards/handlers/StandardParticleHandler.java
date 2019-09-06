@@ -40,11 +40,12 @@ public class StandardParticleHandler extends StandardHandler {
                 {
 
                     particle.tick();
-                    if ( ( ( particle.death < death ) ? 1 : 0 ) ^ ( ( particle.death < 0L ) ? 1 : 0 ) ^ ( ( death < 0L ) ? 1 : 0 ) )
-                    {
-                        this.oldest = i;
-                        death = particle.death;
-                    }
+//                    if ( ( ( particle.death < death ) ? 1 : 0 ) ^ ( ( particle.death < 0L ) ? 1 : 0 ) ^ ( ( death < 0L ) ? 1 : 0 ) )
+//                    {
+//                        this.oldest = i;
+//                        death = particle.death;
+//                       
+//                    }
 
                 } else
                 {

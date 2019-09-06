@@ -1,8 +1,8 @@
 package com.revivedstandards.main;
 
-import com.revivedstandards.StdOps;
 import com.revivedstandards.handlers.StandardHandler;
 import com.revivedstandards.model.StandardGameObject;
+import com.revivedstandards.util.StdOps;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
