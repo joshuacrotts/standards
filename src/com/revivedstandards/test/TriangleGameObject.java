@@ -17,38 +17,50 @@ import org.apache.commons.math3.util.FastMath;
  */
 public class TriangleGameObject extends StandardGameObject
 {
+
     private StandardGame sg;
     private float angle;
-    
-    public TriangleGameObject( StandardGame sg, int x, int y)
+
+    public TriangleGameObject ( StandardGame sg, int x, int y )
     {
-        super(x, y, "src/res/img/triangle.png");
+        super( x, y, "src/res/img/triangle.png" );
         this.sg = sg;
-        
+
         this.setWidth( this.getCurrentSprite().getWidth() );
-        this.setHeight ( this.getCurrentSprite().getHeight() );
+        this.setHeight( this.getCurrentSprite().getHeight() );
     }
-    
-    public void tick()
+
+    @Override
+    public void tick ()
     {
-//        float sign = ( float ) FastMath.signum( this.sg.getMouse().x - this.getX() );
-//        System.out.println( "Mouse x: " + this.sg.getMouse().x + "spritex:" + this.getX());
-//        double dx = Math.abs( this.sg.getMouse().x - this.getX() );
-//        double dy = Math.abs( this.sg.getMouse().y - this.getY() );
+        double mx = this.sg.getMouse().x;
+        double my = this.sg.getMouse().y;
         
-        //angle = ( float ) ( sign * FastMath.atan( dx / dy )) ;
-        angle = ( float ) (Math.atan2( this.getY() - this.sg.getMouse().y, this.getX() - this.sg.getMouse().x ) );
+        float xSign = ( float ) FastMath.signum( mx - this.getX() );
+        
+        double dx = FastMath.abs( mx - this.getX() );
+        double dy = FastMath.abs( my - this.getY() );
+ 
+        this.angle = ( float ) ( ( xSign ) * ( FastMath.atan( ( dx ) / ( dy ) ) ) );
+        
+        // If we're in Q1 (+x, -+y) or in Q2 (-x, +y)
+        if ( ( mx > this.getX() && my > this.getY() ) ||
+             ( mx < this.getX() && my > this.getY() ) )
+        {
+            this.angle = ( float ) ( ( FastMath.PI * 0.5 ) + ( FastMath.PI * 0.5 - angle ) );
+        }
     }
-    
-    public void render(Graphics2D g2)
+
+    @Override
+    public void render ( Graphics2D g2 )
     {
         AffineTransform backup = g2.getTransform();
         AffineTransform rotation = new AffineTransform();
-        
-        rotation.rotate( 0,0,0 );
-        
-        g2.rotate( this.angle, this.getX(), this.getY());
-        g2.drawImage( this.getCurrentSprite(), ( int ) this.getX(),  ( int ) this.getY(), null );
+
+        rotation.rotate( 0, 0, 0 );
+
+        g2.rotate( this.angle, this.getX() + this.getWidth() / 2, this.getY() + this.getHeight() / 2 );
+        g2.drawImage( this.getCurrentSprite(), ( int ) this.getX(), ( int ) this.getY(), null );
         g2.setTransform( backup );
     }
 }

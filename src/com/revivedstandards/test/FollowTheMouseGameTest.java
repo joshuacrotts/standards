@@ -32,19 +32,18 @@ import com.revivedstandards.input.Mouse;
 import com.revivedstandards.main.StandardDraw;
 import com.revivedstandards.main.StandardGame;
 import java.awt.Color;
-import java.awt.event.MouseMotionListener;
 
-public class GameTest extends StandardGame
+public class FollowTheMouseGameTest extends StandardGame
 {
     private TriangleGameObject tri;
     
-    public GameTest()
+    public FollowTheMouseGameTest()
     {
         super( 800, 600, "Game Test" );
         
         Mouse mouse = new Mouse();
         this.setMouse( mouse );
-        this.addListener( (MouseMotionListener) mouse );
+        this.addMouseMotionListener( mouse );
         
         tri = new TriangleGameObject( this, 200, 200 );
     }
@@ -59,13 +58,12 @@ public class GameTest extends StandardGame
     public void render ()
     {
         StandardDraw.Renderer.setColor( Color.RED );
-        StandardDraw.Renderer.drawString( "Fuck!", 30, 30 );
         StandardDraw.Object( tri );
     }
     
     public static void main ( String[] args )
     {
-        GameTest gameTest = new GameTest();
+        FollowTheMouseGameTest gameTest = new FollowTheMouseGameTest();
         gameTest.StartGame();
     }
 }
