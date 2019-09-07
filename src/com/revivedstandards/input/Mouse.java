@@ -34,6 +34,7 @@ public class Mouse extends InputDevice implements MouseListener, MouseMotionList
         ay = e.getYOnScreen();
     }
 
+    @Override
     public void mousePressed ( MouseEvent e )
     {
         update( e );
@@ -41,6 +42,7 @@ public class Mouse extends InputDevice implements MouseListener, MouseMotionList
         set( code, true );
     }
 
+    @Override
     public void mouseReleased ( MouseEvent e )
     {
         update( e );
@@ -48,26 +50,31 @@ public class Mouse extends InputDevice implements MouseListener, MouseMotionList
         set( code, false );
     }
 
+    @Override
     public void mouseClicked ( MouseEvent e )
     {
         update( e );
     }
 
+    @Override
     public void mouseEntered ( MouseEvent e )
     {
         update( e );
     }
 
+    @Override
     public void mouseExited ( MouseEvent e )
     {
         update( e );
     }
 
+    @Override
     public void mouseMoved ( MouseEvent e )
     {
         update( e );
     }
 
+    @Override
     public void mouseDragged ( MouseEvent e )
     {
         update( e );

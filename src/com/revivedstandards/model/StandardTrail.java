@@ -24,59 +24,82 @@ We connect to the Apache FastMath API for some of our trigonometric functions,
 and we use John Carmack's fast inverse square root function.
 ===========================================================================
  */
-
 package com.revivedstandards.model;
 
 import com.revivedstandards.handlers.StandardHandler;
+import com.revivedstandards.view.ShapeType;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class StandardTrail extends StandardGameObject {
-
+/**
+ * Renders a translucent trail behind the supplied StandardGameObject. This
+ * trail can either be a shape (circle or rectangle), or a translucent image of
+ * the sprite. The life denotes how long each trail should last (i.e. the lower
+ * the life, the shorter the trail and vice versa). If the isImage flag is on, 
+ * it will draw a copy of the supplied SGO's current sprite.
+ */
+public class StandardTrail extends StandardGameObject
+{
+    //
+    //  Information regarding the lifespan and visibility of the 
+    //  trail. 
+    //
     private float alpha = 1.0F;
     private float life;
     private boolean isImage = false;
 
+    //
+    //  Color and shape information if we are only rendering a shape as opposed
+    //  to an image. If we are rendering an image, the SGO's current sprite
+    //  is referenced.
+    //
     private Color color;
-    private String shape;
-    private StandardGameObject obj;
+    private ShapeType shape;
+    private final StandardGameObject obj;
+    
+    //
+    //  Handler for the trail ONLY.
+    //
+    private final StandardHandler stdHandler;
 
-    private StandardHandler stdHandler;
-
-    public StandardTrail( double x, double y, double width, double height, Color color, float life, StandardGameObject o, StandardHandler stdHandler, String shape, boolean isImage )
+    public StandardTrail ( double x, double y, double width, double height, Color color,
+                           float life, StandardGameObject o, StandardHandler stdHandler,
+                           ShapeType shape, boolean isImage )
     {
         super( x, y, ( int ) width, ( int ) height );
 
         this.color = color;
         this.life = life;
         this.shape = shape;
-        setId( StandardID.Trail );
+        this.setId( StandardID.Trail );
 
         this.stdHandler = stdHandler;
         this.stdHandler.addEntity( this );
 
         this.isImage = isImage;
         this.obj = o;
-        checkNullShape();
+        this.checkNullShape();
     }
 
-    private AlphaComposite makeTransparent( float alpha )
+    private AlphaComposite makeTransparent ( float alpha )
     {
         int type = 3;
         return AlphaComposite.getInstance( type, alpha );
     }
 
     @Override
-    public void tick()
+    public void tick ()
     {
         if ( this.alpha > this.life )
         {
             this.alpha -= this.life - 0.001F;
-        } else if ( this.alpha > this.life )
+        }
+        else if ( this.alpha > this.life )
         {
             this.alpha += this.life - 0.001F;
-        } else
+        }
+        else
         {
 
             this.stdHandler.removeEntity( this );
@@ -84,81 +107,83 @@ public class StandardTrail extends StandardGameObject {
     }
 
     @Override
-    public void render( Graphics2D g2 )
+    public void render ( Graphics2D g2 )
     {
         g2.setComposite( makeTransparent( this.alpha ) );
         if ( !this.isImage && this.shape != null )
         {
             g2.setColor( this.color );
-            if ( this.shape.equalsIgnoreCase( "Circle" ) )
+            if ( this.shape == ShapeType.CIRCLE )
             {
                 g2.fillOval( ( int ) getX(), ( int ) getY(), getWidth(), getHeight() );
-            } else
+            }
+            else
             {
                 g2.fillRect( ( int ) getX(), ( int ) getY(), getWidth(), getHeight() );
             }
-        } else
+        }
+        else
         {
             g2.drawImage( this.obj.getCurrentSprite(), ( int ) getX(), ( int ) getY(), null );
         }
         g2.setComposite( makeTransparent( 1.0F ) );
     }
 
-    private void checkNullShape()
+    private void checkNullShape ()
     {
         if ( this.shape == null && !this.isImage )
         {
-            System.err.println( "Shape is NULL in a Trail" );
-            this.shape = "Square";
+            System.err.println( "Shape is NULL in a Trail. Defaulting to type RECTANGLE." );
+            this.shape = ShapeType.RECTANGLE;
         }
     }
 
-    public float getAlpha()
+    public float getAlpha ()
     {
         return this.alpha;
     }
 
-    public void setAlpha( float alpha )
+    public void setAlpha ( float alpha )
     {
         this.alpha = alpha;
     }
 
-    public float getLife()
+    public float getLife ()
     {
         return this.life;
     }
 
-    public void setLife( float life )
+    public void setLife ( float life )
     {
         this.life = life;
     }
 
-    public Color getColor()
+    public Color getColor ()
     {
         return this.color;
     }
 
-    public void setColor( Color color )
+    public void setColor ( Color color )
     {
         this.color = color;
     }
 
-    public String getShape()
+    public ShapeType getShape ()
     {
         return this.shape;
     }
 
-    public void setShape( String shape )
+    public void setShape ( ShapeType shape )
     {
         this.shape = shape;
     }
 
-    public boolean isImage()
+    public boolean isImage ()
     {
         return this.isImage;
     }
 
-    public void setImage( boolean isImage )
+    public void setImage ( boolean isImage )
     {
         this.isImage = isImage;
     }

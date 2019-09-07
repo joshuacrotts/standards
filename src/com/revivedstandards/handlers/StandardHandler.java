@@ -30,18 +30,20 @@ package com.revivedstandards.handlers;
 import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.main.StandardCamera;
 import com.revivedstandards.model.StandardID;
+import com.revivedstandards.view.Renderable;
+import com.revivedstandards.view.Updatable;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-public class StandardHandler {
+public class StandardHandler implements Renderable, Updatable{
 
     public ArrayList<StandardGameObject> entities;
     public StandardCamera stdCamera;
 
     public StandardHandler( StandardCamera stdCamera )
     {
-        this.entities = new ArrayList();
+        this.entities  = new ArrayList();
         this.stdCamera = stdCamera;
     }
 
@@ -50,16 +52,34 @@ public class StandardHandler {
         this.entities = new ArrayList();
     }
 
+    /**
+     * Calls tick on the respective object.
+     * 
+     * The purpose of this is to only update one object.
+     * 
+     * @param obj 
+     */
     public static void Object( StandardGameObject obj )
     {
         obj.tick();
     }
 
+    /**
+     * Calls tick() on the supplied handler.
+     * 
+     * @param handler 
+     */
     public static void Handler( StandardHandler handler )
     {
         handler.tick();
     }
 
+    /**
+     * Adds n StandardGameObject obj's to the StandardHandler stdHandler
+     * @param obj
+     * @param stdHandler
+     * @param n 
+     */
     public static void Add( StandardGameObject obj, StandardHandler stdHandler, int n )
     {
         for ( int i = 0; i < n; i++ )
@@ -68,6 +88,7 @@ public class StandardHandler {
         }
     }
 
+    @Override
     public void tick()
     {
         for ( int i = 0; i < this.entities.size(); i++ )
@@ -76,19 +97,19 @@ public class StandardHandler {
         }
     }
 
+    @Override
     public void render( Graphics2D g2 )
     {
         int vpo = 300;
         Rectangle cam = null;
         if ( this.stdCamera != null )
         {
-            cam = new Rectangle( ( int ) ( this.stdCamera.getX() - vpo - this.stdCamera.vpw ), 
-                                 ( int ) ( this.stdCamera.getY() - this.stdCamera.vph ), 
-                                  this.stdCamera.vpw * 2 + vpo * 2, this.stdCamera.vph * 2 );
+            cam = new Rectangle( ( int ) ( this.stdCamera.getX() - vpo - this.stdCamera.getVpw() ), 
+                                 ( int ) ( this.stdCamera.getY() - this.stdCamera.getVph() ), 
+                                  this.stdCamera.getVpw() * 2 + vpo * 2, this.stdCamera.getVph() * 2 );
         }
         for ( int i = 0; i < this.entities.size(); i++ )
         {
-
             StandardGameObject o = ( StandardGameObject ) this.entities.get( i );
 
             if ( cam != null && ( o.getBounds().intersects( cam ) || this.stdCamera == null ) )

@@ -25,11 +25,9 @@ and we use John Carmack's fast inverse square root function.
 ===========================================================================
  */
 
-package com.revivedstandards.model;
+package com.revivedstandards.view;
 
-public enum StandardID
+public enum ShapeType
 {
-  Player, Particle, Trail, Enemy, Wall, Obstacle, StandardGameObject, StandardButton, Interactor, Entity, Weapon, NPC, Large, Multi, Powerup, Block, Brick, NULL, Pipe, Camera,
-  Skeleton, Zombie, Boss, FinalBoss, Creature, Enemy1, Enemy2, Enemy3, Enemy4, Enemy5, Enemy6, Enemy7, Enemy8, Enemy9, Enemy10, Object, Projectile, Ignore;
+    CIRCLE, RECTANGLE;
 }
-

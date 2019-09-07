@@ -27,38 +27,67 @@ and we use John Carmack's fast inverse square root function.
 
 package com.revivedstandards.test;
 
+import com.revivedstandards.handlers.StandardCollisionHandler;
 import com.revivedstandards.handlers.StandardHandler;
 import com.revivedstandards.input.Mouse;
+import com.revivedstandards.main.StandardCamera;
 import com.revivedstandards.main.StandardDraw;
 import com.revivedstandards.main.StandardGame;
-import java.awt.Color;
+import com.revivedstandards.model.StandardID;
+import com.revivedstandards.model.StandardLevel;
 
 public class FollowTheMouseGameTest extends StandardGame
 {
-    private TriangleGameObject tri;
+    private final TriangleGameObject       tri; //Player    
+    private final StandardCamera           sc;  //Camera
+    private final StandardCollisionHandler sch; //Collision handler
+    private final StandardLevel          level; //Level
     
     public FollowTheMouseGameTest()
     {
         super( 800, 600, "Game Test" );
         
+        //  Instantiate the mouse and add it as a mouse listener to the game
+        //  so we can track its location for the TriangleGameObject
         Mouse mouse = new Mouse();
-        this.setMouse( mouse );
-        this.addMouseMotionListener( mouse );
+        super.setMouse( mouse );
+        super.addMouseMotionListener( mouse );
         
-        tri = new TriangleGameObject( this, 200, 200 );
+        //  Instantiates a new TGO (the player)
+        this.tri = new TriangleGameObject( this, 200, 200, StandardID.Player );
+        
+        //  Create a new collision handler
+        this.sch = new StandardCollisionHandler( null );
+        
+        //  Instantiate the camera
+        this.sc = new StandardCamera( this.tri, 1, 800, 600 );
+        this.sch.stdCamera = this.sc;
+        
+        //  Add the player to the collision handler
+        this.sch.addEntity( this.tri );
+        
+        this.level = new SpaceLevel( tri );
+        
+        for ( int y = 64; y <= 640; y += 34 )
+        {
+            this.sch.addEntity( new BrickGameObject( this, 100, y ) );
+        }
     }
 
     @Override
     public void tick ()
     {
-        StandardHandler.Object( tri );
+        StandardHandler.Handler( sch );
+        sc.tick();
     }
 
     @Override
     public void render ()
     {
-        StandardDraw.Renderer.setColor( Color.RED );
-        StandardDraw.Object( tri );
+        this.level.render( StandardDraw.Renderer );
+        StandardDraw.Object( this.sc );
+        StandardDraw.Handler( this.sch );
+
     }
     
     public static void main ( String[] args )

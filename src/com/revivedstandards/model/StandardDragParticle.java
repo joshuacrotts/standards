@@ -74,6 +74,7 @@ public class StandardDragParticle extends StandardParticle {
         this.color = c;
     }
 
+    @Override
     public void tick()
     {
         if ( this.isAlive() )
@@ -88,6 +89,7 @@ public class StandardDragParticle extends StandardParticle {
         }
     }
 
+    @Override
     public void render( Graphics2D g2 )
     {
         if ( !this.isAlive() )

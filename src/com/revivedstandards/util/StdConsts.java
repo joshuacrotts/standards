@@ -29,6 +29,11 @@ package com.revivedstandards.util;
 
 import java.io.File;
 
+/**
+ * This class contains several bitmask constants that are referenced a lot
+ * in Command, InputDevice, Keyboard, Mouse, and other miscellaneous file
+ * parsing locations.
+ */
 public class StdConsts {
 
     public static final int MOUSE_MASK = -2147483648;

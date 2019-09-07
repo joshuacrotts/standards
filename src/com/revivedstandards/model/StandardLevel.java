@@ -27,18 +27,24 @@ and we use John Carmack's fast inverse square root function.
 package com.revivedstandards.model;
 
 import com.revivedstandards.handlers.StandardHandler;
+import com.revivedstandards.util.StdOps;
+import com.revivedstandards.view.Renderable;
+import com.revivedstandards.view.Updatable;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
-public abstract class StandardLevel
+public abstract class StandardLevel implements Renderable, Updatable
 {
-
+    //
+    //  File locations for the level data itself, and the background image
+    //  for said level.
+    //
     private String fileLocation;
     private String bgImagePath;
 
+    //
+    //  BufferedImage references for the levelData image, and the background image.
+    //
     private BufferedImage levelData;
     private BufferedImage bgImage;
 
@@ -46,26 +52,25 @@ public abstract class StandardLevel
 
     public StandardLevel ( String fileLocation, String bgImagePath, StandardHandler stdHandler )
     {
-        this.fileLocation = fileLocation;
-        this.bgImagePath = bgImagePath;
-        this.stdHandler = stdHandler;
-
-        try
+        this.fileLocation  = fileLocation;
+        this.bgImagePath   = bgImagePath;
+        this.stdHandler    = stdHandler;
+        
+        if ( this.fileLocation != null )
         {
-            this.levelData = ImageIO.read( new File( this.fileLocation ) );
-            this.bgImage = ImageIO.read( new File( this.bgImagePath ) );
+            this.levelData = StdOps.loadImage( this.fileLocation );
         }
-        catch ( IOException e )
-        {
-            e.printStackTrace();
-        }
+        
+        this.bgImage       = StdOps.loadImage( this.bgImagePath );
     }
 
     public abstract void loadLevelData ();
 
+    @Override
     public abstract void tick ();
 
-    public abstract void render ( Graphics2D paramGraphics2D );
+    @Override
+    public abstract void render ( Graphics2D g2 );
 
     public String getFileLocation ()
     {

@@ -46,9 +46,9 @@ public class StandardCollisionHandler extends StandardHandler {
     {
         double[] norm = new double[2];
         int vpo = 300;
-        Rectangle cam = new Rectangle( ( int ) ( this.stdCamera.getX() - vpo - this.stdCamera.vpw ), 
-                                       ( int ) ( this.stdCamera.getY() - this.stdCamera.vph ), 
-                                        this.stdCamera.vpw * 2 + vpo * 2, this.stdCamera.vph * 2 );
+        Rectangle cam = new Rectangle( ( int ) ( this.stdCamera.getX() - vpo - this.stdCamera.getVpw() ), 
+                                       ( int ) ( this.stdCamera.getY() - this.stdCamera.getVph() ), 
+                                        this.stdCamera.getVpw() * 2 + vpo * 2, this.stdCamera.getVph() * 2 );
         for ( int i = 0; i < this.entities.size(); i++ )
         {
 
@@ -65,7 +65,7 @@ public class StandardCollisionHandler extends StandardHandler {
                         norm[0] = 0.0D;
                         norm[1] = 0.0D;
 
-                        if ( obj1 != obj2 && obj1.getId() != obj2.getIgnoreID() && obj1.isAlive() && obj2.isAlive() )
+                        if ( obj1 != obj2 && obj1.getId() != StandardID.Ignore && obj1.isAlive() && obj2.isAlive() )
                         {
                             if ( ( obj2.getId() == StandardID.Block || obj2.getId() == StandardID.Brick
                                     || obj2.getId() == StandardID.Obstacle || obj2.getId() == StandardID.NPC
@@ -136,11 +136,11 @@ public class StandardCollisionHandler extends StandardHandler {
         if ( !bx.intersects( b2 ) )
         {
 
-            norm[0] = ( double ) ( ( bx.x < b2.x ) ? -1 : true );
+            norm[0] = ( ( bx.x < b2.x ) ? -1 : 1 );
             norm[1] = 0.0D;
             if ( !b1.intersects( b2 ) )
             {
-                norm[1] = ( double ) ( ( b1.y < b2.y ) ? -1 : true );
+                norm[1] = ( ( b1.y < b2.y ) ? -1 : 1 );
             }
             return;
         }
@@ -148,7 +148,7 @@ public class StandardCollisionHandler extends StandardHandler {
         {
 
             norm[0] = 0.0D;
-            norm[1] = ( double ) ( ( b1.y < b2.y ) ? -1 : true );
+            norm[1] = ( ( b1.y < b2.y ) ? -1 : 1 );
         }
     }
 

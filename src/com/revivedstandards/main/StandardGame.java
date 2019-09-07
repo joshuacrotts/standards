@@ -34,13 +34,22 @@ import com.revivedstandards.view.StandardWindowView;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferStrategy;
-import java.util.EventListener;
 
+/**
+ * This class is the barebones blueprint for a game in Java. It includes
+ * the render-loop, frames/updates per second information, keyboard/mouse
+ * input, the screen, and other information.
+ * 
+ * To start, extend StandardGame, and call this.StartGame();
+ * 
+ * To stop the game, call this.StopGame();
+ * 
+ * To add listeners to your project, call this.addMouseListener/MouseMotionListener
+ * /addKeyListener/MouseWheelListener, etc. Any listeners that java.awt.Canvas
+ * supports are supported by StandardGame. 
+ * 
+ */
 public abstract class StandardGame extends Canvas implements Runnable {
 
     //
@@ -111,6 +120,9 @@ public abstract class StandardGame extends Canvas implements Runnable {
         this.addKeyListener( this.keyboard );
     }
 
+    /**
+     * Initializes the thread and starts the game loop.
+     */
     public void StartGame()
     {
         System.out.println( "here?" );
@@ -123,6 +135,9 @@ public abstract class StandardGame extends Canvas implements Runnable {
         this.running = true;
     }
 
+    /**
+     * Halts the thread, stops the game.
+     */
     public void StopGame()
     {
         if ( !this.running )
@@ -140,6 +155,10 @@ public abstract class StandardGame extends Canvas implements Runnable {
         System.exit( 0 );
     }
 
+    /**
+     * The game loop.
+     */
+    @Override
     public void run()
     {
         requestFocus();
@@ -169,17 +188,20 @@ public abstract class StandardGame extends Canvas implements Runnable {
                 renderable = true;
             }
 
-            frames++;
-            StandardGame.bufferStrategy = getBufferStrategy();
-            StandardDraw.Renderer = ( Graphics2D ) StandardGame.bufferStrategy.getDrawGraphics();
+            if ( renderable )
+            {
+                frames++;
+                StandardGame.bufferStrategy = getBufferStrategy();
+                StandardDraw.Renderer = ( Graphics2D ) StandardGame.bufferStrategy.getDrawGraphics();
 
-            StandardDraw.Renderer.setColor( Color.BLACK );
-            StandardDraw.Renderer.fillRect( 0, 0, this.getGameWidth(), this.getGameHeight() );
+                StandardDraw.Renderer.setColor( Color.BLACK );
+                StandardDraw.Renderer.fillRect( 0, 0, this.getGameWidth(), this.getGameHeight() );
 
-            render();
+                render();
 
-            StandardDraw.Renderer.dispose();
-            StandardGame.bufferStrategy.show();
+                StandardDraw.Renderer.dispose();
+                StandardGame.bufferStrategy.show();
+            }
 
             if ( System.currentTimeMillis() - timer > 1000L )
             {
@@ -200,33 +222,20 @@ public abstract class StandardGame extends Canvas implements Runnable {
         StopGame();
     }
 
+    /**
+     * Handles all physics/game state/object state updates. 
+     */
     public abstract void tick();
 
+    /**
+     * Renders graphics, text, sprites, etc. to the StandardWindowView. 
+     * To use this, call StandardDraw.Renderer to reference the G2D object.
+     */
     public abstract void render();
 
     public StandardGame getGame()
     {
         return this;
-    }
-
-    public void addListener( EventListener listener )
-    {
-        if ( listener instanceof KeyListener )
-        {
-            addKeyListener( ( KeyListener ) listener );
-        }
-        else if ( listener instanceof MouseListener )
-        {
-            addMouseListener( ( MouseListener ) listener );
-        }
-        else if ( listener instanceof MouseMotionListener )
-        {
-            addMouseMotionListener( ( MouseMotionListener ) listener );
-        }
-        else if ( listener instanceof MouseWheelListener )
-        {
-            addMouseWheelListener( ( MouseWheelListener ) listener );
-        }
     }
 
     public int getFPS()

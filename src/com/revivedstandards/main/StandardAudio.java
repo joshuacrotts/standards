@@ -38,6 +38,11 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * StandardAudio controls all audio effects for the API. For music purposes,
+ * the Javax api should be used. For sound effects, the JavaFX API should be 
+ * used. 
+ */
 public class StandardAudio
 {
     private Clip audioClip;
@@ -68,6 +73,7 @@ public class StandardAudio
     public StandardAudio ( String fileName, boolean sfx )
     {
         this.sfx = sfx;
+        
 
         try
         {
@@ -82,12 +88,18 @@ public class StandardAudio
         this.sound.setVolume( 1.0D );
     }
 
-    public void rAndP ()
+    /**
+     * Sets the frame position of the current audio track, and re-plays it.
+     */
+    public void repeatAndPlay ()
     {
         this.audioClip.setFramePosition( 0 );
         this.audioClip.start();
     }
 
+    /**
+     * Starts playing a music file.
+     */
     public void J2DPlay ()
     {
         this.audioClip.start();
