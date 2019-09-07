@@ -27,21 +27,32 @@ and we use John Carmack's fast inverse square root function.
 
 package com.revivedstandards.test;
 
+import com.revivedstandards.handlers.StandardHandler;
+import com.revivedstandards.input.Mouse;
 import com.revivedstandards.main.StandardDraw;
 import com.revivedstandards.main.StandardGame;
 import java.awt.Color;
+import java.awt.event.MouseMotionListener;
 
 public class GameTest extends StandardGame
 {
+    private TriangleGameObject tri;
+    
     public GameTest()
     {
         super( 800, 600, "Game Test" );
+        
+        Mouse mouse = new Mouse();
+        this.setMouse( mouse );
+        this.addListener( (MouseMotionListener) mouse );
+        
+        tri = new TriangleGameObject( this, 200, 200 );
     }
 
     @Override
     public void tick ()
     {
-        
+        StandardHandler.Object( tri );
     }
 
     @Override
@@ -49,6 +60,7 @@ public class GameTest extends StandardGame
     {
         StandardDraw.Renderer.setColor( Color.RED );
         StandardDraw.Renderer.drawString( "Fuck!", 30, 30 );
+        StandardDraw.Object( tri );
     }
     
     public static void main ( String[] args )

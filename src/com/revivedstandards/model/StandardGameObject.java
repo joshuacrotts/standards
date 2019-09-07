@@ -37,7 +37,7 @@ import javax.imageio.ImageIO;
 
 public abstract class StandardGameObject {
 
-    private double x;
+    public double x;
     private double y;
     private double velX;
     private double velY;
