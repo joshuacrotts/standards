@@ -24,7 +24,6 @@ We connect to the Apache FastMath API for some of our trigonometric functions,
 and we use John Carmack's fast inverse square root function.
 ===========================================================================
  */
-
 package com.revivedstandards.test;
 
 import com.revivedstandards.handlers.StandardCollisionHandler;
@@ -38,40 +37,42 @@ import com.revivedstandards.model.StandardLevel;
 
 public class FollowTheMouseGameTest extends StandardGame
 {
-    private final TriangleGameObject       tri; //Player    
-    private final StandardCamera           sc;  //Camera
+
+    private final TriangleGameObject tri; //Player    
+    private final StandardCamera sc;  //Camera
     private final StandardCollisionHandler sch; //Collision handler
-    private final StandardLevel          level; //Level
-    
-    public FollowTheMouseGameTest()
+    private final StandardLevel level; //Level
+
+    public FollowTheMouseGameTest ()
     {
-        super( 800, 600, "Game Test" );
-        
+        super( 1280, 720, "Game Test" );
+
         //  Instantiate the mouse and add it as a mouse listener to the game
         //  so we can track its location for the TriangleGameObject
         Mouse mouse = new Mouse();
         super.setMouse( mouse );
         super.addMouseMotionListener( mouse );
-        
+
         //  Instantiates a new TGO (the player)
         this.tri = new TriangleGameObject( this, 200, 200, StandardID.Player );
-        
+
         //  Create a new collision handler
         this.sch = new StandardCollisionHandler( null );
-        
+
         //  Instantiate the camera
-        this.sc = new StandardCamera( this.tri, 1, 800, 600 );
-        this.sch.stdCamera = this.sc;
-        
+        this.sc = new StandardCamera( this.tri, 1, this.getGameWidth(), this.getGameHeight() );
+
+        //  Sets the player's camera to the global camera
+        this.tri.setCamera( this.sc );
+        this.sch.setCamera( this.sc );
+
         //  Add the player to the collision handler
         this.sch.addEntity( this.tri );
-        
+
+        //  Instantiates the level
         this.level = new SpaceLevel( tri );
-        
-        for ( int y = 64; y <= 640; y += 34 )
-        {
-            this.sch.addEntity( new BrickGameObject( this, 100, y ) );
-        }
+
+        this.spawnBricks( 10 );
     }
 
     @Override
@@ -89,7 +90,15 @@ public class FollowTheMouseGameTest extends StandardGame
         StandardDraw.Handler( this.sch );
 
     }
-    
+
+    private void spawnBricks ( int n )
+    {
+        for ( int y = 64 ; y <= n * 64 ; y += 32 )
+        {
+            this.sch.addEntity( new BrickGameObject( this, 100, y ) );
+        }
+    }
+
     public static void main ( String[] args )
     {
         FollowTheMouseGameTest gameTest = new FollowTheMouseGameTest();

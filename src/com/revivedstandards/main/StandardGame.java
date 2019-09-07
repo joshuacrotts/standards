@@ -33,7 +33,9 @@ import com.revivedstandards.input.Mouse;
 import com.revivedstandards.view.StandardWindowView;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
 /**
@@ -51,6 +53,11 @@ import java.awt.image.BufferStrategy;
  * 
  */
 public abstract class StandardGame extends Canvas implements Runnable {
+
+    //
+    //  Default screen size
+    //
+    private static final Dimension SCREEN_DIMENSION = Toolkit.getDefaultToolkit().getScreenSize();
 
     //
     //  Window for the game
@@ -119,6 +126,27 @@ public abstract class StandardGame extends Canvas implements Runnable {
         this.addMouseMotionListener( this.mouse );
         this.addKeyListener( this.keyboard );
     }
+    
+    public StandardGame( String title )
+    {
+        this.thread = null;
+        this.running = false;
+        this.currentFPS = 0;
+        this.consoleFPS = true;
+        this.titleFPS = true;
+        this.window = new StandardWindowView( this.getScreenWidth(), this.getScreenHeight(), title, this );
+
+        this.createBufferStrategy( 3 );
+
+        this.bufferStrategy = this.getBufferStrategy();
+
+        this.mouse = new Mouse();
+        this.keyboard = new Keyboard();
+
+        this.addMouseListener( this.mouse );
+        this.addMouseMotionListener( this.mouse );
+        this.addKeyListener( this.keyboard );
+    }    
 
     /**
      * Initializes the thread and starts the game loop.
@@ -287,4 +315,14 @@ public abstract class StandardGame extends Canvas implements Runnable {
     {
         this.mouse = mouse;
     }
+    
+    public int getScreenWidth()
+    {
+        return ( int ) StandardGame.SCREEN_DIMENSION.getWidth();
+    }
+    
+    public int getScreenHeight()
+    {
+        return ( int ) StandardGame.SCREEN_DIMENSION.getHeight();
+    }    
 }

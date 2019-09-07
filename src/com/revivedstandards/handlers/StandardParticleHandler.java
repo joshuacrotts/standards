@@ -24,73 +24,65 @@ We connect to the Apache FastMath API for some of our trigonometric functions,
 and we use John Carmack's fast inverse square root function.
 ===========================================================================
  */
-
 package com.revivedstandards.handlers;
 
 import com.revivedstandards.model.StandardGameObject;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-public class StandardParticleHandler extends StandardHandler {
+public class StandardParticleHandler extends StandardHandler
+{
+    private final int MAX_PARTICLES;
+    private int dead;
+    private int oldest;
+    private int replace;
 
-    public final int MAX_PARTICLES;
-    public int dead;
-    public int oldest;
-    public int replace;
-
-    public StandardParticleHandler( int max )
+    public StandardParticleHandler ( int max )
     {
         this.MAX_PARTICLES = max;
         this.dead = this.MAX_PARTICLES;
         this.oldest = 0;
         this.replace = this.MAX_PARTICLES;
 
-        this.entities = new ArrayList( this.MAX_PARTICLES + 1 );
-        for ( int i = 0; i < this.MAX_PARTICLES; i++ )
+        this.setEntities( new ArrayList( this.MAX_PARTICLES + 1 ) );
+        for ( int i = 0 ; i < this.MAX_PARTICLES ; i++ )
         {
-            this.entities.add( null );
+            this.getEntities().add( null );
         }
     }
 
-    public void tick()
+    @Override
+    public void tick ()
     {
-        long death = -1L;
-
         if ( this.dead < this.MAX_PARTICLES )
         {
-            for ( int i = this.dead; i < this.MAX_PARTICLES; i++ )
+            for ( int i = this.dead ; i < this.MAX_PARTICLES ; i++ )
             {
-                StandardGameObject particle = ( StandardGameObject ) this.entities.get( i );
+                StandardGameObject particle = ( StandardGameObject ) this.getEntities().get( i );
 
                 if ( particle.isAlive() )
                 {
 
                     particle.tick();
-//                    if ( ( ( particle.death < death ) ? 1 : 0 ) ^ ( ( particle.death < 0L ) ? 1 : 0 ) ^ ( ( death < 0L ) ? 1 : 0 ) )
-//                    {
-//                        this.oldest = i;
-//                        death = particle.death;
-//                       
-//                    }
 
-                } else
+                }
+                else
                 {
 
-                    StandardGameObject swap = ( StandardGameObject ) this.entities.get( this.dead );
-                    this.entities.set( i, swap );
-                    this.entities.set( this.dead++, null );
+                    StandardGameObject swap = ( StandardGameObject ) this.getEntities().get( this.dead );
+                    this.getEntities().set( i, swap );
+                    this.getEntities().set( this.dead++, null );
                 }
             }
         }
     }
 
     @Override
-    public void render( Graphics2D g2 )
+    public void render ( Graphics2D g2 )
     {
-        for ( int i = 0; i < this.entities.size(); i++ )
+        for ( int i = 0 ; i < this.getEntities().size() ; i++ )
         {
-
-            StandardGameObject particle = ( StandardGameObject ) this.entities.get( i );
+            StandardGameObject particle = ( StandardGameObject ) this.getEntities().get( i );
 
             if ( particle != null && particle.isAlive() )
             {
@@ -99,8 +91,21 @@ public class StandardParticleHandler extends StandardHandler {
         }
     }
 
+    /**
+     * Adds a particle to the Standard Particle Handler. This is a custom
+     * algorithm for placing a particle in a spot that houses an already-dead
+     * particle, to prevent having add and remove spots in the arraylist. It
+     * speeds up the process tremendously. 
+     * 
+     * If you need to iterate over the SPH, start from MAX-PARTICLES - 1, to 0. 
+     * The first entity is inserted at the back of the list, and it works it way 
+     * to the front (all particles are marked as dead upon instantiation of the 
+     * handler).
+     * 
+     * @param particle 
+     */
     @Override
-    public void addEntity( StandardGameObject particle )
+    public void addEntity ( StandardGameObject particle )
     {
         if ( this.dead == 0 )
         {
@@ -108,22 +113,41 @@ public class StandardParticleHandler extends StandardHandler {
             {
                 this.replace = this.MAX_PARTICLES;
             }
-            this.entities.set( --this.replace, particle );
-
+            this.getEntities().set( --this.replace, particle );
             return;
         }
-        this.entities.set( --this.dead, particle );
+        this.getEntities().set( --this.dead, particle );
     }
 
     @Override
-    public void removeEntity( StandardGameObject obj )
+    public void removeEntity ( StandardGameObject obj )
     {
         super.removeEntity( obj );
     }
 
     @Override
-    public int size()
+    public int size ()
     {
         return this.MAX_PARTICLES - this.dead;
+    }
+    
+    public int getOldestIndex()
+    {
+        return this.oldest;
+    }
+    
+    public int getDeadIndex()
+    {
+        return this.dead;
+    }
+    
+    public int getReplaceIndex()
+    {
+        return this.replace;
+    }
+    
+    public int getMaxParticles()
+    {
+        return this.MAX_PARTICLES;
     }
 }

@@ -2,11 +2,13 @@ package com.revivedstandards.test;
 
 import com.revivedstandards.handlers.StandardHandler;
 import com.revivedstandards.handlers.StandardParticleHandler;
+import com.revivedstandards.main.StandardCamera;
 import com.revivedstandards.main.StandardDraw;
 import com.revivedstandards.main.StandardGame;
-import com.revivedstandards.model.StandardDragParticle;
+import com.revivedstandards.model.StandardBoxParticle;
 import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.model.StandardID;
+import com.revivedstandards.model.StandardParticle;
 import com.revivedstandards.util.StdOps;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -15,12 +17,13 @@ import org.apache.commons.math3.util.FastMath;
 
 /**
  * This class represents a subclass of the StandardGameObject, demonstrating its
- * capabilities, and moreover, how to use it properly. We load in a sprite,
- * pass it to the superclass, and override the tick() and render() methods.
+ * capabilities, and moreover, how to use it properly. We load in a sprite, pass
+ * it to the superclass, and override the tick() and render() methods.
  */
 public class TriangleGameObject extends StandardGameObject
 {
     private StandardGame sg;
+    private StandardCamera sc;
     private StandardParticleHandler sph;
 
     private float angle;
@@ -31,10 +34,8 @@ public class TriangleGameObject extends StandardGameObject
         super( x, y, "src/res/img/spaceship.png", id );
         this.sg = sg;
         this.sph = new StandardParticleHandler( 500 );
-
         this.setVelX( 15.0 );
         this.setVelY( 15.0 );
-        
     }
 
     @Override
@@ -43,8 +44,8 @@ public class TriangleGameObject extends StandardGameObject
         this.updatePosition();
 
         // Save the mouse position
-        double mx = this.sg.getMouse().x;
-        double my = this.sg.getMouse().y;
+        double mx = this.sc.getX() + this.sg.getMouse().x - this.sc.getVpw();
+        double my = this.sc.getY() + this.sg.getMouse().y - this.sc.getVph();
 
         // Calculate the distance between the sprite and the mouse
         double diffX = this.getX() - mx - 8;
@@ -73,9 +74,15 @@ public class TriangleGameObject extends StandardGameObject
 
         //  Adds random particles to the end of the ship to simulate fuel burning
         StandardHandler.Handler( this.sph );
-        this.sph.addEntity( new StandardDragParticle( this.getX() + this.getWidth() * 0.5, 
-                                                      this.getY() + ( this.getHeight() * 0.5 ) + 20, 50, this.sph, 
-                                                      new Color( 0xFF, StdOps.rand( 0, 0xFF ), 0 ) ) );
+//        this.sph.addEntity( new StandardDragParticle( this.getX() + this.getWidth() * 0.5,
+//                this.getY() + ( this.getHeight() * 0.5 ) + 20, 50, this.sph,
+//                new Color( 0xFF, StdOps.rand( 0, 0xFF ), 0 ), this.angle ) );
+
+        this.sph.addEntity( new StandardBoxParticle( this.getX() + this.getWidth() * 0.5,
+                this.getY() + ( this.getHeight() * 0.5 ) + 20, 6, StdOps.rand( -3.5, 3.5 ),
+                StdOps.rand( 5.0, 10.0 ), new Color( 0xFF, StdOps.rand( 0, 0xFF ), 0 ),
+                20.0, this.sph, this.angle ) );
+
     }
 
     @Override
@@ -86,14 +93,37 @@ public class TriangleGameObject extends StandardGameObject
         AffineTransform rotation = new AffineTransform();
         rotation.rotate( 0, 0, 0 );
 
-        // Rotate the graphics context to the new translation
+        // Iterates through the particle handler, finds any existing particle
+        // and translates it to ITS specific angle. This is to prevent every
+        // single preexisting angle from suddenly changing angles when it
+        // shouldn't.
+        for ( int i = this.sph.getMaxParticles() - 1; i >= 0; i-- )
+        {
+            StandardParticle particle = ( StandardParticle ) this.sph.get( i );
+            
+            //  If we reach a wall, then we stop the loop.
+            if ( particle == null )
+            {
+                break;
+            }
+            
+            g2.rotate( particle.getAngle(), this.getX() + this.getWidth() / 2, this.getY() + this.getHeight() / 2 );
+            particle.render( g2 );
+            
+            //  Do NOT forget this (delete it and try it out. I dare ya.)
+            g2.setTransform( backup );
+        }
+        
+        //  Rotate the sprite to its current angle, and draw it.
         g2.rotate( this.angle, this.getX() + this.getWidth() / 2, this.getY() + this.getHeight() / 2 );
         StandardDraw.image( this.getCurrentSprite(), ( int ) this.getX(), ( int ) this.getY() );
-        
+
         // Reset the old translation
         g2.setTransform( backup );
-        
-        // Render the handler of particles
-        StandardDraw.Handler( this.sph );
+    }
+
+    public void setCamera ( StandardCamera sc )
+    {
+        this.sc = sc;
     }
 }

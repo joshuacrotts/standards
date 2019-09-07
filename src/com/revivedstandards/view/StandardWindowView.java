@@ -40,14 +40,12 @@ import javax.swing.JFrame;
  */
 public class StandardWindowView extends Canvas
 {
-    private static final long serialVersionUID = 6915741236108516353L;
-
     private JFrame frame;
-
+    private String title;
+    
     private int width;
     private int height;
 
-    private String title;
 
     public StandardWindowView ( int width, int height, String title, StandardGame game, GraphicsConfiguration gc )
     {
@@ -153,4 +151,5 @@ public class StandardWindowView extends Canvas
     {
         this.frame.setTitle( title );
     }
+
 }

@@ -38,8 +38,8 @@ import java.util.ArrayList;
 
 public class StandardHandler implements Renderable, Updatable{
 
-    public ArrayList<StandardGameObject> entities;
-    public StandardCamera stdCamera;
+    private ArrayList<StandardGameObject> entities;
+    private StandardCamera stdCamera;
 
     public StandardHandler( StandardCamera stdCamera )
     {
@@ -126,6 +126,11 @@ public class StandardHandler implements Renderable, Updatable{
             entity.render( g2 );
         }
     }
+    
+    public void setEntities( ArrayList<StandardGameObject> entities )
+    {
+        this.entities = entities;
+    }
 
     public void addEntity( StandardGameObject obj )
     {
@@ -200,8 +205,13 @@ public class StandardHandler implements Renderable, Updatable{
         return this.entities;
     }
 
-    public void addCam( StandardCamera cam )
+    public void setCamera( StandardCamera cam )
     {
         this.stdCamera = cam;
+    }
+    
+    public StandardCamera getCamera()
+    {
+        return this.stdCamera;
     }
 }

@@ -45,7 +45,7 @@ public class StandardDragParticle extends StandardParticle {
         this.setVelX( h * FastMath.sin( d ) );
         this.setVelY( h * FastMath.cos( d ) );
 
-        this.color = new Color( 255, 255 - ( int ) this.getDeath() & 0x7F, 255 - ( int ) this.getDeath() & 0xFF, 255 );
+        this.setColor( new Color( 255, 255 - ( int ) super.getDeath() & 0x7F, 255 - ( int ) this.getDeath() & 0xFF, 255 ) );
     }
 
     public StandardDragParticle( double x, double y, double life, StandardHandler handler )
@@ -58,21 +58,30 @@ public class StandardDragParticle extends StandardParticle {
         this.setVelX( h * FastMath.sin( d ) );
         this.setVelY( h * FastMath.cos( d ) );
         
-        this.color = new Color( 255, 255 - ( int ) this.getDeath() & 0x7F, 255 - ( int ) this.getDeath() & 0xFF, 255 );
+        this.setColor( new Color( 255, 255 - ( int ) this.getDeath() & 0x7F, 255 - ( int ) this.getDeath() & 0xFF, 255 ) );
     }
 
     public StandardDragParticle( double x, double y, double life, StandardHandler handler, Color c )
     {
-        super( x, y, life, handler );
+        super( x, y, life, handler, c );
 
         double d = StdOps.rand( 0.0D, 6.283185307179586D );
         double h = StdOps.rand( 0.05D, 2.5D );
 
         this.setVelX( h * FastMath.sin( d ) );
         this.setVelY( h * FastMath.cos( d ) );
-
-        this.color = c;
     }
+    
+    public StandardDragParticle( double x, double y, double life, StandardHandler handler, Color c, double rotationAngle )
+    {
+        super( x, y, life, handler, c, rotationAngle );
+
+        double d = StdOps.rand( 0.0D, 6.283185307179586D );
+        double h = StdOps.rand( 0.05D, 2.5D );
+
+        this.setVelX( h * FastMath.sin( d ) );
+        this.setVelY( h * FastMath.cos( d ) );
+    }    
 
     @Override
     public void tick()
@@ -96,10 +105,10 @@ public class StandardDragParticle extends StandardParticle {
         {
             return;
         }
-        int red = this.color.getRed();
-        int green = this.color.getGreen();
-        int blue = this.color.getBlue();
-        int alpha = this.color.getAlpha();
+        int red = this.getColor().getRed();
+        int green = this.getColor().getGreen();
+        int blue = this.getColor().getBlue();
+        int alpha = this.getColor().getAlpha();
         g2.setColor( new Color( red, green, blue, alpha ) );
 
         g2.drawLine( ( int ) this.getX(), ( int ) this.getY(), ( int ) ( this.getX() + this.getWidth() ), ( int ) ( this.getY() + this.getHeight() ) );

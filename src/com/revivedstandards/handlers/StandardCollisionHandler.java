@@ -38,7 +38,7 @@ public class StandardCollisionHandler extends StandardHandler {
 
     public StandardCollisionHandler( StandardCamera c )
     {
-        this.stdCamera = c;
+        this.setCamera( c );
     }
 
     @Override
@@ -46,22 +46,22 @@ public class StandardCollisionHandler extends StandardHandler {
     {
         double[] norm = new double[2];
         int vpo = 300;
-        Rectangle cam = new Rectangle( ( int ) ( this.stdCamera.getX() - vpo - this.stdCamera.getVpw() ), 
-                                       ( int ) ( this.stdCamera.getY() - this.stdCamera.getVph() ), 
-                                        this.stdCamera.getVpw() * 2 + vpo * 2, this.stdCamera.getVph() * 2 );
-        for ( int i = 0; i < this.entities.size(); i++ )
+        Rectangle cam = new Rectangle( ( int ) ( this.getCamera().getX() - vpo - this.getCamera().getVpw() ), 
+                                       ( int ) ( this.getCamera().getY() - this.getCamera().getVph() ), 
+                                        this.getCamera().getVpw() * 2 + vpo * 2, this.getCamera().getVph() * 2 );
+        for ( int i = 0; i < this.getEntities().size(); i++ )
         {
 
-            StandardGameObject obj1 = ( StandardGameObject ) this.entities.get( i );
+            StandardGameObject obj1 = ( StandardGameObject ) this.getEntities().get( i );
             if ( obj1.getBounds().intersects( cam ) )
             {
 
-                if ( ( ( StandardGameObject ) this.entities.get( i ) ).getId() == StandardID.Player || ( ( StandardGameObject ) this.entities.get( i ) ).getId() == StandardID.Enemy || ( ( StandardGameObject ) this.entities.get( i ) ).getId() == StandardID.Projectile || ( ( StandardGameObject ) this.entities.get( i ) ).getId() == StandardID.Powerup )
+                if ( ( ( StandardGameObject ) this.getEntities().get( i ) ).getId() == StandardID.Player || ( ( StandardGameObject ) this.getEntities().get( i ) ).getId() == StandardID.Enemy || ( ( StandardGameObject ) this.getEntities().get( i ) ).getId() == StandardID.Projectile || ( ( StandardGameObject ) this.getEntities().get( i ) ).getId() == StandardID.Powerup )
                 {
-                    for ( int j = 0; j < this.entities.size(); j++ )
+                    for ( int j = 0; j < this.getEntities().size(); j++ )
                     {
 
-                        StandardGameObject obj2 = ( StandardGameObject ) this.entities.get( j );
+                        StandardGameObject obj2 = ( StandardGameObject ) this.getEntities().get( j );
                         norm[0] = 0.0D;
                         norm[1] = 0.0D;
 

@@ -32,9 +32,9 @@ import java.awt.Color;
 
 public abstract class StandardParticle extends StandardGameObject
 {
-    public Color color = Color.red;
-
-    protected StandardHandler handler;
+    private Color color = Color.red;
+    private StandardHandler handler;
+    private double rotationAngle;
 
     public StandardParticle ( double x, double y, double life )
     {
@@ -47,7 +47,6 @@ public abstract class StandardParticle extends StandardGameObject
     {
         super( ( int ) x, ( int ) y, StandardID.Particle );
         this.handler = handler;
-        this.handler.addEntity( this );
     }
 
     public StandardParticle ( double x, double y, double life, StandardHandler handler )
@@ -61,5 +60,31 @@ public abstract class StandardParticle extends StandardGameObject
     {
         this( x, y, life, handler );
         this.color = c;
+    }
+    
+    public StandardParticle ( double x, double y, double life, StandardHandler handler, Color c, double rotationAngle )
+    {
+        this( x, y, life, handler, c );
+        this.rotationAngle = rotationAngle;
+    }    
+    
+    public double getAngle()
+    {
+        return this.rotationAngle;
+    }
+    
+    public StandardHandler getHandler()
+    {
+        return this.handler;
+    }
+    
+    public void setColor( Color c )
+    {
+        this.color = c;
+    }
+    
+    public Color getColor()
+    {
+        return this.color;
     }
 }

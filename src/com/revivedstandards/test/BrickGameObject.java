@@ -36,5 +36,7 @@ public class BrickGameObject extends StandardGameObject
     {
         g2.setColor( Color.BLUE );
         g2.fillRect( ( int ) this.getX(), ( int ) this.getY(), ( int ) this.getWidth(), ( int ) this.getHeight() );
+        g2.setColor( Color.BLACK );
+        g2.drawRect( ( int ) this.getX(), ( int ) this.getY(), ( int ) this.getWidth(), ( int ) this.getHeight() );
     }
 }
