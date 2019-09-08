@@ -43,6 +43,9 @@ public class TriangleGameObject extends StandardGameObject
     {
         this.updatePosition();
 
+        //*******************************************************************//
+        //      Causes the arrow to follow the cursor wherever on the screen //
+        //*******************************************************************//
         // Save the mouse position
         double mx = this.sc.getX() + this.sg.getMouse().getMouseX() - this.sc.getVpw();
         double my = this.sc.getY() + this.sg.getMouse().getMouseY() - this.sc.getVph();
@@ -59,6 +62,10 @@ public class TriangleGameObject extends StandardGameObject
         this.setVelX( ( APPROACH_VEL / distance ) * diffX );
         this.setVelY( ( APPROACH_VEL / distance ) * diffY );
 
+        //*****************************************************************//
+        //      Calculates the angle the ship needs to be in to face the   //
+        //      cursor                                                     //
+        //*****************************************************************//
         float xSign = ( float ) FastMath.signum( mx - this.getX() );
         double dx = FastMath.abs( mx - this.getX() );
         double dy = FastMath.abs( my - this.getY() );
@@ -73,16 +80,12 @@ public class TriangleGameObject extends StandardGameObject
         }
 
         //  Adds random particles to the end of the ship to simulate fuel burning
-        StandardHandler.Handler( this.sph );
-//        this.sph.addEntity( new StandardDragParticle( this.getX() + this.getWidth() * 0.5,
-//                this.getY() + ( this.getHeight() * 0.5 ) + 20, 50, this.sph,
-//                new Color( 0xFF, StdOps.rand( 0, 0xFF ), 0 ), this.angle ) );
-
         this.sph.addEntity( new StandardBoxParticle( this.getX() + this.getWidth() * 0.5,
                 this.getY() + ( this.getHeight() * 0.5 ) + 20, 6, StdOps.rand( -3.5, 3.5 ),
                 StdOps.rand( 5.0, 10.0 ), new Color( 0xFF, StdOps.rand( 0, 0xFF ), 0 ),
                 20.0, this.sph, this.angle ) );
-
+        
+        StandardHandler.Handler( this.sph );
     }
 
     @Override
