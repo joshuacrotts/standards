@@ -24,7 +24,6 @@ We connect to the Apache FastMath API for some of our trigonometric functions,
 and we use John Carmack's fast inverse square root function.
 ===========================================================================
  */
-
 package com.revivedstandards.input;
 
 import java.awt.event.KeyEvent;
@@ -32,27 +31,31 @@ import java.awt.event.KeyListener;
 
 public class Keyboard extends InputDevice implements KeyListener
 {
+
     public static final int MAX_CHARS = 0x10000;
-    
-    public Keyboard()
+
+    public Keyboard ()
     {
-        super("Default Keyboard", MAX_CHARS);
+        super( "Default Keyboard", MAX_CHARS );
     }
+
     @Override
-    public void keyPressed (KeyEvent e)
+    public void keyPressed ( KeyEvent e )
     {
         int code = e.getKeyCode();
-        set(code, true);
+        set( code, true );
     }
+
     @Override
-    public void keyReleased (KeyEvent e)
+    public void keyReleased ( KeyEvent e )
     {
         int code = e.getKeyCode();
-        set(code, false);
+        set( code, false );
     }
+
     @Override
-    public void keyTyped (KeyEvent e)
+    public void keyTyped ( KeyEvent e )
     {
-    	//add key to log
+        //add key to log
     }
 }

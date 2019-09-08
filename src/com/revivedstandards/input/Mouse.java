@@ -16,10 +16,10 @@ public class Mouse extends InputDevice implements MouseListener, MouseMotionList
 {
 
     private static final int MAX_CHARS = 0x10;
-    public int x = -1;
-    public int y = -1;
-    public int ax = -1;
-    public int ay = -1;
+    private int x = -1;
+    private int y = -1;
+    private int ax = -1;
+    private int ay = -1;
 
     public Mouse ()
     {
@@ -84,6 +84,43 @@ public class Mouse extends InputDevice implements MouseListener, MouseMotionList
     public void mouseWheelMoved ( MouseWheelEvent e )
     {
         // TODO Auto-generated method stub
-
+    }
+    
+    /**
+     * Returns the horizontal x position of the event relative to the frame.
+     * 
+     * @return 
+     */
+    public int getMouseX()
+    {
+        return this.x;
+    }
+    
+    /**
+     * Returns the vertical y position of the event relative to the frame.
+     * @return 
+     */
+    public int getMouseY()
+    {
+        return this.y;
+    }
+    
+    /**
+     * Returns the absolute horizontal x position of the mouse.
+     * 
+     * @return 
+     */
+    public int getAbsoluteMouseX()
+    {
+        return this.ax;
+    }
+    
+    /**
+     * Returns the absolute vertical y position of the mouse.
+     * @return 
+     */
+    public int getAbsoluteMouseY()
+    {
+        return this.ay;
     }
 }

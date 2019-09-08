@@ -39,9 +39,8 @@ import javax.imageio.ImageIO;
  * - Random Numbers - Determining Mouse Location (if the mouse coordinates are
  * over a rectangle (area) - Added the ability to load in specific fonts at a
  * specific size. Pass in the String and the size, and it will be returned. -
- * Clamping a value to a specific range - Loading an image.
- *
- * - Fast math from Quake III (sqrt & inverse sqrt())
+ * Clamping a value to a specific range - Loading an image, fast math from 
+ * Quake III (sqrt and inverse sqrt())
  */
 public abstract class StdOps {
 

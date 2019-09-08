@@ -39,16 +39,40 @@ public abstract class StandardDraw
 
     public static Graphics2D Renderer;
 
+    /**
+     * Draws an image to the screen using doubles that are downcasted to ints.
+     * 
+     * @param image
+     * @param x
+     * @param y 
+     */
     public static void image ( BufferedImage image, double x, double y )
     {
         StandardDraw.Renderer.drawImage( image, ( int ) x, ( int ) y, null );
     }
 
+    /**
+     * Draws an image to the screen with integer parameters.
+     * @param image
+     * @param x
+     * @param y 
+     */
     public static void image ( BufferedImage image, int x, int y )
     {
         StandardDraw.Renderer.drawImage( image, x, y, null );
     }
 
+    /**
+     * Draws a string of text to the screen with a specific font, font size,
+     * and color.
+     * 
+     * @param text
+     * @param x
+     * @param y
+     * @param font - name of font, not the .tff location or Font class object.
+     * @param size
+     * @param color 
+     */
     public static void text ( String text, int x, int y, String font, float size, Color color )
     {
         Font oldFont = StandardDraw.Renderer.getFont();
@@ -69,6 +93,17 @@ public abstract class StandardDraw
         StandardDraw.Renderer.setFont( oldFont );
     }
 
+    /**
+     * Draws a string of text to the screen with a specific font, font size,
+     * and color.
+     * 
+     * @param text
+     * @param x
+     * @param y
+     * @param font - must be the Font class object.
+     * @param size
+     * @param color 
+     */
     public static void text ( String text, int x, int y, Font font, float size, Color color )
     {
         Font oldFont = StandardDraw.Renderer.getFont();
@@ -89,6 +124,17 @@ public abstract class StandardDraw
         StandardDraw.Renderer.setFont( oldFont );
     }
 
+    /**
+     * Draws a rectangle at position x, y, dim width, height, Color color
+     * to the screen. 
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param color - if null, defaults to black.
+     * @param fill - if true, will fill the rectangle with color. Otherwise,
+     *                will draw the outline only
+     */
     public static void rect ( double x, double y, double width, double height, Color color, boolean fill )
     {
         if ( color == null )
@@ -112,7 +158,18 @@ public abstract class StandardDraw
         }
     }
 
-    public static void circle ( double x, double y, double width, double height, Color color, boolean fill )
+    /**
+     * Draws an ellipse at x, y, dim width,height, Color color to the screen.
+     * 
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param color - if null, defaults to black.
+     * @param fill - if true, will fill the ellipse with color. Otherwise,
+     *                will draw the outline only
+     */
+    public static void ellipse ( double x, double y, double width, double height, Color color, boolean fill )
     {
         if ( color == null )
         {
@@ -134,16 +191,30 @@ public abstract class StandardDraw
         }
     }
 
+    /**
+     * Draws the supplied object to the screen. Calls obj.render(...)
+     * 
+     * @param obj 
+     */
     public static void Object ( StandardGameObject obj )
     {
         obj.render( StandardDraw.Renderer );
     }
 
+    /**
+     * Renders all elements within a standard handler.
+     * 
+     * @param handler 
+     */
     public static void Handler ( StandardHandler handler )
     {
         handler.render( StandardDraw.Renderer );
     }
 
+    /**
+     * Generates a random color. 
+     * @return new randomized color (0-255, 0-255, 0-255).
+     */
     public static Color getRandomColor()
     {
         return new Color( StdOps.rand( 0, 255 ), StdOps.rand( 0, 255 ), StdOps.rand( 0, 255 ) );

@@ -84,6 +84,12 @@ public abstract class StandardGame extends Canvas implements Runnable {
     private boolean titleFPS;
     private static BufferStrategy bufferStrategy = null;
 
+    /**
+     * Creates a StandardGame object with size width x height, and title.
+     * @param width
+     * @param height
+     * @param title 
+     */
     public StandardGame( int width, int height, String title )
     {
         this.thread = null;
@@ -105,6 +111,13 @@ public abstract class StandardGame extends Canvas implements Runnable {
         this.addKeyListener( this.keyboard );
     }
 
+    /**
+     * Creates a StandardGame object with aspect ration 16:9 via the supplied
+     * width.
+     * 
+     * @param width
+     * @param title 
+     */
     public StandardGame( int width, String title )
     {
         this.window = null;
@@ -127,6 +140,12 @@ public abstract class StandardGame extends Canvas implements Runnable {
         this.addKeyListener( this.keyboard );
     }
     
+    /**
+     * Generates a StandardGame object with a title, and forces the 
+     * screen size to whatever the user's monitor dimensions are.
+     * 
+     * @param title 
+     */
     public StandardGame( String title )
     {
         this.thread = null;
@@ -153,7 +172,6 @@ public abstract class StandardGame extends Canvas implements Runnable {
      */
     public void StartGame()
     {
-        System.out.println( "here?" );
         if ( this.running )
         {
             return;
@@ -225,7 +243,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
                 StandardDraw.Renderer.setColor( Color.BLACK );
                 StandardDraw.Renderer.fillRect( 0, 0, this.getGameWidth(), this.getGameHeight() );
 
-                render();
+                this.render();
 
                 StandardDraw.Renderer.dispose();
                 StandardGame.bufferStrategy.show();
@@ -234,6 +252,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
             if ( System.currentTimeMillis() - timer > 1000L )
             {
                 timer += 1000L;
+                
                 if ( this.titleFPS )
                 {
                     this.window.setTitle( String.valueOf( this.window.getTitle() ) + " | " + updates + " ups, " + frames + " fps" );
@@ -242,6 +261,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
                 {
                     System.out.println( String.valueOf( this.window.getTitle() ) + " | " + updates + " ups, " + frames + " fps" );
                 }
+                
                 updates = 0;
                 frames = 0;
             }

@@ -185,8 +185,25 @@ public abstract class StandardGameObject implements Renderable, Updatable
         this.interactable  = interactable;
     }
 
+    /**
+     * Updates the position, state, actions, etc. of the StandardGameObject. 
+     * Any logic or physics should be done within the tick() method. Do not
+     * put drawing functions in here; it will mess up the physics loop.
+     * 
+     * This method must be implemented in any subclass of SGO.
+     */
+    @Override
     public abstract void tick ();
 
+    /**
+     * Draws the StandardGameObject to the screen however the user defines it as.
+     * Do not update any game/object logic in here. 
+     * 
+     * This method must be implemented in any subclass of SGO.
+     * 
+     * @param paramGraphics2D 
+     */
+    @Override
     public abstract void render ( Graphics2D paramGraphics2D );
 
     /**

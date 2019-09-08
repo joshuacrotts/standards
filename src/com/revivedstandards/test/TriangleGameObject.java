@@ -44,8 +44,8 @@ public class TriangleGameObject extends StandardGameObject
         this.updatePosition();
 
         // Save the mouse position
-        double mx = this.sc.getX() + this.sg.getMouse().x - this.sc.getVpw();
-        double my = this.sc.getY() + this.sg.getMouse().y - this.sc.getVph();
+        double mx = this.sc.getX() + this.sg.getMouse().getMouseX() - this.sc.getVpw();
+        double my = this.sc.getY() + this.sg.getMouse().getMouseY() - this.sc.getVph();
 
         // Calculate the distance between the sprite and the mouse
         double diffX = this.getX() - mx - 8;

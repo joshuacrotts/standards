@@ -45,7 +45,7 @@ public class FollowTheMouseGameTest extends StandardGame
 
     public FollowTheMouseGameTest ()
     {
-        super( 1280, 720, "Game Test" );
+        super( "Game Test" );
 
         //  Instantiate the mouse and add it as a mouse listener to the game
         //  so we can track its location for the TriangleGameObject
