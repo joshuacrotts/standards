@@ -41,26 +41,26 @@ import java.util.LinkedList;
  */
 public class StandardAudioController
 {
-    private HashMap<Integer, LinkedList<StandardAudio>> audioBuffer;
+    private static HashMap<Integer, LinkedList<StandardAudio>> audioBuffer;
 
     /**
      * Initializes the Audio buffer. This cannot be called twice.
      *
      * @param buffers
      */
-    public StandardAudioController ( int buffers )
+    public static void init ( int buffers )
     {
         if ( buffers <= 0 )
         {
             throw new IllegalArgumentException( "The amount of buffers cannot be less than or equal to 0." );
         }
-        else if ( this.audioBuffer != null )
+        else if ( StandardAudioController.audioBuffer != null )
 
         {
             throw new IllegalStateException( "The audio buffer already exists!" );
         }
 
-        this.audioBuffer = new HashMap<>( buffers );
+        StandardAudioController.audioBuffer = new HashMap<>( buffers );
     }
 
     /**
@@ -68,16 +68,16 @@ public class StandardAudioController
      *
      * @param fileName
      */
-    public void load ( String fileName )
+    public static void load ( String fileName )
     {
         int fileHash = fileName.hashCode();
 
-        if ( !this.audioBuffer.containsKey( fileHash ) )
+        if ( !StandardAudioController.audioBuffer.containsKey( fileHash ) )
         {
-            this.audioBuffer.put( fileName.hashCode(), new LinkedList<>() );
+            StandardAudioController.audioBuffer.put( fileName.hashCode(), new LinkedList<>() );
         }
 
-        LinkedList<StandardAudio> audioList = this.audioBuffer.get( fileHash );
+        LinkedList<StandardAudio> audioList = StandardAudioController.audioBuffer.get( fileHash );
         audioList.add( new StandardAudio( fileName ) );
 
     }
@@ -86,11 +86,11 @@ public class StandardAudioController
      * Plays the file at the supplied path.
      * @param fileName 
      */
-    public void play ( String fileName )
+    public static void play ( String fileName )
     {
         int fileHash = fileName.hashCode();
 
-        LinkedList<StandardAudio> audioList = this.audioBuffer.get( fileHash );
+        LinkedList<StandardAudio> audioList = StandardAudioController.audioBuffer.get( fileHash );
         for ( int i = 0 ; i < audioList.size() ; i++ )
         {
             StandardAudio audio = audioList.get( i );

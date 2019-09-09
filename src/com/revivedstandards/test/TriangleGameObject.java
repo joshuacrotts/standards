@@ -1,6 +1,5 @@
 package com.revivedstandards.test;
 
-import com.revivedstandards.controller.StandardAudioController;
 import com.revivedstandards.handlers.StandardHandler;
 import com.revivedstandards.handlers.StandardParticleHandler;
 import com.revivedstandards.main.StandardCamera;
@@ -26,7 +25,6 @@ public class TriangleGameObject extends StandardGameObject
 {
     private final StandardGame sg;
     private final StandardParticleHandler sph;
-    private final StandardAudioController audioController;
     private StandardCamera sc;
 
     private final PlaySoundCommand soundCommand;
@@ -34,18 +32,16 @@ public class TriangleGameObject extends StandardGameObject
     private float angle;
     private static final float APPROACH_VEL = -3.0f;
 
-    public TriangleGameObject ( StandardGame sg, StandardAudioController audioController,
-                                int x, int y, StandardID id )
+    public TriangleGameObject ( StandardGame sg, int x, int y, StandardID id )
     {
         super( x, y, "src/res/img/spaceship.png", id );
         this.sg = sg;
-        this.audioController = audioController;
         this.sph = new StandardParticleHandler( 500 );
         
         this.setVelX( 15.0 );
         this.setVelY( 15.0 );
         
-        this.soundCommand = new PlaySoundCommand( this, this.audioController );
+        this.soundCommand = new PlaySoundCommand( this );
         this.soundCommand.bind( this.sg.getKeyboard(), KeyEvent.VK_W );
     }
 

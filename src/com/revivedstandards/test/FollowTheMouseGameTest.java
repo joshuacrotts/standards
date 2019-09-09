@@ -41,18 +41,16 @@ public class FollowTheMouseGameTest extends StandardGame
     private final StandardCamera sc;            //Camera
     private final StandardCollisionHandler sch; //Collision handler
     private final StandardLevel level;          //Level
-    private final StandardAudioController sac;  //Audio controller
 
     public FollowTheMouseGameTest ()
     {
         super( "Game Test" );
-
-        //  Instantiate the mouse and add it as a mouse listener to the game
-        //  so we can track its location for the TriangleGameObject
-        this.sac = new StandardAudioController( 16 );
-
+        
+        //  Initializes the audio control buffer
+        StandardAudioController.init( 16 );
+        
         //  Instantiates a new TGO (the player)
-        this.tri = new TriangleGameObject( this, this.sac, 200, 200, StandardID.Player );
+        this.tri = new TriangleGameObject( this, 200, 200, StandardID.Player );
 
         //  Create a new collision handler
         this.sch = new StandardCollisionHandler( null );
@@ -76,7 +74,7 @@ public class FollowTheMouseGameTest extends StandardGame
         
         for ( int i = 0; i < 10; i++ )
         {
-            this.sac.load( "src/res/audio/sfx/soma_hurt0.wav" );
+            StandardAudioController.load( "src/res/audio/sfx/soma_hurt0.wav" );
         }
     }
 
