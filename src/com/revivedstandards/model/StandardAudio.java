@@ -49,7 +49,6 @@ public final class StandardAudio
 
     public static int INFINITELY = Clip.LOOP_CONTINUOUSLY;
 
-
     public StandardAudio( String fileLocation )
     {
         this.load( fileLocation );

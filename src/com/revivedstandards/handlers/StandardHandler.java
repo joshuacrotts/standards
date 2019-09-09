@@ -37,6 +37,12 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+/**
+ * The StandardHandler class houses all entities/objects within the game.
+ * As the name implies, it "handles" all events, renders, and updates for
+ * every SGO inside the handler. The SGO (or subclass of SGO) must have 
+ * tick() and render(G2D) implemented, or this will not work.
+ */
 public class StandardHandler implements Renderable, Updatable{
 
     private ArrayList<StandardGameObject> entities;
@@ -113,19 +119,25 @@ public class StandardHandler implements Renderable, Updatable{
         {
             StandardGameObject o = ( StandardGameObject ) this.entities.get( i );
 
-            if ( cam != null && ( o.getBounds().intersects( cam ) || this.stdCamera == null ) )
+            if ( ( cam != null && ( o.getBounds().intersects( cam ) || this.stdCamera == null ) ) )
             {
-                o.render( g2 );
+                
+               o.render( g2 );
             }
         }
     }
 
+    /**
+     * Performs a standard render on the SGOs in the 
+     * handler without worrying about translations for the camera.
+     * @param g2 
+     */
     public void stdRender( Graphics2D g2 )
     {
-        for ( StandardGameObject entity : this.entities )
+        this.entities.forEach( ( entity ) ->
         {
             entity.render( g2 );
-        }
+        } );
     }
     
     public void setEntities( ArrayList<StandardGameObject> entities )

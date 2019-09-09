@@ -126,11 +126,7 @@ public abstract class StandardGameObject implements Renderable, Updatable
 
     public StandardGameObject ( double x, int y, int width, int height, StandardID id, boolean interactable )
     {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.id = id;
+        this( x, y, width, height, id );
         this.interactable = interactable;
     }
 

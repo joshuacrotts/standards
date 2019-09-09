@@ -44,7 +44,7 @@ public class FollowTheMouseGameTest extends StandardGame
 
     public FollowTheMouseGameTest ()
     {
-        super( "Game Test" );
+        super( 1280, 720, "Game Test" );
         
         //  Initializes the audio control buffer
         StandardAudioController.init( 16 );
@@ -91,7 +91,6 @@ public class FollowTheMouseGameTest extends StandardGame
         this.level.render( StandardDraw.Renderer );
         StandardDraw.Object( this.sc );
         StandardDraw.Handler( this.sch );
-
     }
 
     private void spawnBricks ( int n )

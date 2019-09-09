@@ -35,6 +35,14 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import org.apache.commons.math3.util.FastMath;
 
+/**
+ * StandardCollisionHandler uses preset StandardIDs to determine what should
+ * happen when a collision between two ID's occurs. Some StandardIDs are 
+ * reserved for motionless/immovable objects, so when anything collides into
+ * them, the colliding object stops moving. Otherwise, it functions as a 
+ * normal StandardHandler.
+ */
+
 public class StandardCollisionHandler extends StandardHandler {
 
     public StandardCollisionHandler( StandardCamera c )

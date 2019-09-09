@@ -47,8 +47,9 @@ public class StandardTrail extends StandardGameObject
     //  Information regarding the lifespan and visibility of the 
     //  trail. 
     //
-    private float alpha = 1.0F;
-    private float life;
+    private double angle    = 0.0;
+    private float alpha     = 1.0F;
+    private float life      = -1f;
     private boolean isImage = false;
 
     //
@@ -65,23 +66,36 @@ public class StandardTrail extends StandardGameObject
     //
     private final StandardHandler stdHandler;
 
-    public StandardTrail ( double x, double y, double width, double height, Color color,
-                           float life, StandardGameObject o, StandardHandler stdHandler,
-                           ShapeType shape, boolean isImage )
+    public StandardTrail ( double x, double y, double width, double height, 
+                           double angle, float life, Color color, 
+                           StandardGameObject o, StandardHandler stdHandler,
+                           ShapeType shape )
     {
-        super( x, y, ( int ) width, ( int ) height );
-
-        this.color = color;
-        this.life = life;
-        this.shape = shape;
-        this.setId( StandardID.Trail );
-
+        super( x, y, ( int ) width, ( int ) height, StandardID.Trail );
+        this.color      = color;
+        this.life       = life;
+        this.shape      = shape;
+        this.angle      = angle;
         this.stdHandler = stdHandler;
-        this.stdHandler.addEntity( this );
-
-        this.isImage = isImage;
-        this.obj = o;
+        this.isImage    = false;
+        this.obj        = o;
+        
         this.checkNullShape();
+    }
+    
+    public StandardTrail( double x, double y, double angle, float life, StandardGameObject obj,
+                          StandardHandler stdHandler )
+    {
+        super( x, y, StandardID.Trail );
+        
+        this.obj        = obj;
+        this.stdHandler = stdHandler;
+        this.angle      = angle;
+        this.life       = life;
+        this.isImage    = true;
+        
+        this.setWidth( this.obj.getCurrentSprite().getWidth() );
+        this.setHeight( this.obj.getCurrentSprite().getHeight() );
     }
 
     private AlphaComposite makeTransparent ( float alpha )
@@ -103,9 +117,9 @@ public class StandardTrail extends StandardGameObject
         }
         else
         {
-
             this.stdHandler.removeEntity( this );
         }
+        
     }
 
     @Override
@@ -188,5 +202,10 @@ public class StandardTrail extends StandardGameObject
     public void setImage ( boolean isImage )
     {
         this.isImage = isImage;
+    }
+    
+    public double getAngle()
+    {
+        return this.angle;
     }
 }

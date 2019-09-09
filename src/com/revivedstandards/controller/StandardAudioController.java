@@ -25,7 +25,6 @@ and we use John Carmack's fast inverse square root function. Lastly, for
 StandardAudio, we use the javax.sound (Trail's Sound) Oracle API.
 ===========================================================================
  */
-
 package com.revivedstandards.controller;
 
 import com.revivedstandards.model.StandardAudio;
@@ -35,12 +34,13 @@ import java.util.LinkedList;
 /**
  * The StandardAudioController acts as an audio buffer to play audio tracks
  * without having to have a ton of StandardAudio objects in random places.
- * 
- * It also alleviates the problem of cutting already-playing tracks off
- * when it's necessary to start another (shooting bullets for instance).
+ *
+ * It also alleviates the problem of cutting already-playing tracks off when
+ * it's necessary to start another (shooting bullets for instance).
  */
 public class StandardAudioController
 {
+
     private static HashMap<Integer, LinkedList<StandardAudio>> audioBuffer;
 
     /**
@@ -67,8 +67,9 @@ public class StandardAudioController
      * Attempts to add the fileName if the key exists in the hashmap.
      *
      * @param fileName
+     * @param n - amount of times to buffer the file
      */
-    public static void load ( String fileName )
+    public static void load ( String fileName, int n )
     {
         int fileHash = fileName.hashCode();
 
@@ -78,13 +79,27 @@ public class StandardAudioController
         }
 
         LinkedList<StandardAudio> audioList = StandardAudioController.audioBuffer.get( fileHash );
-        audioList.add( new StandardAudio( fileName ) );
 
+        for ( int i = 0 ; i < n ; i++ )
+        {
+            audioList.add( new StandardAudio( fileName ) );
+        }
+    }
+
+    /**
+     * Attempts to add one instance of the fileName to the buffer.
+     *
+     * @param fileName
+     */
+    public static void load ( String fileName )
+    {
+        StandardAudioController.load( fileName, 1 );
     }
 
     /**
      * Plays the file at the supplied path.
-     * @param fileName 
+     *
+     * @param fileName
      */
     public static void play ( String fileName )
     {

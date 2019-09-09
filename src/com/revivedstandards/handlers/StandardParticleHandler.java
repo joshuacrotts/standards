@@ -25,15 +25,25 @@ and we use John Carmack's fast inverse square root function. Lastly, for
 StandardAudio, we use the javax.sound (Trail's Sound) Oracle API.
 ===========================================================================
  */
-
 package com.revivedstandards.handlers;
 
 import com.revivedstandards.model.StandardGameObject;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+/**
+ * StandardParticleHandler is, as the name suggests, a handler for
+ * StandardParticle objects. There is a max amount of particles that a SPH can
+ * expel (to avoid performance bottlenecks).
+ *
+ * Furthermore, to prevent having to dynamically shrink and resize the ArrayList
+ * when particles die and respawn, SPH uses a custom algorithm to detect which
+ * particles are dead/are oldest, and assigns new particles to these spots in
+ * the ArrayList, as opposed to simply adding a new index, or removing one.
+ */
 public class StandardParticleHandler extends StandardHandler
 {
+
     private final int MAX_PARTICLES;
     private int dead;
     private int oldest;
@@ -64,13 +74,10 @@ public class StandardParticleHandler extends StandardHandler
 
                 if ( particle.isAlive() )
                 {
-
                     particle.tick();
-
                 }
                 else
                 {
-
                     StandardGameObject swap = ( StandardGameObject ) this.getEntities().get( this.dead );
                     this.getEntities().set( i, swap );
                     this.getEntities().set( this.dead++, null );
@@ -97,14 +104,14 @@ public class StandardParticleHandler extends StandardHandler
      * Adds a particle to the Standard Particle Handler. This is a custom
      * algorithm for placing a particle in a spot that houses an already-dead
      * particle, to prevent having add and remove spots in the arraylist. It
-     * speeds up the process tremendously. 
-     * 
-     * If you need to iterate over the SPH, start from MAX-PARTICLES - 1, to 0. 
-     * The first entity is inserted at the back of the list, and it works it way 
-     * to the front (all particles are marked as dead upon instantiation of the 
+     * speeds up the process tremendously.
+     *
+     * If you need to iterate over the SPH, start from MAX-PARTICLES - 1, to 0.
+     * The first entity is inserted at the back of the list, and it works it way
+     * to the front (all particles are marked as dead upon instantiation of the
      * handler).
-     * 
-     * @param particle 
+     *
+     * @param particle
      */
     @Override
     public void addEntity ( StandardGameObject particle )
@@ -132,23 +139,23 @@ public class StandardParticleHandler extends StandardHandler
     {
         return this.MAX_PARTICLES - this.dead;
     }
-    
-    public int getOldestIndex()
+
+    public int getOldestIndex ()
     {
         return this.oldest;
     }
-    
-    public int getDeadIndex()
+
+    public int getDeadIndex ()
     {
         return this.dead;
     }
-    
-    public int getReplaceIndex()
+
+    public int getReplaceIndex ()
     {
         return this.replace;
     }
-    
-    public int getMaxParticles()
+
+    public int getMaxParticles ()
     {
         return this.MAX_PARTICLES;
     }
