@@ -21,7 +21,8 @@ to simplify the rendering and logic pipeline, but with a focus on the MVC
 paradigm.
 
 We connect to the Apache FastMath API for some of our trigonometric functions,
-and we use John Carmack's fast inverse square root function.
+and we use John Carmack's fast inverse square root function. Lastly, for 
+StandardAudio, we use the javax.sound (Trail's Sound) Oracle API.
 ===========================================================================
  */
 
@@ -29,12 +30,16 @@ package com.revivedstandards.controller;
 
 import java.awt.Color;
 
+/**
+ * Instantiates a controller that continuously changes colors, ranging from
+ * color1 to color2, with a translation time of alpha.
+ */
 public class StandardFadeController {
 
     private double time;
-    private double alpha;
     private boolean firstColor;
     
+    private final double alpha;
     private final Color color1;
     private final Color color2;
 

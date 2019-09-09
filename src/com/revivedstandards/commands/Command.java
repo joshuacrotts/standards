@@ -21,7 +21,8 @@ to simplify the rendering and logic pipeline, but with a focus on the MVC
 paradigm.
 
 We connect to the Apache FastMath API for some of our trigonometric functions,
-and we use John Carmack's fast inverse square root function.
+and we use John Carmack's fast inverse square root function. Lastly, for 
+StandardAudio, we use the javax.sound (Trail's Sound) Oracle API.
 ===========================================================================
  */
 
@@ -294,9 +295,6 @@ public abstract class Command//And so we meet again Larru >:}
         return false;
     }
 
-    /**
-     *
-     */
     protected void pressed ( float delta )
     {
     }
@@ -425,6 +423,7 @@ public abstract class Command//And so we meet again Larru >:}
 
     /**
      *
+     * @param delta
      */
     public static void update ( float delta )
     {

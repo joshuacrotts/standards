@@ -26,9 +26,9 @@ and we use John Carmack's fast inverse square root function.
  */
 package com.revivedstandards.test;
 
+import com.revivedstandards.controller.StandardAudioController;
 import com.revivedstandards.handlers.StandardCollisionHandler;
 import com.revivedstandards.handlers.StandardHandler;
-import com.revivedstandards.input.Mouse;
 import com.revivedstandards.main.StandardCamera;
 import com.revivedstandards.main.StandardDraw;
 import com.revivedstandards.main.StandardGame;
@@ -37,11 +37,11 @@ import com.revivedstandards.model.StandardLevel;
 
 public class FollowTheMouseGameTest extends StandardGame
 {
-
-    private final TriangleGameObject tri; //Player    
-    private final StandardCamera sc;  //Camera
+    private final TriangleGameObject tri;       //Player    
+    private final StandardCamera sc;            //Camera
     private final StandardCollisionHandler sch; //Collision handler
-    private final StandardLevel level; //Level
+    private final StandardLevel level;          //Level
+    private final StandardAudioController sac;  //Audio controller
 
     public FollowTheMouseGameTest ()
     {
@@ -49,12 +49,10 @@ public class FollowTheMouseGameTest extends StandardGame
 
         //  Instantiate the mouse and add it as a mouse listener to the game
         //  so we can track its location for the TriangleGameObject
-        Mouse mouse = new Mouse();
-        super.setMouse( mouse );
-        super.addMouseMotionListener( mouse );
+        this.sac = new StandardAudioController( 16 );
 
         //  Instantiates a new TGO (the player)
-        this.tri = new TriangleGameObject( this, 200, 200, StandardID.Player );
+        this.tri = new TriangleGameObject( this, this.sac, 200, 200, StandardID.Player );
 
         //  Create a new collision handler
         this.sch = new StandardCollisionHandler( null );
@@ -64,6 +62,7 @@ public class FollowTheMouseGameTest extends StandardGame
 
         //  Sets the player's camera to the global camera
         this.tri.setCamera( this.sc );
+        //  Sets the collision handler's camera to the global camera
         this.sch.setCamera( this.sc );
 
         //  Add the player to the collision handler
@@ -72,14 +71,20 @@ public class FollowTheMouseGameTest extends StandardGame
         //  Instantiates the level
         this.level = new SpaceLevel( tri );
 
+        //  Spawn bricks
         this.spawnBricks( 10 );
+        
+        for ( int i = 0; i < 10; i++ )
+        {
+            this.sac.load( "src/res/audio/sfx/soma_hurt0.wav" );
+        }
     }
 
     @Override
     public void tick ()
     {
-        StandardHandler.Handler( sch );
-        sc.tick();
+        StandardHandler.Handler( this.sch );
+        StandardHandler.Object( this.sc );
     }
 
     @Override

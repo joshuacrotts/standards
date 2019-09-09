@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.revivedstandards.test;
 
 import com.revivedstandards.model.StandardGameObject;
@@ -10,8 +5,7 @@ import com.revivedstandards.model.StandardLevel;
 import java.awt.Graphics2D;
 
 /**
- *
- * @author Joshua
+ * Demonstrates the concept of a very primitive level using the Standards API. 
  */
 public class SpaceLevel extends StandardLevel
 {

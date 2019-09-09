@@ -1,5 +1,6 @@
 package com.revivedstandards.test;
 
+import com.revivedstandards.controller.StandardAudioController;
 import com.revivedstandards.handlers.StandardHandler;
 import com.revivedstandards.handlers.StandardParticleHandler;
 import com.revivedstandards.main.StandardCamera;
@@ -12,6 +13,7 @@ import com.revivedstandards.model.StandardParticle;
 import com.revivedstandards.util.StdOps;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import org.apache.commons.math3.util.FastMath;
 
@@ -22,20 +24,29 @@ import org.apache.commons.math3.util.FastMath;
  */
 public class TriangleGameObject extends StandardGameObject
 {
-    private StandardGame sg;
+    private final StandardGame sg;
+    private final StandardParticleHandler sph;
+    private final StandardAudioController audioController;
     private StandardCamera sc;
-    private StandardParticleHandler sph;
 
+    private final PlaySoundCommand soundCommand;
+    
     private float angle;
     private static final float APPROACH_VEL = -3.0f;
 
-    public TriangleGameObject ( StandardGame sg, int x, int y, StandardID id )
+    public TriangleGameObject ( StandardGame sg, StandardAudioController audioController,
+                                int x, int y, StandardID id )
     {
         super( x, y, "src/res/img/spaceship.png", id );
         this.sg = sg;
+        this.audioController = audioController;
         this.sph = new StandardParticleHandler( 500 );
+        
         this.setVelX( 15.0 );
         this.setVelY( 15.0 );
+        
+        this.soundCommand = new PlaySoundCommand( this, this.audioController );
+        this.soundCommand.bind( this.sg.getKeyboard(), KeyEvent.VK_W );
     }
 
     @Override
@@ -80,7 +91,7 @@ public class TriangleGameObject extends StandardGameObject
         }
 
         //  Adds random particles to the end of the ship to simulate fuel burning
-        this.sph.addEntity( new StandardBoxParticle( this.getX() + this.getWidth() * 0.5,
+         this.sph.addEntity( new StandardBoxParticle( this.getX() + this.getWidth() * 0.5,
                 this.getY() + ( this.getHeight() * 0.5 ) + 20, 6, StdOps.rand( -3.5, 3.5 ),
                 StdOps.rand( 5.0, 10.0 ), new Color( 0xFF, StdOps.rand( 0, 0xFF ), 0 ),
                 20.0, this.sph, this.angle ) );

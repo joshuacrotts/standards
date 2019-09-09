@@ -21,7 +21,8 @@ to simplify the rendering and logic pipeline, but with a focus on the MVC
 paradigm.
 
 We connect to the Apache FastMath API for some of our trigonometric functions,
-and we use John Carmack's fast inverse square root function.
+and we use John Carmack's fast inverse square root function. Lastly, for 
+StandardAudio, we use the javax.sound (Trail's Sound) Oracle API.
 ===========================================================================
  */
 
@@ -47,7 +48,7 @@ import java.awt.image.BufferStrategy;
  * 
  * To stop the game, call this.StopGame();
  * 
- * To add listeners to your project, call this.addMouseListener/MouseMotionListener
+ * To add listeners to your project, call 'super.addMouseListener/MouseMotionListener
  * /addKeyListener/MouseWheelListener, etc. Any listeners that java.awt.Canvas
  * supports are supported by StandardGame. 
  * 
@@ -92,12 +93,12 @@ public abstract class StandardGame extends Canvas implements Runnable {
      */
     public StandardGame( int width, int height, String title )
     {
-        this.thread = null;
-        this.running = false;
+        this.thread     = null;
+        this.running    = false;
         this.currentFPS = 0;
         this.consoleFPS = true;
-        this.titleFPS = true;
-        this.window = new StandardWindowView( width, height, title, this );
+        this.titleFPS   = true;
+        this.window     = new StandardWindowView( width, height, title, this );
 
         this.createBufferStrategy( 3 );
 
