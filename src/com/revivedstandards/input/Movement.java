@@ -52,7 +52,7 @@ public class Movement extends Command {
     {
         if ( this.animator != null )
         {
-            this.animator.animate();
+            this.animator.getStandardAnimation().advanceFrame();
         }
         this.player.setVelX( this.player.getVelX() + this.deltaX );
         this.player.setVelY( this.player.getVelY() + this.deltaY );

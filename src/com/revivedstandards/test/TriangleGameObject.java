@@ -1,5 +1,6 @@
 package com.revivedstandards.test;
 
+import com.revivedstandards.handlers.StandardCollisionHandler;
 import com.revivedstandards.handlers.StandardHandler;
 import com.revivedstandards.handlers.StandardParticleHandler;
 import com.revivedstandards.main.StandardCamera;
@@ -23,24 +24,35 @@ import org.apache.commons.math3.util.FastMath;
  */
 public class TriangleGameObject extends StandardGameObject
 {
-
+    //
+    //  Misc. Reference variables 
+    //
     private final StandardGame sg;
     private final StandardParticleHandler sph;
+    private final StandardCollisionHandler globalHandler;
     private StandardCamera sc;
 
-    private final PlaySoundCommand soundCommand;
+    //
+    //  Command list
+    //
+    private final BulletCommand    bulletCommand;
 
+    //
+    //  Variables representing the angle and approach velocity
+    //
     private float angle;
     private static final float APPROACH_VEL = -3.0f;
 
-    public TriangleGameObject ( StandardGame sg, int x, int y, StandardID id )
+    public TriangleGameObject ( StandardGame sg, StandardCollisionHandler sch, int x, int y, StandardID id )
     {
         super( x, y, "src/res/img/spaceship.png", id );
         this.sg = sg;
         this.sph = new StandardParticleHandler( 500 );
-
-        this.soundCommand = new PlaySoundCommand( this );
-        this.soundCommand.bind( this.sg.getKeyboard(), KeyEvent.VK_W );
+        this.globalHandler = sch;
+        this.bulletCommand = new BulletCommand( this.sg, this, this.globalHandler );
+        this.bulletCommand.bind( this.sg.getKeyboard(), KeyEvent.VK_SPACE );
+        
+        this.globalHandler.addCollider( StandardID.Player );
     }
 
     @Override
@@ -86,8 +98,8 @@ public class TriangleGameObject extends StandardGameObject
 
         //  Adds random particles to the end of the ship to simulate fuel burning
         this.sph.addEntity( new StandardBoxParticle( this.getX() + this.getWidth() * 0.5,
-                this.getY() + ( this.getHeight() * 0.5 ) + 20, 6, StdOps.rand( -3.5, 3.5 ),
-                StdOps.rand( 5.0, 10.0 ), new Color( 0xFF, StdOps.rand( 0, 0xFF ), 0 ),
+                this.getY() + ( this.getHeight() * 0.5 ) + 20, 6, StdOps.randBounds( -7, -0.5, 0.5 , 7 ),
+                StdOps.rand( 7.5, 15.0 ), new Color( 0xFF, StdOps.rand( 0, 0xFF ), 0 ),
                 20.0, this.sph, this.angle ) );
 
         StandardHandler.Handler( this.sph );
@@ -134,4 +146,10 @@ public class TriangleGameObject extends StandardGameObject
     {
         this.sc = sc;
     }
+    
+    public float getAngle()
+    {
+        return this.angle;
+    }
+
 }

@@ -221,7 +221,7 @@ public abstract class StandardGameObject implements Renderable, Updatable
         }
     }
     
-    public StandardAnimatorController getAnimation()
+    public StandardAnimatorController getAnimationController()
     {
         return this.activeAnimation;
     }

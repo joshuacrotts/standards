@@ -118,10 +118,9 @@ public class StandardHandler implements Renderable, Updatable{
         for ( int i = 0; i < this.entities.size(); i++ )
         {
             StandardGameObject o = ( StandardGameObject ) this.entities.get( i );
-
+            
             if ( ( cam != null && ( o.getBounds().intersects( cam ) || this.stdCamera == null ) ) )
             {
-                
                o.render( g2 );
             }
         }

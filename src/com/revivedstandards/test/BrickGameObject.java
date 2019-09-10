@@ -1,5 +1,6 @@
 package com.revivedstandards.test;
 
+import com.revivedstandards.handlers.StandardCollisionHandler;
 import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.model.StandardID;
@@ -9,14 +10,18 @@ import java.awt.Graphics2D;
 public class BrickGameObject extends StandardGameObject
 {
     private final StandardGame sg;
+    private final StandardCollisionHandler globalHandler;
 
-    public BrickGameObject ( StandardGame sg, int x, int y )
+    public BrickGameObject ( StandardGame sg, StandardCollisionHandler sch, int x, int y )
     {
         super( x, y, StandardID.Obstacle );
         this.sg = sg;
+        this.globalHandler = sch;
         
         this.setWidth( 32 );
         this.setHeight( this.getWidth() );
+        
+        this.globalHandler.addCollider( StandardID.Obstacle );
     }
 
     @Override

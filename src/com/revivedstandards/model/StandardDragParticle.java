@@ -89,7 +89,6 @@ public class StandardDragParticle extends StandardParticle {
     {
         if ( this.isAlive() )
         {
-
             this.setWidth( ( int ) ( this.getVelX() * this.getVelX() * FastMath.signum( this.getVelX() ) ) + 1 );
             this.setHeight( ( int ) ( this.getVelY() * this.getVelY() * FastMath.signum( this.getVelY() ) ) + 1 );
             this.setX( this.getX() + this.getVelX() );
@@ -97,6 +96,7 @@ public class StandardDragParticle extends StandardParticle {
             this.setY(  this.getY() + this.getVelY());
             this.setAlive( ( System.nanoTime() - this.getDeath() <= 0L ) );
         }
+                
     }
 
     @Override

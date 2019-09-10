@@ -66,6 +66,32 @@ public abstract class StdOps {
         }
         return ThreadLocalRandom.current().nextInt( min, max + 1 );
     }
+    
+    /**
+     * Generates a number between [min, minUpperBound) U (maxLowerBound, max)
+     * 
+     * For instance to generate a number between -10 and 10, but no lower than -5 or 5,
+     * do randBounds( -10, -5, 5, 10). Precision doesn't really matter;
+     * @param min
+     * @param minUpperBound
+     * @param maxLowerBound
+     * @param max
+     * 
+     * In the end, min leq x leq minUpperBound OR maxLowerBound leq x leq max;
+     * @return 
+     */
+    public static double randBounds( double min, double minUpperBound, double maxLowerBound, double max )
+    {
+        double n;
+        
+        do
+        {
+            n = StdOps.rand( min, max );
+            
+        } while( ( n < min || n > minUpperBound ) && ( n < maxLowerBound || n > max ) );
+        
+        return n;
+    }
 
     /**
      * Returns a random double between min and max.

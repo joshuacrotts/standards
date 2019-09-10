@@ -48,12 +48,12 @@ public class FollowTheMouseGameTest extends StandardGame
         
         //  Initializes the audio control buffer
         StandardAudioController.init( 16 );
-        
-        //  Instantiates a new TGO (the player)
-        this.tri = new TriangleGameObject( this, 200, 200, StandardID.Player );
 
         //  Create a new collision handler
         this.sch = new StandardCollisionHandler( null );
+        
+        //  Instantiates a new TGO (the player)
+        this.tri = new TriangleGameObject( this, this.sch, 200, 200, StandardID.Player );
 
         //  Instantiate the camera
         this.sc = new StandardCamera( this.tri, 1, this.getGameWidth(), this.getGameHeight() );
@@ -74,7 +74,10 @@ public class FollowTheMouseGameTest extends StandardGame
         
         for ( int i = 0; i < 10; i++ )
         {
-            StandardAudioController.load( "src/res/audio/sfx/soma_hurt0.wav" );
+            StandardAudioController.load( "src/res/audio/sfx/laser_sfx.wav" );
+            StandardAudioController.load( "src/res/audio/sfx/damage_0.wav" );
+            StandardAudioController.load( "src/res/audio/sfx/damage_1.wav" );
+            StandardAudioController.load( "src/res/audio/sfx/damage_2.wav" );
         }
     }
 
@@ -97,7 +100,7 @@ public class FollowTheMouseGameTest extends StandardGame
     {
         for ( int y = 64 ; y <= n * 64 ; y += 32 )
         {
-            this.sch.addEntity( new BrickGameObject( this, 100, y ) );
+            this.sch.addEntity( new BrickGameObject( this, this.sch, 100, y ) );
         }
     }
 
