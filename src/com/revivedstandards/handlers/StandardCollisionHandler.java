@@ -45,8 +45,8 @@ import org.apache.commons.math3.util.FastMath;
  */
 public class StandardCollisionHandler extends StandardHandler
 {
-    private static final Set<StandardID> falseFlags = new HashSet<>();
-    private static final Set<StandardID> colliders = new HashSet<>();
+    private static final Set<StandardID> DEATH_FLAGS = new HashSet<>();
+    private static final Set<StandardID> COLLISION_FLAGS = new HashSet<>();
 
     public StandardCollisionHandler ( StandardCamera c )
     {
@@ -68,7 +68,7 @@ public class StandardCollisionHandler extends StandardHandler
 
             if ( obj1.getBounds().intersects( cam ) )
             {
-                if ( StandardCollisionHandler.colliders.contains( obj1.getId() ) )
+                if ( StandardCollisionHandler.COLLISION_FLAGS.contains( obj1.getId() ) )
                 {
                     for ( int j = 0 ; j < this.getEntities().size() ; j++ )
                     {
@@ -78,7 +78,7 @@ public class StandardCollisionHandler extends StandardHandler
 
                         if ( obj1 != obj2 && obj1.getId() != StandardID.Ignore && obj1.isAlive() && obj2.isAlive() )
                         {
-                            if ( StandardCollisionHandler.colliders.contains( obj2.getId() )
+                            if ( StandardCollisionHandler.COLLISION_FLAGS.contains( obj2.getId() )
                                     && ( obj2.getId() != StandardID.Camera ) )
                             {
                                 StandardCollisionHandler.intersection( obj1, obj2, norm );
@@ -99,7 +99,7 @@ public class StandardCollisionHandler extends StandardHandler
                                 obj2.collide( obj1 );
                                 obj1.collide( obj2 );
 
-                                if ( StandardCollisionHandler.falseFlags.
+                                if ( StandardCollisionHandler.DEATH_FLAGS.
                                         contains( obj1.getId() ) )
                                 {
                                     obj1.setAlive( false );
@@ -123,7 +123,7 @@ public class StandardCollisionHandler extends StandardHandler
      */
     public void flagAlive ( StandardID id )
     {
-        StandardCollisionHandler.falseFlags.add( id );
+        StandardCollisionHandler.DEATH_FLAGS.add( id );
     }
 
     /**
@@ -133,7 +133,7 @@ public class StandardCollisionHandler extends StandardHandler
      */
     public void addCollider ( StandardID id )
     {
-        StandardCollisionHandler.colliders.add( id );
+        StandardCollisionHandler.COLLISION_FLAGS.add( id );
     }
 
     public static void intersection ( StandardGameObject r1, StandardGameObject r2, double[] norm )

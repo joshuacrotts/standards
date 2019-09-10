@@ -25,15 +25,18 @@ and we use John Carmack's fast inverse square root function. Lastly, for
 StandardAudio, we use the javax.sound (Trail's Sound) Oracle API.
 ===========================================================================
  */
-
 package com.revivedstandards.view;
 
 import com.revivedstandards.main.StandardGame;
+import com.revivedstandards.util.StdOps;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -44,33 +47,33 @@ import javax.swing.JFrame;
  */
 public class StandardWindowView extends Canvas
 {
-    private JFrame frame;
-    private String title;
-    
+
+    private final String icon = "src/res/img/stds_icon.png";
+    private final JFrame frame;
+    private final String title;
+
     private int width;
     private int height;
-
 
     public StandardWindowView ( int width, int height, String title, StandardGame game, GraphicsConfiguration gc )
     {
         this.frame = new JFrame( title, gc );
 
-        this.width  = width;
+        this.width = width;
         this.height = height;
-        this.title  = title;
+        this.title = title;
 
         this.frame.setMinimumSize( new Dimension( width, height ) );
         this.frame.setMaximumSize( new Dimension( width, height ) );
         this.frame.setPreferredSize( new Dimension( width, height ) );
+        this.frame.getContentPane().setSize( new Dimension( width, height ) );
+        this.frame.setIconImage( StdOps.loadImage( this.icon ) );
 
         this.frame.setResizable( false );
         this.frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         this.frame.setLocationRelativeTo( null );
 
         this.frame.add( game );
-
-        this.frame.getContentPane().setSize( new Dimension( width, height ) );
-
         this.frame.pack();
 
         this.frame.setVisible( true );
@@ -89,20 +92,18 @@ public class StandardWindowView extends Canvas
         this.frame.setMinimumSize( new Dimension( width, height ) );
         this.frame.setMaximumSize( new Dimension( width, height ) );
         this.frame.setPreferredSize( new Dimension( width, height ) );
-
+        this.frame.getContentPane().setSize( new Dimension( width, height ) );
+        this.frame.setIconImage( StdOps.loadImage( this.icon ) );
+        this.frame.setResizable( false );
         this.frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         this.frame.setLocationRelativeTo( null );
 
         this.frame.add( ( Component ) game );
-
-        this.frame.getContentPane().setSize( new Dimension( width, height ) );
-
         this.frame.pack();
 
         this.frame.setVisible( true );
 
     }
-
 
     public void setBackgroundColor ( Color color )
     {
@@ -129,11 +130,6 @@ public class StandardWindowView extends Canvas
     public JFrame getFrame ()
     {
         return frame;
-    }
-
-    public void setFrame ( JFrame frame )
-    {
-        this.frame = frame;
     }
 
     public void setWidth ( short width )
