@@ -10,7 +10,6 @@ import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.DeathListener;
 import com.revivedstandards.model.StandardAnimation;
 import com.revivedstandards.model.StandardBoxParticle;
-import com.revivedstandards.model.StandardDragParticle;
 import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.model.StandardID;
 import com.revivedstandards.util.StdOps;
@@ -117,7 +116,7 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
                                                                       StdOps.randBounds( -5, -0.1, 0.1, 5 ),
                                                                       StdOps.randBounds( -5, -1, 1, 5 ),
                                                                       this.getRandomRGYB( StdOps.rand( 0, 3 ) ),
-                                                                      4f, this.explosionHandler, 0.0 ) ); 
+                                                                      4f, this.explosionHandler, 0.0, true) ); 
         }
         this.aliveFlag = false;
     }
