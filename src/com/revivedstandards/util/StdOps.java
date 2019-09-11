@@ -134,7 +134,7 @@ public abstract class StdOps {
      * @param min
      * @param max
      */
-    public static void clamp( int num, int min, int max )
+    public static int clamp( int num, int min, int max )
     {
         if ( num < min )
         {
@@ -143,6 +143,8 @@ public abstract class StdOps {
         {
             num = max;
         }
+        
+        return num;
     }
 
     public static Font initFont( String path, float size )

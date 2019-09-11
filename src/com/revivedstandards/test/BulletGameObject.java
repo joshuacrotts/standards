@@ -9,6 +9,7 @@ import com.revivedstandards.main.StandardDraw;
 import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.DeathListener;
 import com.revivedstandards.model.StandardAnimation;
+import com.revivedstandards.model.StandardBoxParticle;
 import com.revivedstandards.model.StandardDragParticle;
 import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.model.StandardID;
@@ -109,8 +110,14 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
     {
         for ( int i = 0 ; i < n ; i++ )
         {
-            this.explosionHandler.addEntity( new StandardDragParticle( this.getX(), this.getY(),
-                    4f, this.explosionHandler, this.getRandomRGYB( StdOps.rand( 0, 3 ) ), this.getAnimationController().getStandardAnimation().getRotation() ) );
+            /*this.explosionHandler.addEntity( new StandardDragParticle( this.getX(), this.getY(),
+                    4f, this.explosionHandler, this.getRandomRGYB( StdOps.rand( 0, 3 ) ), this.getAnimationController().getStandardAnimation().getRotation() ) );*/
+            
+            this.explosionHandler.addEntity( new StandardBoxParticle( this.getX(), this.getY(), StdOps.rand( 0.5, 2.5 ),
+                                                                      StdOps.randBounds( -5, -0.1, 0.1, 5 ),
+                                                                      StdOps.randBounds( -5, -1, 1, 5 ),
+                                                                      this.getRandomRGYB( StdOps.rand( 0, 3 ) ),
+                                                                      4f, this.explosionHandler, 0.0 ) ); 
         }
         this.aliveFlag = false;
     }

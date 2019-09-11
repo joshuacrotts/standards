@@ -30,12 +30,15 @@ StandardAudio, we use the javax.sound (Trail's Sound) Oracle API.
 package com.revivedstandards.model;
 
 import com.revivedstandards.handlers.StandardParticleHandler;
+import com.revivedstandards.util.StdOps;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 
 public class StandardBoxParticle extends StandardParticle
 {
+    private int alpha = 255;
+    
     public StandardBoxParticle ( double x, double y, double dimension, 
                                  double velX, double velY, Color c, double life, 
                                  StandardParticleHandler sph, double rotationAngle )
