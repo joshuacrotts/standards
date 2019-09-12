@@ -27,15 +27,24 @@
  */
 package com.revivedstandards.model;
 
+import com.revivedstandards.handlers.StandardHandler;
 import com.revivedstandards.handlers.StandardParticleHandler;
+import com.revivedstandards.main.StandardDraw;
 import com.revivedstandards.util.StdOps;
+import com.revivedstandards.view.ShapeType;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 /**
  * This class represents a standard box particle.
  */
-public class StandardBoxParticle extends StandardParticle {
+public class StandardBoxParticle extends StandardParticle
+{
+
+    //
+    //  Circle or rectangle
+    //
+    private final ShapeType shapeType;
 
     //
     //  Velocity factors that are continuously applied to the 
@@ -49,10 +58,10 @@ public class StandardBoxParticle extends StandardParticle {
     //
     private final boolean variableVelocity;
 
-    public StandardBoxParticle( double x, double y, double dimension,
+    public StandardBoxParticle ( double x, double y, double dimension,
             double velX, double velY, Color c, double life,
             StandardParticleHandler sph, double rotationAngle,
-            boolean variableVelocity )
+            ShapeType shape, boolean variableVelocity )
     {
         super( x, y, life, sph, c, rotationAngle );
 
@@ -61,10 +70,11 @@ public class StandardBoxParticle extends StandardParticle {
         super.setVelX( velX );
         super.setVelY( velY );
         this.variableVelocity = variableVelocity;
+        this.shapeType = shape;
     }
 
     @Override
-    public void tick()
+    public void tick ()
     {
         if ( this.variableVelocity )
         {
@@ -76,19 +86,28 @@ public class StandardBoxParticle extends StandardParticle {
     }
 
     @Override
-    public void render( Graphics2D g2 )
+    public void render ( Graphics2D g2 )
     {
         g2.setColor( this.getColor() );
 
-        g2.fillRect( ( int ) this.getX(), ( int ) this.getY(),
-                ( int ) this.getWidth(), ( int ) this.getHeight() );
+        if ( this.shapeType == ShapeType.RECTANGLE )
+        {
+            g2.fillRect( ( int ) this.getX(), ( int ) this.getY(),
+                         ( int ) this.getWidth(), ( int ) this.getHeight() );
+        }
+        else
+        {
+            g2.fillOval( ( int ) this.getX(), ( int ) this.getY(), 
+                         ( int ) this.getWidth(), ( int ) this.getHeight() );
+        }
     }
 
     /**
      * Sets a variable velocity for the X coordinate. This value will be applied
      * to the X velocity continuously over the life span of the particle.
      *
-     * The range of values should be approx. -0.5 leq min leq 0.0 leq max leq approx 0.5
+     * The range of values should be approx. -0.5 leq min leq 0.0 leq max leq
+     * approx 0.5
      *
      * Other values higher or lower than +-0.5 are POSSIBLE, but it gets
      * insane...
@@ -96,7 +115,7 @@ public class StandardBoxParticle extends StandardParticle {
      * @param min
      * @param max
      */
-    public void setVariableVelocityX( int min, int max )
+    public void setVariableVelocityX ( int min, int max )
     {
         if ( !this.variableVelocity )
         {
@@ -110,7 +129,8 @@ public class StandardBoxParticle extends StandardParticle {
      * Sets a variable velocity for the Y coordinate. This value will be applied
      * to the Y velocity continuously over the life span of the particle.
      *
-     * The range of values should be approx. -0.5 leq min leq 0.0 leq max leq approx 0.5
+     * The range of values should be approx. -0.5 leq min leq 0.0 leq max leq
+     * approx 0.5
      *
      * Other values higher or lower than +-0.5 are POSSIBLE, but it gets
      * insane...
@@ -118,7 +138,7 @@ public class StandardBoxParticle extends StandardParticle {
      * @param min
      * @param max
      */
-    public void setVariableVelocityY( int min, int max )
+    public void setVariableVelocityY ( int min, int max )
     {
         if ( !this.variableVelocity )
         {

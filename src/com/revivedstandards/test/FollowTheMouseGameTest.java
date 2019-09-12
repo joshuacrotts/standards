@@ -34,9 +34,11 @@ import com.revivedstandards.main.StandardDraw;
 import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.StandardID;
 import com.revivedstandards.model.StandardLevel;
+import java.awt.Color;
 
 public class FollowTheMouseGameTest extends StandardGame
 {
+
     private final TriangleGameObject tri;       //Player    
     private final StandardCamera sc;            //Camera
     private final StandardCollisionHandler sch; //Collision handler
@@ -45,13 +47,13 @@ public class FollowTheMouseGameTest extends StandardGame
     public FollowTheMouseGameTest ()
     {
         super( 1280, 720, "Game Test" );
-        
+
         //  Initializes the audio control buffer
         StandardAudioController.init( 16 );
 
         //  Create a new collision handler
         this.sch = new StandardCollisionHandler( null );
-        
+
         //  Instantiates a new TGO (the player)
         this.tri = new TriangleGameObject( this, this.sch, 200, 200, StandardID.Player );
 
@@ -70,9 +72,9 @@ public class FollowTheMouseGameTest extends StandardGame
         this.level = new SpaceLevel( tri );
 
         //  Spawn bricks
-        this.spawnBricks( 10 );
-        
-        for ( int i = 0; i < 10; i++ )
+        this.spawnBricks( 10, 64 );
+
+        for ( int i = 0 ; i < 10 ; i++ )
         {
             StandardAudioController.load( "src/res/audio/sfx/laser_sfx.wav" );
             StandardAudioController.load( "src/res/audio/sfx/damage_0.wav" );
@@ -96,11 +98,11 @@ public class FollowTheMouseGameTest extends StandardGame
         StandardDraw.Handler( this.sch );
     }
 
-    private void spawnBricks ( int n )
+    private void spawnBricks ( int n, int dim )
     {
-        for ( int y = 64 ; y <= n * 64 ; y += 32 )
+        for ( int y = 64 ; y <= n * 64 ; y += dim )
         {
-            this.sch.addEntity( new BrickGameObject( this, this.sch, 100, y ) );
+            this.sch.addEntity( new BrickGameObject( this, this.sch, 100, y, dim, Color.ORANGE ) );
         }
     }
 

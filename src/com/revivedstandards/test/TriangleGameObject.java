@@ -11,9 +11,11 @@ import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.model.StandardID;
 import com.revivedstandards.model.StandardParticle;
 import com.revivedstandards.util.StdOps;
+import com.revivedstandards.view.ShapeType;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import org.apache.commons.math3.util.FastMath;
 
@@ -50,7 +52,7 @@ public class TriangleGameObject extends StandardGameObject
         this.sph = new StandardParticleHandler( 500 );
         this.globalHandler = sch;
         this.bulletCommand = new BulletCommand( this.sg, this, this.globalHandler );
-        this.bulletCommand.bind( this.sg.getKeyboard(), KeyEvent.VK_SPACE );
+        this.bulletCommand.bind( this.sg.getMouse(), MouseEvent.BUTTON1 );
         
         this.globalHandler.addCollider( StandardID.Player );
     }
@@ -100,7 +102,7 @@ public class TriangleGameObject extends StandardGameObject
         this.sph.addEntity( new StandardBoxParticle( this.getX() + this.getWidth() * 0.5,
                 this.getY() + ( this.getHeight() * 0.5 ) + 20, 6, StdOps.randBounds( -7, -0.5, 0.5 , 7 ),
                 StdOps.rand( 7.5, 15.0 ), new Color( 0xFF, StdOps.rand( 0, 0xFF ), 0 ),
-                20.0, this.sph, this.angle, false ) );
+                20.0, this.sph, this.angle, ShapeType.CIRCLE, false ) );
 
         StandardHandler.Handler( this.sph );
     }

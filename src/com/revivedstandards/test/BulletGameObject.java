@@ -13,6 +13,7 @@ import com.revivedstandards.model.StandardBoxParticle;
 import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.model.StandardID;
 import com.revivedstandards.util.StdOps;
+import com.revivedstandards.view.ShapeType;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -116,7 +117,7 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
                                                                       StdOps.randBounds( -5, -0.1, 0.1, 5 ),
                                                                       StdOps.randBounds( -5, -1, 1, 5 ),
                                                                       this.getRandomRGYB( StdOps.rand( 0, 3 ) ),
-                                                                      4f, this.explosionHandler, 0.0, true) ); 
+                                                                      4f, this.explosionHandler, 0.0, ShapeType.CIRCLE, true) ); 
         }
         this.aliveFlag = false;
     }
@@ -125,8 +126,8 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
     public void uponDeath()
     {
         this.playRandomExplosionSFX( StdOps.rand( 0, 2 ) );
-        this.explosionHandler = new StandardParticleHandler( 50 );
-        this.summonDeathParticles( 50 );
+        this.explosionHandler = new StandardParticleHandler( 800 );
+        this.summonDeathParticles( 200 );
     }
     
     /**

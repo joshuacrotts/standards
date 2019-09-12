@@ -40,6 +40,8 @@ import java.awt.Graphics2D;
  * the sprite. The life denotes how long each trail should last (i.e. the lower
  * the life, the shorter the trail and vice versa). If the isImage flag is on, 
  * it will draw a copy of the supplied SGO's current sprite.
+ * 
+ * THIS CLASS IS VERY, VERY BROKEN.
  */
 public class StandardTrail extends StandardGameObject
 {
@@ -107,13 +109,9 @@ public class StandardTrail extends StandardGameObject
     @Override
     public void tick ()
     {
-        if ( this.alpha > this.life )
+        if ( this.alpha >= this.life )
         {
-            this.alpha -= this.life - 0.001F;
-        }
-        else if ( this.alpha > this.life )
-        {
-            this.alpha += this.life - 0.001F;
+            this.alpha = this.life;
         }
         else
         {
