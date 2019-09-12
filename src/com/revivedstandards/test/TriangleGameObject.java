@@ -53,7 +53,6 @@ public class TriangleGameObject extends StandardGameObject
         this.globalHandler = sch;
         this.bulletCommand = new BulletCommand( this.sg, this, this.globalHandler );
         this.bulletCommand.bind( this.sg.getMouse(), MouseEvent.BUTTON1 );
-        
         this.globalHandler.addCollider( StandardID.Player );
     }
 
@@ -101,7 +100,7 @@ public class TriangleGameObject extends StandardGameObject
         //  Adds random particles to the end of the ship to simulate fuel burning
         this.sph.addEntity( new StandardBoxParticle( this.getX() + this.getWidth() * 0.5,
                 this.getY() + ( this.getHeight() * 0.5 ) + 20, 6, StdOps.randBounds( -7, -0.5, 0.5 , 7 ),
-                StdOps.rand( 7.5, 15.0 ), new Color( 0xFF, StdOps.rand( 0, 0xFF ), 0 ),
+                StdOps.rand( 20, 30.0 ), new Color( 0xFF, StdOps.rand( 0, 0xFF ), 0 ),
                 20.0, this.sph, this.angle, ShapeType.CIRCLE, false ) );
 
         StandardHandler.Handler( this.sph );
@@ -144,9 +143,19 @@ public class TriangleGameObject extends StandardGameObject
         g2.setTransform( backup );
     }
 
+    /**
+     * Sets the camera for both the object and the particle handler
+     * @param sc 
+     */
     public void setCamera ( StandardCamera sc )
     {
         this.sc = sc;
+        this.sph.setCamera( this.sc );
+    }
+    
+    public StandardCamera getCamera()
+    {
+        return this.sc;
     }
     
     public float getAngle()

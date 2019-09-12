@@ -152,4 +152,14 @@ public class StandardWindowView extends Canvas
         this.frame.setTitle( title );
     }
 
+    /**
+     * USE AT YOUR OWN RISK, DOES NOT CURRENTLY WORK.
+     */
+    public void setFullScreen ()
+    {
+        this.frame.setExtendedState( JFrame.MAXIMIZED_BOTH );
+        this.frame.setUndecorated( true );
+        this.frame.setVisible( true );
+    }    
+
 }

@@ -25,7 +25,6 @@ and we use John Carmack's fast inverse square root function. Lastly, for
 StandardAudio, we use the javax.sound (Trail's Sound) Oracle API.
 ===========================================================================
  */
-
 package com.revivedstandards.main;
 
 import com.revivedstandards.commands.Command;
@@ -40,20 +39,22 @@ import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
 /**
- * This class is the barebones blueprint for a game in Java. It includes
- * the render-loop, frames/updates per second information, keyboard/mouse
- * input, the screen, and other information.
- * 
+ * This class is the barebones blueprint for a game in Java. It includes the
+ * render-loop, frames/updates per second information, keyboard/mouse input, the
+ * screen, and other information.
+ *
  * To start, extend StandardGame, and call this.StartGame();
- * 
+ *
  * To stop the game, call this.StopGame();
- * 
- * To add listeners to your project, call 'super.addMouseListener/MouseMotionListener
+ *
+ * To add listeners to your project, call
+ * 'super.addMouseListener/MouseMotionListener
  * /addKeyListener/MouseWheelListener, etc. Any listeners that java.awt.Canvas
- * supports are supported by StandardGame. 
- * 
+ * supports are supported by StandardGame.
+ *
  */
-public abstract class StandardGame extends Canvas implements Runnable {
+public abstract class StandardGame extends Canvas implements Runnable
+{
 
     //
     //  Default screen size
@@ -64,18 +65,18 @@ public abstract class StandardGame extends Canvas implements Runnable {
     //  Window for the game
     //
     private StandardWindowView window;
-    
+
     //
     //  Input devices
     //
     private Keyboard keyboard;
     private Mouse mouse;
-    
+
     //
     //  Game loop thread
     //
     private Thread thread;
-    
+
     //
     //  Debugging variables
     //
@@ -87,18 +88,19 @@ public abstract class StandardGame extends Canvas implements Runnable {
 
     /**
      * Creates a StandardGame object with size width x height, and title.
+     *
      * @param width
      * @param height
-     * @param title 
+     * @param title
      */
-    public StandardGame( int width, int height, String title )
+    public StandardGame ( int width, int height, String title )
     {
-        this.thread     = null;
-        this.running    = false;
+        this.thread = null;
+        this.running = false;
         this.currentFPS = 0;
         this.consoleFPS = true;
-        this.titleFPS   = true;
-        this.window     = new StandardWindowView( width, height, title, this );
+        this.titleFPS = true;
+        this.window = new StandardWindowView( width, height, title, this );
 
         this.createBufferStrategy( 3 );
 
@@ -115,11 +117,11 @@ public abstract class StandardGame extends Canvas implements Runnable {
     /**
      * Creates a StandardGame object with aspect ration 16:9 via the supplied
      * width.
-     * 
+     *
      * @param width
-     * @param title 
+     * @param title
      */
-    public StandardGame( int width, String title )
+    public StandardGame ( int width, String title )
     {
         this.window = null;
         this.thread = null;
@@ -140,14 +142,14 @@ public abstract class StandardGame extends Canvas implements Runnable {
         this.addMouseMotionListener( this.mouse );
         this.addKeyListener( this.keyboard );
     }
-    
+
     /**
-     * Generates a StandardGame object with a title, and forces the 
-     * screen size to whatever the user's monitor dimensions are.
-     * 
-     * @param title 
+     * Generates a StandardGame object with a title, and forces the screen size
+     * to whatever the user's monitor dimensions are.
+     *
+     * @param title
      */
-    public StandardGame( String title )
+    public StandardGame ( String title )
     {
         this.thread = null;
         this.running = false;
@@ -155,7 +157,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
         this.consoleFPS = true;
         this.titleFPS = true;
         this.window = new StandardWindowView( this.getScreenWidth(), this.getScreenHeight(), title, this );
-
+        this.window.setFullScreen();
         this.createBufferStrategy( 3 );
 
         this.bufferStrategy = this.getBufferStrategy();
@@ -166,12 +168,12 @@ public abstract class StandardGame extends Canvas implements Runnable {
         this.addMouseListener( this.mouse );
         this.addMouseMotionListener( this.mouse );
         this.addKeyListener( this.keyboard );
-    }    
+    }
 
     /**
      * Initializes the thread and starts the game loop.
      */
-    public void StartGame()
+    public void StartGame ()
     {
         if ( this.running )
         {
@@ -185,7 +187,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
     /**
      * Halts the thread, stops the game.
      */
-    public void StopGame()
+    public void StopGame ()
     {
         if ( !this.running )
         {
@@ -194,7 +196,8 @@ public abstract class StandardGame extends Canvas implements Runnable {
         try
         {
             this.thread.join();
-        } catch ( InterruptedException e )
+        }
+        catch ( InterruptedException e )
         {
             e.printStackTrace();
         }
@@ -206,7 +209,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
      * The game loop.
      */
     @Override
-    public void run()
+    public void run ()
     {
         requestFocus();
         long lastTime = System.nanoTime();
@@ -253,7 +256,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
             if ( System.currentTimeMillis() - timer > 1000L )
             {
                 timer += 1000L;
-                
+
                 if ( this.titleFPS )
                 {
                     this.window.setTitle( String.valueOf( this.window.getTitle() ) + " | " + updates + " ups, " + frames + " fps" );
@@ -262,7 +265,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
                 {
                     System.out.println( String.valueOf( this.window.getTitle() ) + " | " + updates + " ups, " + frames + " fps" );
                 }
-                
+
                 updates = 0;
                 frames = 0;
             }
@@ -272,78 +275,79 @@ public abstract class StandardGame extends Canvas implements Runnable {
     }
 
     /**
-     * Handles all physics/game state/object state updates. 
+     * Handles all physics/game state/object state updates.
      */
-    public abstract void tick();
+    public abstract void tick ();
 
     /**
-     * Renders graphics, text, sprites, etc. to the StandardWindowView. 
-     * To use this, call StandardDraw.Renderer to reference the G2D object.
+     * Renders graphics, text, sprites, etc. to the StandardWindowView. To use
+     * this, call StandardDraw.Renderer to reference the G2D object.
      */
-    public abstract void render();
+    public abstract void render ();
 
-    public StandardGame getGame()
+    public StandardGame getGame ()
     {
         return this;
     }
 
-    public int getFPS()
+    public int getFPS ()
     {
         return this.currentFPS;
     }
 
-    public int getGameWidth()
+    public int getGameWidth ()
     {
         return this.window.width();
     }
 
-    public int getGameHeight()
+    public int getGameHeight ()
     {
         return this.window.height();
     }
 
-    public void framesToConsole( boolean print )
+    public void framesToConsole ( boolean print )
     {
         this.consoleFPS = print;
     }
 
-    public void framesToTitle( boolean print )
+    public void framesToTitle ( boolean print )
     {
         this.titleFPS = print;
     }
 
-    public StandardWindowView getWindow()
+    public StandardWindowView getWindow ()
     {
         return this.window;
     }
 
-    public Keyboard getKeyboard()
+    public Keyboard getKeyboard ()
     {
         return this.keyboard;
     }
 
-    public void setKeyboard( Keyboard keyboard )
+    public void setKeyboard ( Keyboard keyboard )
     {
         this.keyboard = keyboard;
     }
 
-    public Mouse getMouse()
+    public Mouse getMouse ()
     {
         return this.mouse;
     }
 
-    public void setMouse( Mouse mouse )
+    public void setMouse ( Mouse mouse )
     {
         this.mouse = mouse;
     }
-    
-    public int getScreenWidth()
+
+    public int getScreenWidth ()
     {
         return ( int ) StandardGame.SCREEN_DIMENSION.getWidth();
     }
-    
-    public int getScreenHeight()
+
+    public int getScreenHeight ()
     {
         return ( int ) StandardGame.SCREEN_DIMENSION.getHeight();
-    }    
+    }
+
 }

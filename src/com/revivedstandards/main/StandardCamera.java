@@ -25,7 +25,6 @@ and we use John Carmack's fast inverse square root function. Lastly, for
 StandardAudio, we use the javax.sound (Trail's Sound) Oracle API.
 ===========================================================================
  */
-
 package com.revivedstandards.main;
 
 import com.revivedstandards.model.StandardGameObject;
@@ -33,29 +32,36 @@ import com.revivedstandards.model.StandardID;
 import java.awt.Graphics2D;
 
 /**
- * A camera will follow an object in the game. When using this, make absolute sure
- * you call the render() method BEFORE rendering the handlers.
- * 
+ * A camera will follow an object in the game. When using this, make absolute
+ * sure you call the render() method BEFORE rendering the handlers.
+ *
  * Moreover, make sure you tick the camera AFTER ticking the handlers. So,
- * 
- * 1. Render() camera first
- * 2. Tick() camera second.
- * 
+ *
+ * 1. Render() camera first 2. Tick() camera second.
+ *
  * These are very strict contingencies, unfortunately.
  */
 public class StandardCamera extends StandardGameObject
 {
+
     private StandardGameObject subject;
+    private StandardGame sg;
+
     private double snap = 1.0D;
     private int vpw = 0, vph = 0, maxX, maxY = this.maxX = Integer.MAX_VALUE, minX, minY = this.minX = Integer.MIN_VALUE;
+    private int objectMinXBounds, objectMaxXBounds;
+    private int objectMinYBounds, objectMaxYBounds;
 
-    public StandardCamera ( StandardGameObject sgo, double snap, int vpw, int vph )
+    public StandardCamera ( StandardGame sg, StandardGameObject sgo, double snap, int vpw, int vph )
     {
         super( sgo.getX(), sgo.getY(), StandardID.Camera );
         this.vpw = vpw >> 1;
         this.vph = vph >> 1;
         this.subject = sgo;
         this.snap = snap;
+        this.sg = sg;
+
+        this.setObjectBounds();
     }
 
     public void restrict ( int maxx, int maxy, int minx, int miny )
@@ -107,6 +113,22 @@ public class StandardCamera extends StandardGameObject
         }
         this.setVelY( ( location - this.getY() ) * this.snap );
         this.setY( this.getY() + this.getVelY() );
+
+        this.setObjectBounds();
+    }
+
+    private void setObjectBounds ()
+    {
+        this.objectMinXBounds = ( int ) ( this.subject.getX() - this.sg.getGameWidth() );
+        this.objectMaxXBounds = ( int ) ( this.subject.getX() + this.sg.getGameWidth() );
+        this.objectMinYBounds = ( int ) ( this.subject.getY() - this.sg.getGameHeight() );
+        this.objectMaxYBounds = ( int ) ( this.subject.getY() + this.sg.getGameHeight() );
+    }
+
+    public boolean SGOInBounds ( StandardGameObject other )
+    {
+        return ( ( other.getX() > this.objectMinXBounds ) && ( other.getX() < this.objectMaxXBounds ) )
+                && ( ( other.getY() > this.objectMinYBounds ) && ( other.getY() < this.objectMaxYBounds ) );
     }
 
     public StandardGameObject getSubject ()
@@ -188,6 +210,5 @@ public class StandardCamera extends StandardGameObject
     {
         this.minY = minY;
     }
-    
-    
+
 }

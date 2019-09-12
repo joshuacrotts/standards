@@ -45,6 +45,7 @@ import org.apache.commons.math3.util.FastMath;
  */
 public class StandardCollisionHandler extends StandardHandler
 {
+
     private static final Set<StandardID> DEATH_FLAGS = new HashSet<>();
     private static final Set<StandardID> COLLISION_FLAGS = new HashSet<>();
 
@@ -82,12 +83,19 @@ public class StandardCollisionHandler extends StandardHandler
                                     && ( obj2.getId() != StandardID.Camera ) )
                             {
                                 StandardCollisionHandler.intersection( obj1, obj2, norm );
-                                
-                                if ( norm[ 0 ] == 0.0D )
+
+                                // Fixes vertical collisions....???
+                                if ( norm[ 1 ] == -1.0D )
+                                {
+                                }
+                                else if ( norm[ 1 ] == 1.0D )
+                                {
+                                }
+                                else if ( norm[ 0 ] == 0.0D )
                                 {
                                     continue;
                                 }
-                                
+
                                 double res = obj2.getRestitution();
                                 double dot = obj1.getVelX() * norm[ 0 ] + obj1.getVelY() * norm[ 1 ];
                                 if ( dot > -1.2D )
@@ -107,6 +115,7 @@ public class StandardCollisionHandler extends StandardHandler
 
                             }
                         }
+                        continue;
                     }
                 }
             }

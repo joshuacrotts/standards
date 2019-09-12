@@ -93,7 +93,7 @@ public class StandardParticleHandler extends StandardHandler
         {
             StandardGameObject particle = ( StandardGameObject ) this.getEntities().get( i );
 
-            if ( particle != null && particle.isAlive() )
+            if ( particle != null && particle.isAlive() && this.getCamera().SGOInBounds( particle ) )
             {
                 particle.render( g2 );
             }

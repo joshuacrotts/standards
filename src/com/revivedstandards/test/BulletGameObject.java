@@ -5,6 +5,7 @@ import com.revivedstandards.controller.StandardAudioController;
 import com.revivedstandards.handlers.StandardCollisionHandler;
 import com.revivedstandards.handlers.StandardHandler;
 import com.revivedstandards.handlers.StandardParticleHandler;
+import com.revivedstandards.main.StandardCamera;
 import com.revivedstandards.main.StandardDraw;
 import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.DeathListener;
@@ -20,13 +21,17 @@ import java.awt.image.BufferedImage;
 
 public class BulletGameObject extends StandardGameObject implements DeathListener
 {
-
     private final StandardGame sg;
     private final StandardCollisionHandler sch;
+    private final StandardCamera sc;
     private StandardParticleHandler explosionHandler;
+    
+    //
+    //  One-time variable for tracking the "alive" to "death state" transition
+    //
     private boolean aliveFlag = true;
 
-    public BulletGameObject ( StandardGame sg, StandardCollisionHandler parentContainer, TriangleGameObject parent, int x, int y )
+    public BulletGameObject ( StandardGame sg, StandardCollisionHandler parentContainer, StandardCamera sc, TriangleGameObject parent, int x, int y )
     {
         super( x, y, StandardID.Projectile );
         this.sg = sg;
@@ -41,6 +46,8 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
         
         this.sch.flagAlive( this.getId() );
         this.sch.addCollider( this.getId() );
+        
+        this.sc = sc;
     }
 
     @Override
@@ -67,7 +74,6 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
             if ( this.explosionHandler.size() == 0 )
             {
                 this.setAlive( false );
-                this.sch.removeEntity( this );
             }
 
             StandardHandler.Handler( this.explosionHandler );
@@ -77,6 +83,8 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
     @Override
     public void render ( Graphics2D g2 )
     {
+        // If they're alive, draw the frame that the bullet animation is on.
+        // Otherwise, render the explosion handler
         if ( this.isAlive() )
         {
             this.getAnimationController().renderFrame( g2 );
@@ -88,6 +96,10 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
 
     }
 
+    /**
+     * Instantiates the buffered image array.
+     * @return 
+     */
     private BufferedImage[] initImages ()
     {
         BufferedImage[] images = new BufferedImage[ 3 ];
@@ -98,6 +110,15 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
         }
 
         return images;
+    }
+    
+    @Override
+    public void uponDeath()
+    {
+        this.playRandomExplosionSFX( StdOps.rand( 0, 2 ) );
+        this.explosionHandler = new StandardParticleHandler( 800 );
+        this.explosionHandler.setCamera( this.sc );
+        this.summonDeathParticles( 200 );
     }
 
     /**
@@ -120,14 +141,6 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
                                                                       4f, this.explosionHandler, 0.0, ShapeType.CIRCLE, true) ); 
         }
         this.aliveFlag = false;
-    }
-    
-    @Override
-    public void uponDeath()
-    {
-        this.playRandomExplosionSFX( StdOps.rand( 0, 2 ) );
-        this.explosionHandler = new StandardParticleHandler( 800 );
-        this.summonDeathParticles( 200 );
     }
     
     /**
@@ -156,5 +169,4 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
         
         return null;
     }
-
 }

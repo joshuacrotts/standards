@@ -31,13 +31,17 @@ package com.revivedstandards.model;
  * DeathListener allows the user to control what happens when a SGO "dies". 
  * A flag should be set in the subclass (trust me I tried to do this with 
  * event listeners to no avail) called aliveFlag or something to that effect.
- * 
- * So, the SGO has an isAlive() method, and with this flag, you can do 
- * 
- * if ( SGO.isAlive() ) { ... } else { if ( this.aliveFlag ) { uponDeath(); 
- *                                                             aliveFlag = false; }}
  */
 public interface DeathListener
 {
-    public void uponDeath();
+    /**
+     * Method to be overridden in the implementing class. Once
+     * the entities is in a "death" state, this method should be
+     * called but only once via some extra if (deathState) uponDeath() 
+     * deathState = false; clause or something similar. 
+     * 
+     * This is useful for if the enemy/object disperses particles,
+     * drops items, etc upon their "death".
+     */
+    public abstract void uponDeath();
 }

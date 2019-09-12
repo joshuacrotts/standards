@@ -46,7 +46,7 @@ public class FollowTheMouseGameTest extends StandardGame
 
     public FollowTheMouseGameTest ()
     {
-        super( 1280, 720, "Game Test" );
+        super( "Game Test" );
 
         //  Initializes the audio control buffer
         StandardAudioController.init( 16 );
@@ -58,7 +58,7 @@ public class FollowTheMouseGameTest extends StandardGame
         this.tri = new TriangleGameObject( this, this.sch, 200, 200, StandardID.Player );
 
         //  Instantiate the camera
-        this.sc = new StandardCamera( this.tri, 1, this.getGameWidth(), this.getGameHeight() );
+        this.sc = new StandardCamera( this, this.tri, 1, this.getGameWidth(), this.getGameHeight() );
 
         //  Sets the player's camera to the global camera
         this.tri.setCamera( this.sc );
@@ -100,10 +100,20 @@ public class FollowTheMouseGameTest extends StandardGame
 
     private void spawnBricks ( int n, int dim )
     {
+        //Horizontal top & bottom rows
+        for ( int x = 100; x <= n * 64; x += dim)
+        {
+            this.sch.addEntity( new BrickGameObject( this, this.sch, x, 64 , dim, Color.ORANGE ) );
+            this.sch.addEntity( new BrickGameObject( this, this.sch, x, n * 64 , dim, Color.ORANGE ) );            
+        }
+        
+        //Vertical left & right row
         for ( int y = 64 ; y <= n * 64 ; y += dim )
         {
             this.sch.addEntity( new BrickGameObject( this, this.sch, 100, y, dim, Color.ORANGE ) );
+            this.sch.addEntity( new BrickGameObject( this, this.sch, n * 64, y, dim, Color.ORANGE ) );
         }
+        
     }
 
     public static void main ( String[] args )
