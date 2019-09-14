@@ -51,7 +51,7 @@ public class StandardWindowView extends Canvas {
     private int width;
     private int height;
 
-    public StandardWindowView(int width, int height, String title, StandardGame game, GraphicsConfiguration gc) {
+    public StandardWindowView (int width, int height, String title, StandardGame game, GraphicsConfiguration gc) {
         this.FRAME = new JFrame(title, gc);
 
         this.width = width;
@@ -75,7 +75,7 @@ public class StandardWindowView extends Canvas {
 
     }
 
-    public StandardWindowView(int width, int height, String title, Object game) {
+    public StandardWindowView (int width, int height, String title, Object game) {
         this.FRAME = new JFrame();
 
         this.FRAME.setTitle(title);
@@ -102,14 +102,14 @@ public class StandardWindowView extends Canvas {
 
     }
 
-    public void setBackgroundColor(Color color) {
+    public void setBackgroundColor (Color color) {
         this.FRAME.setBackground(color);
     }
 
     /**
      * @return the provided width of the frame.
      */
-    public int width() {
+    public int width () {
         return width;
     }
 
@@ -117,27 +117,27 @@ public class StandardWindowView extends Canvas {
      *
      * @return the provided height of the frame.
      */
-    public int height() {
+    public int height () {
         return height;
     }
 
-    public JFrame getFrame() {
+    public JFrame getFrame () {
         return FRAME;
     }
 
-    public void setWidth(short width) {
+    public void setWidth (short width) {
         this.width = width;
     }
 
-    public void setHeight(short height) {
+    public void setHeight (short height) {
         this.height = height;
     }
 
-    public String getTitle() {
+    public String getTitle () {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle (String title) {
         this.FRAME.setTitle(title);
     }
 

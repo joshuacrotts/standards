@@ -34,24 +34,24 @@ public class Keyboard extends InputDevice implements KeyListener {
 
     public static final int MAX_CHARS = 0x10000;
 
-    public Keyboard() {
+    public Keyboard () {
         super("Default Keyboard", MAX_CHARS);
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed (KeyEvent e) {
         int code = e.getKeyCode();
         set(code, true);
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased (KeyEvent e) {
         int code = e.getKeyCode();
         set(code, false);
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped (KeyEvent e) {
         //add key to log
     }
 }

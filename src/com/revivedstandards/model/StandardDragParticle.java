@@ -35,7 +35,7 @@ import org.apache.commons.math3.util.FastMath;
 
 public class StandardDragParticle extends StandardParticle {
 
-    public StandardDragParticle(double x, double y, double life) {
+    public StandardDragParticle (double x, double y, double life) {
         super(x, y, life);
 
         double d = StdOps.rand(0.0D, 6.283185307179586D);
@@ -47,7 +47,7 @@ public class StandardDragParticle extends StandardParticle {
         this.setColor(new Color(255, 255 - (int) super.getDeath() & 0x7F, 255 - (int) this.getDeath() & 0xFF, 255));
     }
 
-    public StandardDragParticle(double x, double y, double life, StandardHandler handler) {
+    public StandardDragParticle (double x, double y, double life, StandardHandler handler) {
         super(x, y, life, handler);
 
         double d = StdOps.rand(0.0D, 6.283185307179586D);
@@ -59,7 +59,7 @@ public class StandardDragParticle extends StandardParticle {
         this.setColor(new Color(255, 255 - (int) this.getDeath() & 0x7F, 255 - (int) this.getDeath() & 0xFF, 255));
     }
 
-    public StandardDragParticle(double x, double y, double life, StandardHandler handler, Color c) {
+    public StandardDragParticle (double x, double y, double life, StandardHandler handler, Color c) {
         super(x, y, life, handler, c);
 
         double d = StdOps.rand(0.0D, 6.283185307179586D);
@@ -69,7 +69,7 @@ public class StandardDragParticle extends StandardParticle {
         this.setVelY(h * FastMath.cos(d));
     }
 
-    public StandardDragParticle(double x, double y, double life, StandardHandler handler, Color c, double rotationAngle) {
+    public StandardDragParticle (double x, double y, double life, StandardHandler handler, Color c, double rotationAngle) {
         super(x, y, life, handler, c, rotationAngle);
 
         double d = StdOps.rand(0.0D, 6.283185307179586D);
@@ -80,21 +80,21 @@ public class StandardDragParticle extends StandardParticle {
     }
 
     @Override
-    public void tick() {
+    public void tick () {
         if (this.isAlive()) {
-            this.setWidth((int) ( this.getVelX() * this.getVelX() * FastMath.signum(this.getVelX()) ) + 1);
-            this.setHeight((int) ( this.getVelY() * this.getVelY() * FastMath.signum(this.getVelY()) ) + 1);
+            this.setWidth((int) (this.getVelX() * this.getVelX() * FastMath.signum(this.getVelX())) + 1);
+            this.setHeight((int) (this.getVelY() * this.getVelY() * FastMath.signum(this.getVelY())) + 1);
             this.setX(this.getX() + this.getVelX());
             this.setVelY(this.getVelY() + 0.05D);
             this.setY(this.getY() + this.getVelY());
-            this.setAlive(( System.nanoTime() - this.getDeath() <= 0L ));
+            this.setAlive((System.nanoTime() - this.getDeath() <= 0L));
         }
 
     }
 
     @Override
-    public void render(Graphics2D g2) {
-        if ( ! this.isAlive()) {
+    public void render (Graphics2D g2) {
+        if (!this.isAlive()) {
             return;
         }
         int red = this.getColor().getRed();
@@ -103,6 +103,6 @@ public class StandardDragParticle extends StandardParticle {
         int alpha = this.getColor().getAlpha();
         g2.setColor(new Color(red, green, blue, alpha));
 
-        g2.drawLine((int) this.getX(), (int) this.getY(), (int) ( this.getX() + this.getWidth() ), (int) ( this.getY() + this.getHeight() ));
+        g2.drawLine((int) this.getX(), (int) this.getY(), (int) (this.getX() + this.getWidth()), (int) (this.getY() + this.getHeight()));
     }
 }

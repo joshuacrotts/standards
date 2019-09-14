@@ -32,53 +32,53 @@ import java.awt.image.BufferedImage;
 public class StandardAnimationView implements Renderable {
 
     private final BufferedImage[] animationFrames;
-    private StandardGameObject obj;
+    private final StandardGameObject obj;
     private BufferedImage currentFrame;
 
-    public StandardAnimationView(BufferedImage[] frames, StandardGameObject obj) {
+    public StandardAnimationView (BufferedImage[] frames, StandardGameObject obj) {
         this.animationFrames = frames;
         this.obj = obj;
     }
 
     @Override
-    public void render(Graphics2D g2) {
+    public void render (Graphics2D g2) {
         g2.drawImage(this.currentFrame, (int) obj.getX(), (int) obj.getY(), this.currentFrame.getWidth(), this.currentFrame.getHeight(), null);
     }
 
-    public void render(Graphics2D g2, double x, double y, double theta) {
+    public void render (Graphics2D g2, double x, double y, double theta) {
         AffineTransform backup = g2.getTransform();
         AffineTransform transform = new AffineTransform();
-        transform.rotate(theta, ( x + this.currentFrame.getWidth() / 2.0f ), ( y + this.currentFrame.getHeight() / 2.0f ));
+        transform.rotate(theta, (x + this.currentFrame.getWidth() / 2.0f), (y + this.currentFrame.getHeight() / 2.0f));
 
         g2.transform(transform);
         g2.drawImage(this.currentFrame, (int) x, (int) y, this.currentFrame.getWidth(), this.currentFrame.getHeight(), null);
         g2.setTransform(backup);
     }
 
-    public void render(Graphics2D g2, double x, double y, double width, double height, double theta) {
+    public void render (Graphics2D g2, double x, double y, double width, double height, double theta) {
         AffineTransform backup = g2.getTransform();
         AffineTransform transform = new AffineTransform();
-        transform.rotate(theta, ( x + this.currentFrame.getWidth() / 2.0f ), ( y + this.currentFrame.getHeight() / 2.0f ));
+        transform.rotate(theta, (x + this.currentFrame.getWidth() / 2.0f), (y + this.currentFrame.getHeight() / 2.0f));
 
         g2.transform(transform);
         g2.drawImage(this.currentFrame, (int) x, (int) y, (int) width, (int) height, null);
         g2.setTransform(backup);
     }
 
-    public void renderBounds(Graphics2D g2, Rectangle rect) {
+    public void renderBounds (Graphics2D g2, Rectangle rect) {
         g2.drawRect((int) rect.getX(), (int) rect.getY(),
                 (int) rect.getWidth(), (int) rect.getHeight());
     }
 
-    public BufferedImage[] getFrames() {
+    public BufferedImage[] getFrames () {
         return this.animationFrames;
     }
 
-    public BufferedImage getCurrentFrame() {
+    public BufferedImage getCurrentFrame () {
         return this.currentFrame;
     }
 
-    public void setCurrentFrameIndex(int frame) {
+    public void setCurrentFrameIndex (int frame) {
         this.currentFrame = this.animationFrames[frame];
     }
 

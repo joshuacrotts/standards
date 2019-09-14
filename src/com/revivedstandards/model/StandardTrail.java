@@ -50,7 +50,7 @@ public class StandardTrail extends StandardGameObject {
     //
     private double angle = 0.0;
     private float alpha = 1.0F;
-    private float life =  - 1f;
+    private float life = -1f;
     private boolean isImage = false;
 
     //
@@ -67,7 +67,7 @@ public class StandardTrail extends StandardGameObject {
     //
     private final StandardHandler stdHandler;
 
-    public StandardTrail(double x, double y, double width, double height,
+    public StandardTrail (double x, double y, double width, double height,
             double angle, float life, Color color,
             StandardGameObject o, StandardHandler stdHandler,
             ShapeType shape) {
@@ -83,7 +83,7 @@ public class StandardTrail extends StandardGameObject {
         this.checkNullShape();
     }
 
-    public StandardTrail(double x, double y, double angle, float life, StandardGameObject obj,
+    public StandardTrail (double x, double y, double angle, float life, StandardGameObject obj,
             StandardHandler stdHandler) {
         super(x, y, StandardID.Trail);
 
@@ -97,85 +97,88 @@ public class StandardTrail extends StandardGameObject {
         this.setHeight(this.obj.getCurrentSprite().getHeight());
     }
 
-    private AlphaComposite makeTransparent(float alpha) {
+    private AlphaComposite makeTransparent (float alpha) {
         int type = 3;
         return AlphaComposite.getInstance(type, alpha);
     }
 
     @Override
-    public void tick() {
+    public void tick () {
         if (this.alpha >= this.life) {
             this.alpha = this.life;
-        } else {
+        }
+        else {
             this.stdHandler.removeEntity(this);
         }
 
     }
 
     @Override
-    public void render(Graphics2D g2) {
+    public void render (Graphics2D g2) {
         g2.setComposite(makeTransparent(this.alpha));
-        if ( ! this.isImage && this.shape != null) {
+        if (!this.isImage && this.shape != null) {
             g2.setColor(this.color);
             if (this.shape == ShapeType.CIRCLE) {
                 g2.fillOval((int) getX(), (int) getY(), getWidth(), getHeight());
-            } else {
+            }
+            else {
                 g2.fillRect((int) getX(), (int) getY(), getWidth(), getHeight());
             }
-        } else {
+        }
+        else {
             g2.drawImage(this.obj.getCurrentSprite(), (int) getX(), (int) getY(), null);
         }
         g2.setComposite(makeTransparent(1.0F));
     }
 
-    private void checkNullShape() {
-        if (this.shape == null &&  ! this.isImage) {
+    private void checkNullShape () {
+        if (this.shape == null && !this.isImage) {
             System.err.println("Shape is NULL in a Trail. Defaulting to type RECTANGLE.");
             this.shape = ShapeType.RECTANGLE;
         }
     }
 
-    public float getAlpha() {
+    public float getAlpha () {
         return this.alpha;
     }
 
-    public void setAlpha(float alpha) {
+    public void setAlpha (float alpha) {
         this.alpha = alpha;
     }
 
-    public float getLife() {
+    public float getLife () {
         return this.life;
     }
 
-    public void setLife(float life) {
+    public void setLife (float life) {
         this.life = life;
     }
 
-    public Color getColor() {
+    public Color getColor () {
         return this.color;
     }
 
-    public void setColor(Color color) {
+    public void setColor (Color color) {
         this.color = color;
     }
 
-    public ShapeType getShape() {
+    public ShapeType getShape () {
         return this.shape;
     }
 
-    public void setShape(ShapeType shape) {
+    public void setShape (ShapeType shape) {
         this.shape = shape;
     }
 
-    public boolean isImage() {
+    public boolean isImage () {
         return this.isImage;
     }
 
-    public void setImage(boolean isImage) {
+    public void setImage (boolean isImage) {
         this.isImage = isImage;
     }
 
-    public double getAngle() {
+    public double getAngle () {
         return this.angle;
     }
 }

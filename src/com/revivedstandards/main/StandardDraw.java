@@ -46,7 +46,7 @@ public abstract class StandardDraw {
      * @param x
      * @param y
      */
-    public static void image(BufferedImage image, double x, double y) {
+    public static void image (BufferedImage image, double x, double y) {
         StandardDraw.Renderer.drawImage(image, (int) x, (int) y, null);
     }
 
@@ -57,7 +57,7 @@ public abstract class StandardDraw {
      * @param x
      * @param y
      */
-    public static void image(BufferedImage image, int x, int y) {
+    public static void image (BufferedImage image, int x, int y) {
         StandardDraw.Renderer.drawImage(image, x, y, null);
     }
 
@@ -72,13 +72,14 @@ public abstract class StandardDraw {
      * @param size
      * @param color
      */
-    public static void text(String text, int x, int y, String font, float size, Color color) {
+    public static void text (String text, int x, int y, String font, float size, Color color) {
         Font oldFont = StandardDraw.Renderer.getFont();
         Color oldColor = StandardDraw.Renderer.getColor();
 
-        if (font != null &&  ! font.equals("")) {
+        if (font != null && !font.equals("")) {
             StandardDraw.Renderer.setFont(StdOps.initFont(font, size));
-        } else {
+        }
+        else {
             StandardDraw.Renderer.setFont(new Font("Arial", 0, (int) size));
         }
         StandardDraw.Renderer.setColor(color);
@@ -99,13 +100,14 @@ public abstract class StandardDraw {
      * @param size
      * @param color
      */
-    public static void text(String text, int x, int y, Font font, float size, Color color) {
+    public static void text (String text, int x, int y, Font font, float size, Color color) {
         Font oldFont = StandardDraw.Renderer.getFont();
         Color oldColor = StandardDraw.Renderer.getColor();
 
         if (font != null) {
             StandardDraw.Renderer.setFont(font.deriveFont(size));
-        } else {
+        }
+        else {
             StandardDraw.Renderer.setFont(new Font("Arial", 0, (int) size));
         }
         StandardDraw.Renderer.setColor(color);
@@ -127,7 +129,7 @@ public abstract class StandardDraw {
      * @param fill - if true, will fill the rectangle with color. Otherwise,
      * will draw the outline only
      */
-    public static void rect(double x, double y, double width, double height, Color color, boolean fill) {
+    public static void rect (double x, double y, double width, double height, Color color, boolean fill) {
         if (color == null) {
             color = Color.black;
         }
@@ -137,7 +139,8 @@ public abstract class StandardDraw {
             StandardDraw.Renderer.setColor(color);
             StandardDraw.Renderer.fillRect((int) x, (int) y, (int) width, (int) height);
             StandardDraw.Renderer.setColor(old);
-        } else {
+        }
+        else {
             Color old = StandardDraw.Renderer.getColor();
             StandardDraw.Renderer.setColor(color);
             StandardDraw.Renderer.drawRect((int) x, (int) y, (int) width, (int) height);
@@ -156,7 +159,7 @@ public abstract class StandardDraw {
      * @param fill - if true, will fill the ellipse with color. Otherwise, will
      * draw the outline only
      */
-    public static void ellipse(double x, double y, double width, double height, Color color, boolean fill) {
+    public static void ellipse (double x, double y, double width, double height, Color color, boolean fill) {
         if (color == null) {
             color = Color.black;
         }
@@ -165,7 +168,8 @@ public abstract class StandardDraw {
             StandardDraw.Renderer.setColor(color);
             StandardDraw.Renderer.fillOval((int) x, (int) y, (int) width, (int) height);
             StandardDraw.Renderer.setColor(old);
-        } else {
+        }
+        else {
             Color old = StandardDraw.Renderer.getColor();
             StandardDraw.Renderer.setColor(color);
             StandardDraw.Renderer.drawOval((int) x, (int) y, (int) width, (int) height);
@@ -178,7 +182,7 @@ public abstract class StandardDraw {
      *
      * @param obj
      */
-    public static void Object(StandardGameObject obj) {
+    public static void Object (StandardGameObject obj) {
         obj.render(StandardDraw.Renderer);
     }
 
@@ -187,7 +191,7 @@ public abstract class StandardDraw {
      *
      * @param handler
      */
-    public static void Handler(StandardHandler handler) {
+    public static void Handler (StandardHandler handler) {
         handler.render(StandardDraw.Renderer);
     }
 
@@ -196,7 +200,7 @@ public abstract class StandardDraw {
      *
      * @return new randomized color (0-255, 0-255, 0-255).
      */
-    public static Color getRandomColor() {
+    public static Color getRandomColor () {
         return new Color(StdOps.rand(0, 255), StdOps.rand(0, 255), StdOps.rand(0, 255));
     }
 

@@ -90,40 +90,40 @@ public abstract class StandardGameObject implements Renderable, Updatable {
     //
     private Rectangle bounds;
 
-    public StandardGameObject() {
+    public StandardGameObject () {
     }
 
-    public StandardGameObject(double x, double y, StandardID id) {
+    public StandardGameObject (double x, double y, StandardID id) {
         this.x = x;
         this.y = y;
         this.id = id;
     }
 
-    public StandardGameObject(double x, double y, StandardID id, boolean interactable) {
+    public StandardGameObject (double x, double y, StandardID id, boolean interactable) {
         this.x = x;
         this.y = y;
         this.id = id;
         this.interactable = interactable;
     }
 
-    public StandardGameObject(double x, double y, int width, int height) {
+    public StandardGameObject (double x, double y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
     }
 
-    public StandardGameObject(double x, double y, int width, int height, StandardID id) {
+    public StandardGameObject (double x, double y, int width, int height, StandardID id) {
         this(x, y, width, height);
         this.id = id;
     }
 
-    public StandardGameObject(double x, int y, int width, int height, StandardID id, boolean interactable) {
+    public StandardGameObject (double x, int y, int width, int height, StandardID id, boolean interactable) {
         this(x, y, width, height, id);
         this.interactable = interactable;
     }
 
-    public StandardGameObject(double x, double y, String fileLocation) {
+    public StandardGameObject (double x, double y, String fileLocation) {
         this.x = x;
         this.y = y;
         this.fileLocation = fileLocation;
@@ -132,24 +132,24 @@ public abstract class StandardGameObject implements Renderable, Updatable {
         this.height = this.currentSprite.getHeight();
     }
 
-    public StandardGameObject(double x, double y, String fileLocation, boolean interactable) {
+    public StandardGameObject (double x, double y, String fileLocation, boolean interactable) {
         this(x, y, fileLocation);
 
         this.interactable = interactable;
     }
 
-    public StandardGameObject(double x, double y, String fileLocation, StandardID id) {
+    public StandardGameObject (double x, double y, String fileLocation, StandardID id) {
         this(x, y, fileLocation);
         this.id = id;
     }
 
-    public StandardGameObject(double x, double y, String fileLocation, StandardID id, boolean interactable) {
+    public StandardGameObject (double x, double y, String fileLocation, StandardID id, boolean interactable) {
         this(x, y, fileLocation, id);
 
         this.interactable = interactable;
     }
 
-    public StandardGameObject(double x, double y, BufferedImage image) {
+    public StandardGameObject (double x, double y, BufferedImage image) {
         this.x = x;
         this.y = y;
         this.currentSprite = image;
@@ -157,13 +157,13 @@ public abstract class StandardGameObject implements Renderable, Updatable {
         this.height = this.currentSprite.getHeight();
     }
 
-    public StandardGameObject(double x, double y, BufferedImage image, StandardID id) {
+    public StandardGameObject (double x, double y, BufferedImage image, StandardID id) {
         this(x, y, image);
 
         this.id = id;
     }
 
-    public StandardGameObject(double x, double y, BufferedImage image, StandardID id, boolean interactable) {
+    public StandardGameObject (double x, double y, BufferedImage image, StandardID id, boolean interactable) {
         this(x, y, image, id);
 
         this.interactable = interactable;
@@ -177,7 +177,7 @@ public abstract class StandardGameObject implements Renderable, Updatable {
      * This method must be implemented in any subclass of SGO.
      */
     @Override
-    public abstract void tick();
+    public abstract void tick ();
 
     /**
      * Draws the StandardGameObject to the screen however the user defines it
@@ -188,153 +188,147 @@ public abstract class StandardGameObject implements Renderable, Updatable {
      * @param paramGraphics2D
      */
     @Override
-    public abstract void render(Graphics2D paramGraphics2D);
+    public abstract void render (Graphics2D paramGraphics2D);
 
     /**
      * Short-hand way of typing x += velX; y += velY
      */
-    public void updatePosition() {
+    public void updatePosition () {
         this.setX(this.getX() + this.getVelX());
         this.setY(this.getY() + this.getVelY());
     }
 
-    public void collide(StandardGameObject sgo) {
-        if (sgo.getId() == StandardID.Projectile) {
-            sgo.collide(this);
-        }
-    }
-
-    public StandardAnimatorController getAnimationController() {
+    public StandardAnimatorController getAnimationController () {
         return this.activeAnimation;
     }
 
-    public void setAnimation(StandardAnimatorController animation) {
+    public void setAnimation (StandardAnimatorController animation) {
         this.activeAnimation = animation;
     }
 
-    public double getX() {
+    public double getX () {
         return this.x;
     }
 
-    public void setX(double x) {
+    public void setX (double x) {
         this.x = x;
     }
 
-    public double getY() {
+    public double getY () {
         return this.y;
     }
 
-    public void setY(double y) {
+    public void setY (double y) {
         this.y = y;
     }
 
-    public double getVelX() {
+    public double getVelX () {
         return this.velX;
     }
 
-    public void setVelX(double velX) {
+    public void setVelX (double velX) {
         this.velX = velX;
     }
 
-    public double getVelY() {
+    public double getVelY () {
         return this.velY;
     }
 
-    public void setVelY(double velY) {
+    public void setVelY (double velY) {
         this.velY = velY;
     }
 
-    public int getWidth() {
+    public int getWidth () {
         return this.width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth (int width) {
         this.width = width;
     }
 
-    public int getHeight() {
+    public int getHeight () {
         return this.height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight (int height) {
         this.height = height;
     }
 
-    public String getFileLocation() {
+    public String getFileLocation () {
         return this.fileLocation;
     }
 
-    public void setFileLocation(String fileLocation) {
+    public void setFileLocation (String fileLocation) {
         this.fileLocation = fileLocation;
     }
 
-    public BufferedImage getCurrentSprite() {
+    public BufferedImage getCurrentSprite () {
         return this.currentSprite;
     }
 
-    public void setCurrentSprite(BufferedImage currentSprite) {
+    public void setCurrentSprite (BufferedImage currentSprite) {
         this.currentSprite = currentSprite;
     }
 
-    public StandardID getId() {
+    public StandardID getId () {
         return this.id;
     }
 
-    public void setId(StandardID id) {
+    public void setId (StandardID id) {
         this.id = id;
     }
 
-    public void setInteractable(boolean interactable) {
+    public void setInteractable (boolean interactable) {
         this.interactable = interactable;
     }
 
-    public boolean isInteractable() {
+    public boolean isInteractable () {
         return this.interactable;
     }
 
-    public void setAlive(boolean alive) {
+    public void setAlive (boolean alive) {
         this.alive = alive;
     }
 
-    public long getDeath() {
+    public long getDeath () {
         return this.death;
     }
 
-    public void setDeath(long death) {
+    public void setDeath (long death) {
         this.death = death;
     }
 
-    public double getRestitution() {
+    public double getRestitution () {
         return 1.0D;
     }
 
-    public boolean isAlive() {
+    public boolean isAlive () {
         return this.alive;
     }
 
-    public Rectangle getBounds(int nX, int nY, int nW, int nH) {
+    public Rectangle getBounds (int nX, int nY, int nW, int nH) {
         this.bounds = new Rectangle((int) this.x + nX, (int) this.y + nY, this.width + nW, this.height + nH);
         return this.bounds;
     }
 
-    public Rectangle getBounds() {
+    public Rectangle getBounds () {
         this.bounds = new Rectangle((int) this.x, (int) this.y, this.width, this.height);
         return this.bounds;
     }
 
-    public Rectangle getLeftBounds() {
+    public Rectangle getLeftBounds () {
         return new Rectangle((int) this.x, (int) this.y, 1, this.height);
     }
 
-    public Rectangle getRightBounds() {
+    public Rectangle getRightBounds () {
         return new Rectangle((int) this.x + this.width, (int) this.y, 1, this.height);
     }
 
-    public Rectangle getTopBounds() {
+    public Rectangle getTopBounds () {
         return new Rectangle((int) this.x, (int) this.y, this.width, 3);
     }
 
-    public Rectangle getBottomBounds() {
+    public Rectangle getBottomBounds () {
         return new Rectangle((int) this.x, (int) this.y + this.height, this.width, 1);
     }
 }

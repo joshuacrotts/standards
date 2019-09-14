@@ -1,6 +1,7 @@
 package com.revivedstandards.test;
 
-import com.revivedstandards.model.StandardGameObject;
+import com.revivedstandards.test.objects.TriangleGameObject;
+import com.revivedstandards.controller.StandardAudioController;
 import com.revivedstandards.model.StandardLevel;
 import java.awt.Graphics2D;
 
@@ -9,43 +10,48 @@ import java.awt.Graphics2D;
  */
 public class SpaceLevel extends StandardLevel {
 
-    private StandardGameObject player;
+    //
+    //  Player of the game
+    //
+    private final TriangleGameObject player;
 
     private int trackX;
     private int trackXX;
 
-    public SpaceLevel(TriangleGameObject player) {
+    public SpaceLevel (TriangleGameObject player) {
         super(null, "src/res/img/bg/space_bg.jpg", null);
 
         this.player = player;
+        StandardAudioController.load("src/res/audio/music/level1.wav");
+        StandardAudioController.play("src/res/audio/music/level1.wav");
     }
 
     @Override
-    public void loadLevelData() {
+    public void loadLevelData () {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void tick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void tick () {
+        this.trackX -= (int) this.player.getVelX() * 0.25;
+        this.trackXX -= (int) this.player.getVelX() * 0.50;
     }
 
     @Override
-    public void render(Graphics2D g2) {
+    public void render (Graphics2D g2) {
         if (this.getBgImage() != null) {
-
-            this.trackX -= (int) this.player.getVelX() * 0.25;
-            this.trackXX -= (int) this.player.getVelX() * 0.50;
 
             if (this.trackX <= 0) {
                 g2.drawImage(this.getBgImage(), this.trackX, 0, null);
-            } else {
+            }
+            else {
                 g2.drawImage(this.getBgImage(), 0, 0, null);
             }
 
             if (this.trackXX <= 0) {
                 g2.drawImage(this.getBgImage(), this.trackXX, 0, null);
-            } else {
+            }
+            else {
                 g2.drawImage(this.getBgImage(), 0, 0, null);
             }
 

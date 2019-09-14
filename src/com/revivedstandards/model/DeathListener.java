@@ -43,5 +43,5 @@ public interface DeathListener {
      * This is useful for if the enemy/object disperses particles, drops items,
      * etc upon their "death".
      */
-    public abstract void uponDeath();
+    public abstract void uponDeath ();
 }

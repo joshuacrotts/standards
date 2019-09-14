@@ -49,7 +49,7 @@ public final class StandardAudio {
 
     public static int INFINITELY = Clip.LOOP_CONTINUOUSLY;
 
-    public StandardAudio(String fileLocation) {
+    public StandardAudio (String fileLocation) {
         this.load(fileLocation);
     }
 
@@ -62,7 +62,7 @@ public final class StandardAudio {
      *
      * @param fileName
      */
-    public void load(String fileName) {
+    public void load (String fileName) {
         this.fileName = fileName;
 
         try {
@@ -75,7 +75,8 @@ public final class StandardAudio {
 
             //  Open the lip and load samples from the AIS
             this.audioClip.open(audioStream);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+        }
+        catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
@@ -83,8 +84,8 @@ public final class StandardAudio {
     /**
      * Starts the clip.
      */
-    public void start() {
-        if ( ! this.audioClip.isRunning()) {
+    public void start () {
+        if (!this.audioClip.isRunning()) {
             this.audioClip.start();
         }
     }
@@ -92,7 +93,7 @@ public final class StandardAudio {
     /**
      * Stops the current audio track.
      */
-    public void stop() {
+    public void stop () {
         if (this.audioClip.isRunning()) {
             this.audioClip.stop();
         }
@@ -104,12 +105,14 @@ public final class StandardAudio {
      *
      * @param n
      */
-    public void loop(int n) {
+    public void loop (int n) {
         if (n < 0) {
             throw new IllegalArgumentException("Cannot loop for less than 0 times.");
-        } else if (n >= 0 && n < StandardAudio.INFINITELY) {
+        }
+        else if (n >= 0 && n < StandardAudio.INFINITELY) {
             this.audioClip.loop(n);
-        } else {
+        }
+        else {
             this.audioClip.loop(Clip.LOOP_CONTINUOUSLY);
         }
     }
@@ -117,7 +120,7 @@ public final class StandardAudio {
     /**
      * Sets the frame position of the current audio clip to 0.
      */
-    public void resetFramePosition() {
+    public void resetFramePosition () {
         this.audioClip.setFramePosition(0);
     }
 
@@ -126,15 +129,15 @@ public final class StandardAudio {
      *
      * @param x
      */
-    public void setFramePosition(int x) {
+    public void setFramePosition (int x) {
         this.audioClip.setFramePosition(x);
     }
 
-    public boolean isPlaying() {
+    public boolean isPlaying () {
         return this.audioClip.isRunning();
     }
 
-    public String getFileName() {
+    public String getFileName () {
         return this.fileName;
     }
 

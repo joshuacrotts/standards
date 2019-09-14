@@ -48,38 +48,39 @@ public class StandardParticleHandler extends StandardHandler {
     private int oldest;
     private int replace;
 
-    public StandardParticleHandler(int max) {
+    public StandardParticleHandler (int max) {
         this.MAX_PARTICLES = max;
         this.dead = this.MAX_PARTICLES;
         this.oldest = 0;
         this.replace = this.MAX_PARTICLES;
 
         this.setEntities(new ArrayList(this.MAX_PARTICLES + 1));
-        for (int i = 0; i < this.MAX_PARTICLES; i ++) {
+        for (int i = 0 ; i < this.MAX_PARTICLES ; i++) {
             this.getEntities().add(null);
         }
     }
 
     @Override
-    public void tick() {
+    public void tick () {
         if (this.dead < this.MAX_PARTICLES) {
-            for (int i = this.dead; i < this.MAX_PARTICLES; i ++) {
+            for (int i = this.dead ; i < this.MAX_PARTICLES ; i++) {
                 StandardGameObject particle = (StandardGameObject) this.getEntities().get(i);
 
                 if (particle.isAlive()) {
                     particle.tick();
-                } else {
+                }
+                else {
                     StandardGameObject swap = (StandardGameObject) this.getEntities().get(this.dead);
                     this.getEntities().set(i, swap);
-                    this.getEntities().set(this.dead ++, null);
+                    this.getEntities().set(this.dead++, null);
                 }
             }
         }
     }
 
     @Override
-    public void render(Graphics2D g2) {
-        for (int i = 0; i < this.getEntities().size(); i ++) {
+    public void render (Graphics2D g2) {
+        for (int i = 0 ; i < this.getEntities().size() ; i++) {
             StandardGameObject particle = (StandardGameObject) this.getEntities().get(i);
 
             if (particle != null && particle.isAlive() && this.getCamera().SGOInBounds(particle)) {
@@ -102,40 +103,40 @@ public class StandardParticleHandler extends StandardHandler {
      * @param particle
      */
     @Override
-    public void addEntity(StandardGameObject particle) {
+    public void addEntity (StandardGameObject particle) {
         if (this.dead == 0) {
             if (this.replace == 0) {
                 this.replace = this.MAX_PARTICLES;
             }
-            this.getEntities().set( -- this.replace, particle);
+            this.getEntities().set(--this.replace, particle);
             return;
         }
-        this.getEntities().set( -- this.dead, particle);
+        this.getEntities().set(--this.dead, particle);
     }
 
     @Override
-    public void removeEntity(StandardGameObject obj) {
+    public void removeEntity (StandardGameObject obj) {
         super.removeEntity(obj);
     }
 
     @Override
-    public int size() {
+    public int size () {
         return this.MAX_PARTICLES - this.dead;
     }
 
-    public int getOldestIndex() {
+    public int getOldestIndex () {
         return this.oldest;
     }
 
-    public int getDeadIndex() {
+    public int getDeadIndex () {
         return this.dead;
     }
 
-    public int getReplaceIndex() {
+    public int getReplaceIndex () {
         return this.replace;
     }
 
-    public int getMaxParticles() {
+    public int getMaxParticles () {
         return this.MAX_PARTICLES;
     }
 }

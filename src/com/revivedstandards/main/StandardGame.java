@@ -92,7 +92,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
      * @param height
      * @param title
      */
-    public StandardGame(int width, int height, String title) {
+    public StandardGame (int width, int height, String title) {
         this.thread = null;
         this.running = false;
         this.currentFPS = 0;
@@ -119,14 +119,14 @@ public abstract class StandardGame extends Canvas implements Runnable {
      * @param width
      * @param title
      */
-    public StandardGame(int width, String title) {
+    public StandardGame (int width, String title) {
         this.window = null;
         this.thread = null;
         this.running = false;
         this.currentFPS = 0;
         this.consoleFPS = true;
         this.titleFPS = true;
-        this.window = new StandardWindowView(width, ( width / 16 * 9 ), title, this);
+        this.window = new StandardWindowView(width, (width / 16 * 9), title, this);
 
         this.createBufferStrategy(3);
 
@@ -146,7 +146,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
      *
      * @param title
      */
-    public StandardGame(String title) {
+    public StandardGame (String title) {
         this.thread = null;
         this.running = false;
         this.currentFPS = 0;
@@ -168,7 +168,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
     /**
      * Initializes the thread and starts the game loop.
      */
-    public void StartGame() {
+    public void StartGame () {
         if (this.running) {
             return;
         }
@@ -180,13 +180,14 @@ public abstract class StandardGame extends Canvas implements Runnable {
     /**
      * Halts the thread, stops the game.
      */
-    public void StopGame() {
-        if ( ! this.running) {
+    public void StopGame () {
+        if (!this.running) {
             return;
         }
         try {
             this.thread.join();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
         this.running = false;
@@ -197,7 +198,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
      * The game loop.
      */
     @Override
-    public void run() {
+    public void run () {
         requestFocus();
         long lastTime = System.nanoTime();
         double ns = 1.6666666666666666E7D;
@@ -209,7 +210,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
             boolean renderable = false;
 
             long now = System.nanoTime();
-            delta += ( now - lastTime ) / ns;
+            delta += (now - lastTime) / ns;
             lastTime = now;
 
             while (delta >= 1.0D) {
@@ -217,14 +218,14 @@ public abstract class StandardGame extends Canvas implements Runnable {
 
                 this.tick();
 
-                delta --;
-                updates ++;
+                delta--;
+                updates++;
 
                 renderable = true;
             }
 
             if (renderable) {
-                frames ++;
+                frames++;
                 StandardGame.bufferStrategy = getBufferStrategy();
                 StandardDraw.Renderer = (Graphics2D) StandardGame.bufferStrategy.getDrawGraphics();
 
@@ -239,6 +240,8 @@ public abstract class StandardGame extends Canvas implements Runnable {
 
             if (System.currentTimeMillis() - timer > 1000L) {
                 timer += 1000L;
+
+                this.currentFPS = frames;
 
                 if (this.titleFPS) {
                     this.window.setTitle(String.valueOf(this.window.getTitle()) + " | " + updates + " ups, " + frames + " fps");
@@ -258,63 +261,63 @@ public abstract class StandardGame extends Canvas implements Runnable {
     /**
      * Handles all physics/game state/object state updates.
      */
-    public abstract void tick();
+    public abstract void tick ();
 
     /**
      * Renders graphics, text, sprites, etc. to the StandardWindowView. To use
      * this, call StandardDraw.Renderer to reference the G2D object.
      */
-    public abstract void render();
+    public abstract void render ();
 
-    public StandardGame getGame() {
+    public StandardGame getGame () {
         return this;
     }
 
-    public int getFPS() {
+    public int getFPS () {
         return this.currentFPS;
     }
 
-    public int getGameWidth() {
+    public int getGameWidth () {
         return this.window.width();
     }
 
-    public int getGameHeight() {
+    public int getGameHeight () {
         return this.window.height();
     }
 
-    public void framesToConsole(boolean print) {
+    public void framesToConsole (boolean print) {
         this.consoleFPS = print;
     }
 
-    public void framesToTitle(boolean print) {
+    public void framesToTitle (boolean print) {
         this.titleFPS = print;
     }
 
-    public StandardWindowView getWindow() {
+    public StandardWindowView getWindow () {
         return this.window;
     }
 
-    public Keyboard getKeyboard() {
+    public Keyboard getKeyboard () {
         return this.keyboard;
     }
 
-    public void setKeyboard(Keyboard keyboard) {
+    public void setKeyboard (Keyboard keyboard) {
         this.keyboard = keyboard;
     }
 
-    public Mouse getMouse() {
+    public Mouse getMouse () {
         return this.mouse;
     }
 
-    public void setMouse(Mouse mouse) {
+    public void setMouse (Mouse mouse) {
         this.mouse = mouse;
     }
 
-    public int getScreenWidth() {
+    public int getScreenWidth () {
         return (int) StandardGame.SCREEN_DIMENSION.getWidth();
     }
 
-    public int getScreenHeight() {
+    public int getScreenHeight () {
         return (int) StandardGame.SCREEN_DIMENSION.getHeight();
     }
 

@@ -38,7 +38,7 @@ public class Movement extends Command {
     public float deltaX;
     public float deltaY;
 
-    public Movement(StandardGameObject sgo, StandardAnimatorController sa, float deltax, float deltay) {
+    public Movement (StandardGameObject sgo, StandardAnimatorController sa, float deltax, float deltay) {
         this.player = sgo;
         this.animator = sa;
         this.deltaX = deltax;
@@ -46,7 +46,7 @@ public class Movement extends Command {
     }
 
     @Override
-    public void pressed(float delta) {
+    public void pressed (float delta) {
         if (this.animator != null) {
             this.animator.getStandardAnimation().advanceFrame();
         }

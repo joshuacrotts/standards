@@ -57,7 +57,7 @@ public abstract class StdOps {
      * @param max
      * @return random integer
      */
-    public static int rand(int min, int max) {
+    public static int rand (int min, int max) {
         if (min >= max) {
             throw new IllegalArgumentException(" Max must be smaller than min ");
         }
@@ -78,13 +78,14 @@ public abstract class StdOps {
      * In the end, min leq x leq minUpperBound OR maxLowerBound leq x leq max;
      * @return
      */
-    public static double randBounds(double min, double minUpperBound, double maxLowerBound, double max) {
+    public static double randBounds (double min, double minUpperBound, double maxLowerBound, double max) {
         double n;
 
         do {
             n = StdOps.rand(min, max);
 
-        } while (( n < min || n > minUpperBound ) && ( n < maxLowerBound || n > max ));
+        }
+        while ((n < min || n > minUpperBound) && (n < maxLowerBound || n > max));
 
         return n;
     }
@@ -96,7 +97,7 @@ public abstract class StdOps {
      * @param max
      * @return
      */
-    public static double rand(double min, double max) {
+    public static double rand (double min, double max) {
         if (min >= max) {
             throw new IllegalArgumentException(" Max must be smaller than min ");
         }
@@ -116,8 +117,8 @@ public abstract class StdOps {
      * @param height - height of rectangle
      * @return
      */
-    public static boolean mouseOver(int mx, int my, int x, int y, int width, int height) {
-        return ( ( mx > x ) && ( mx < x + width ) ) && ( ( my > y ) && ( my < y + height ) );
+    public static boolean mouseOver (int mx, int my, int x, int y, int width, int height) {
+        return ((mx > x) && (mx < x + width)) && ((my > y) && (my < y + height));
     }
 
     /**
@@ -127,35 +128,38 @@ public abstract class StdOps {
      * @param min
      * @param max
      */
-    public static int clamp(int num, int min, int max) {
+    public static int clamp (int num, int min, int max) {
         if (num < min) {
             num = min;
-        } else if (num > max) {
+        }
+        else if (num > max) {
             num = max;
         }
 
         return num;
     }
 
-    public static Font initFont(String path, float size) {
+    public static Font initFont (String path, float size) {
         Font f = null;
 
         try {
             f = Font.createFont(Font.TRUETYPE_FONT, new File(path)).deriveFont(size);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(path)));
-        } catch (FontFormatException | IOException e) {
+        }
+        catch (FontFormatException | IOException e) {
             e.printStackTrace();
             return null;
         }
         return f;
     }
 
-    public static BufferedImage loadImage(String path) {
+    public static BufferedImage loadImage (String path) {
         BufferedImage sprite = null;
         try {
             sprite = ImageIO.read(new File(path));
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
         return sprite;
@@ -164,25 +168,26 @@ public abstract class StdOps {
     /**
      * Algorithm: http://ilab.usc.edu/wiki/index.php/Fast_Square_Root
      */
-    public static float fastsqrt(float x) {
+    public static float fastsqrt (float x) {
         float xhalf = 0.5f * x;
         float u = x;
         int i = 0;
-        i = StdOps.SQRT_MAGIC - ( i >> 1 );  // gives initial guess y0
-        return x * u * ( 1.5f - xhalf * u * u );// Newton step, repeating increases accuracy
+        i = StdOps.SQRT_MAGIC - (i >> 1);  // gives initial guess y0
+        return x * u * (1.5f - xhalf * u * u);// Newton step, repeating increases accuracy
     }
 
     /**
      * Carmack's fast inverse sqrt function
+     *
      * @param x
      * @return
      */
-    public static double fastInvSqrt(double x) {
+    public static double fastInvSqrt (double x) {
         double xhalf = 0.5d * x;
         long i = Double.doubleToLongBits(x);
-        i = 0x5fe6ec85e7de30daL - ( i >> 1 );
+        i = 0x5fe6ec85e7de30daL - (i >> 1);
         x = Double.longBitsToDouble(i);
-        x *= ( 1.5d - xhalf * x * x );
+        x *= (1.5d - xhalf * x * x);
         return x;
     }
 }

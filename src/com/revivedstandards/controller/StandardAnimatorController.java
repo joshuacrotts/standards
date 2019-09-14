@@ -31,7 +31,7 @@ public class StandardAnimatorController {
 
     private final StandardAnimation animation;
 
-    public StandardAnimatorController(StandardAnimation animation) {
+    public StandardAnimatorController (StandardAnimation animation) {
         this.animation = animation;
         this.animation.getView().setCurrentFrameIndex(0);
     }
@@ -41,20 +41,20 @@ public class StandardAnimatorController {
      * is greater than the delay, we move to the next frame of animation.
      *
      */
-    public void tick() {
+    public void tick () {
         if (System.nanoTime() > this.animation.getLastTime()
-                + ( 1_000_000_000 / this.animation.getFrameSpeed() )) {
+                + (1_000_000_000 / this.animation.getFrameSpeed())) {
             this.animation.advanceFrame();
             this.animation.setLastTime(System.nanoTime());
         }
     }
 
-    public void renderFrame(Graphics2D g2) {
+    public void renderFrame (Graphics2D g2) {
         StandardGameObject sgo = this.animation.getStandardGameObject();
         this.animation.getView().render(g2, sgo.getX(), sgo.getY(), sgo.getWidth(), sgo.getHeight(), this.animation.getRotation());
     }
 
-    public StandardAnimation getStandardAnimation() {
+    public StandardAnimation getStandardAnimation () {
         return this.animation;
     }
 

@@ -51,7 +51,9 @@ public class StandardCamera extends StandardGameObject {
     private int objectMinXBounds, objectMaxXBounds;
     private int objectMinYBounds, objectMaxYBounds;
 
-    public StandardCamera(StandardGame sg, StandardGameObject sgo, double snap, int vpw, int vph) {
+    private final double VIEW_PORT_FACTOR = 1;
+
+    public StandardCamera (StandardGame sg, StandardGameObject sgo, double snap, int vpw, int vph) {
         super(sgo.getX(), sgo.getY(), StandardID.Camera);
         this.vpw = vpw >> 1;
         this.vph = vph >> 1;
@@ -62,7 +64,15 @@ public class StandardCamera extends StandardGameObject {
         this.setObjectBounds();
     }
 
-    public void restrict(int maxx, int maxy, int minx, int miny) {
+    /**
+     * Constrains the camera viewport to a rectangular box
+     *
+     * @param maxx
+     * @param maxy
+     * @param minx
+     * @param miny
+     */
+    public void restrict (int maxx, int maxy, int minx, int miny) {
         this.maxX = maxx;
         this.maxY = maxy;
         this.minX = minx;
@@ -70,113 +80,115 @@ public class StandardCamera extends StandardGameObject {
     }
 
     @Override
-    public void tick() {
+    public void tick () {
         this.tickX();
         this.tickY();
-    }
-
-    @Override
-    public void render(Graphics2D g2) {
-        g2.translate( - this.getX() + this.vpw,  - this.getY() + this.vph);
-    }
-
-    public void tickX() {
-        double location = this.subject.getX();
-        if (location > this.maxX) {
-            location = this.maxX;
-        } else if (location < this.minX) {
-            location = this.minX;
-        }
-        this.setVelX(( location - this.getX() ) * this.snap);
-        this.setX(this.getX() + this.getVelX());
-    }
-
-    public void tickY() {
-        double location = this.subject.getY();
-        if (location > this.maxY) {
-            location = this.maxY;
-        } else if (location < this.minY) {
-            location = this.minY;
-        }
-        this.setVelY(( location - this.getY() ) * this.snap);
-        this.setY(this.getY() + this.getVelY());
-
         this.setObjectBounds();
     }
 
-    private void setObjectBounds() {
-        this.objectMinXBounds = (int) ( this.subject.getX() - this.sg.getGameWidth() );
-        this.objectMaxXBounds = (int) ( this.subject.getX() + this.sg.getGameWidth() );
-        this.objectMinYBounds = (int) ( this.subject.getY() - this.sg.getGameHeight() );
-        this.objectMaxYBounds = (int) ( this.subject.getY() + this.sg.getGameHeight() );
+    @Override
+    public void render (Graphics2D g2) {
+        g2.translate(-this.getX() + this.vpw, -this.getY() + this.vph);
     }
 
-    public boolean SGOInBounds(StandardGameObject other) {
-        return ( ( other.getX() > this.objectMinXBounds ) && ( other.getX() < this.objectMaxXBounds ) )
-                && ( ( other.getY() > this.objectMinYBounds ) && ( other.getY() < this.objectMaxYBounds ) );
+    public void tickX () {
+        double location = this.subject.getX();
+        if (location > this.maxX) {
+            location = this.maxX;
+        }
+        else if (location < this.minX) {
+            location = this.minX;
+        }
+        this.setVelX((location - this.getX()) * this.snap);
+        this.setX(this.getX() + this.getVelX());
     }
 
-    public StandardGameObject getSubject() {
+    public void tickY () {
+        double location = this.subject.getY();
+        if (location > this.maxY) {
+            location = this.maxY;
+        }
+        else if (location < this.minY) {
+            location = this.minY;
+        }
+        this.setVelY((location - this.getY()) * this.snap);
+        this.setY(this.getY() + this.getVelY());
+
+    }
+
+    private void setObjectBounds () {
+        this.objectMinXBounds = (int) ((this.subject.getX() - this.sg.getGameWidth()) * VIEW_PORT_FACTOR);
+        this.objectMaxXBounds = (int) ((this.subject.getX() + this.sg.getGameWidth()) * VIEW_PORT_FACTOR);
+        this.objectMinYBounds = (int) ((this.subject.getY() - this.sg.getGameHeight()) * VIEW_PORT_FACTOR);
+        this.objectMaxYBounds = (int) ((this.subject.getY() + this.sg.getGameHeight()) * VIEW_PORT_FACTOR);
+    }
+
+    public boolean SGOInBounds (StandardGameObject other) {
+        return ((other.getX() > this.objectMinXBounds) && (other.getX() < this.objectMaxXBounds))
+                && ((other.getY() > this.objectMinYBounds) && (other.getY() < this.objectMaxYBounds));
+    }
+
+    public StandardGameObject getSubject () {
         return subject;
     }
 
-    public void setSubject(StandardGameObject subject) {
+    public void setSubject (StandardGameObject subject) {
         this.subject = subject;
     }
 
-    public double getSnap() {
+    public double getSnap () {
         return snap;
     }
 
-    public void setSnap(double snap) {
+    public void setSnap (double snap) {
         this.snap = snap;
     }
 
-    public int getVpw() {
+    public int getVpw () {
         return vpw;
     }
 
-    public void setVpw(int vpw) {
+    public void setVpw (int vpw) {
         this.vpw = vpw;
     }
 
-    public int getVph() {
+    public int getVph () {
         return vph;
     }
 
-    public void setVph(int vph) {
+    public void setVph (int vph) {
         this.vph = vph;
     }
 
-    public int getMaxX() {
+    public int getMaxX () {
         return maxX;
     }
 
-    public void setMaxX(int maxX) {
+    public void setMaxX (int maxX) {
         this.maxX = maxX;
     }
 
-    public int getMaxY() {
+    public int getMaxY () {
         return maxY;
     }
 
-    public void setMaxY(int maxY) {
+    public void setMaxY (int maxY) {
         this.maxY = maxY;
     }
 
-    public int getMinX() {
+    public int getMinX () {
         return minX;
     }
 
-    public void setMinX(int minX) {
+    public void setMinX (int minX) {
         this.minX = minX;
     }
 
-    public int getMinY() {
+    public int getMinY () {
         return minY;
     }
 
-    public void setMinY(int minY) {
+    public void setMinY (int minY) {
         this.minY = minY;
     }
 
