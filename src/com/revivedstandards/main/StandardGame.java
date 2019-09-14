@@ -1,29 +1,29 @@
 /*
-===========================================================================
-                   Standards Java Game Library Source Code
-           Copyright (C) 2017-2019 Joshua Crotts & Andrew Matzureff 
-Standards is free software: you can redistribute it and/or modify it under 
-the terms of the GNU General Public License as published by the Free Software 
-Foundation, either version 3 of the License, or (at your option) any later 
-version.
-
-Standards Source Code is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Standards Source Code. If not, see <http://www.gnu.org/licenses/>.
-
-Standards is the long-overdue update to the everlasting Standards 2.0 library
-Andrew Matzureff and I created two years ago. I am including it in this project
-to simplify the rendering and logic pipeline, but with a focus on the MVC
-paradigm.
-
-We connect to the Apache FastMath API for some of our trigonometric functions,
-and we use John Carmack's fast inverse square root function. Lastly, for 
-StandardAudio, we use the javax.sound (Trail's Sound) Oracle API.
-===========================================================================
+ * ===========================================================================
+ * Standards Java Game Library Source Code
+ * Copyright (C) 2017-2019 Joshua Crotts & Andrew Matzureff
+ * Standards is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * Standards Source Code is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Standards Source Code. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Standards is the long-overdue update to the everlasting Standards 2.0 library
+ * Andrew Matzureff and I created two years ago. I am including it in this project
+ * to simplify the rendering and logic pipeline, but with a focus on the MVC
+ * paradigm.
+ *
+ * We connect to the Apache FastMath API for some of our trigonometric functions,
+ * and we use John Carmack's fast inverse square root function. Lastly, for
+ * StandardAudio, we use the javax.sound (Trail's Sound) Oracle API.
+ * ===========================================================================
  */
 package com.revivedstandards.main;
 
@@ -53,8 +53,7 @@ import java.awt.image.BufferStrategy;
  * supports are supported by StandardGame.
  *
  */
-public abstract class StandardGame extends Canvas implements Runnable
-{
+public abstract class StandardGame extends Canvas implements Runnable {
 
     //
     //  Default screen size
@@ -93,25 +92,24 @@ public abstract class StandardGame extends Canvas implements Runnable
      * @param height
      * @param title
      */
-    public StandardGame ( int width, int height, String title )
-    {
+    public StandardGame(int width, int height, String title) {
         this.thread = null;
         this.running = false;
         this.currentFPS = 0;
         this.consoleFPS = true;
         this.titleFPS = true;
-        this.window = new StandardWindowView( width, height, title, this );
+        this.window = new StandardWindowView(width, height, title, this);
 
-        this.createBufferStrategy( 3 );
+        this.createBufferStrategy(3);
 
         this.bufferStrategy = this.getBufferStrategy();
 
         this.mouse = new Mouse();
         this.keyboard = new Keyboard();
 
-        this.addMouseListener( this.mouse );
-        this.addMouseMotionListener( this.mouse );
-        this.addKeyListener( this.keyboard );
+        this.addMouseListener(this.mouse);
+        this.addMouseMotionListener(this.mouse);
+        this.addKeyListener(this.keyboard);
     }
 
     /**
@@ -121,26 +119,25 @@ public abstract class StandardGame extends Canvas implements Runnable
      * @param width
      * @param title
      */
-    public StandardGame ( int width, String title )
-    {
+    public StandardGame(int width, String title) {
         this.window = null;
         this.thread = null;
         this.running = false;
         this.currentFPS = 0;
         this.consoleFPS = true;
         this.titleFPS = true;
-        this.window = new StandardWindowView( width, ( width / 16 * 9 ), title, this );
+        this.window = new StandardWindowView(width, ( width / 16 * 9 ), title, this);
 
-        this.createBufferStrategy( 3 );
+        this.createBufferStrategy(3);
 
         StandardGame.bufferStrategy = this.getBufferStrategy();
 
         this.mouse = new Mouse();
         this.keyboard = new Keyboard();
 
-        this.addMouseListener( this.mouse );
-        this.addMouseMotionListener( this.mouse );
-        this.addKeyListener( this.keyboard );
+        this.addMouseListener(this.mouse);
+        this.addMouseMotionListener(this.mouse);
+        this.addKeyListener(this.keyboard);
     }
 
     /**
@@ -149,37 +146,33 @@ public abstract class StandardGame extends Canvas implements Runnable
      *
      * @param title
      */
-    public StandardGame ( String title )
-    {
+    public StandardGame(String title) {
         this.thread = null;
         this.running = false;
         this.currentFPS = 0;
         this.consoleFPS = true;
         this.titleFPS = true;
-        this.window = new StandardWindowView( this.getScreenWidth(), this.getScreenHeight(), title, this );
-        this.window.setFullScreen();
-        this.createBufferStrategy( 3 );
+        this.window = new StandardWindowView(this.getScreenWidth(), this.getScreenHeight(), title, this);
+        this.createBufferStrategy(3);
 
         this.bufferStrategy = this.getBufferStrategy();
 
         this.mouse = new Mouse();
         this.keyboard = new Keyboard();
 
-        this.addMouseListener( this.mouse );
-        this.addMouseMotionListener( this.mouse );
-        this.addKeyListener( this.keyboard );
+        this.addMouseListener(this.mouse);
+        this.addMouseMotionListener(this.mouse);
+        this.addKeyListener(this.keyboard);
     }
 
     /**
      * Initializes the thread and starts the game loop.
      */
-    public void StartGame ()
-    {
-        if ( this.running )
-        {
+    public void StartGame() {
+        if (this.running) {
             return;
         }
-        this.thread = new Thread( this );
+        this.thread = new Thread(this);
         this.thread.start();
         this.running = true;
     }
@@ -187,30 +180,24 @@ public abstract class StandardGame extends Canvas implements Runnable
     /**
      * Halts the thread, stops the game.
      */
-    public void StopGame ()
-    {
-        if ( !this.running )
-        {
+    public void StopGame() {
+        if ( ! this.running) {
             return;
         }
-        try
-        {
+        try {
             this.thread.join();
-        }
-        catch ( InterruptedException e )
-        {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         this.running = false;
-        System.exit( 0 );
+        System.exit(0);
     }
 
     /**
      * The game loop.
      */
     @Override
-    public void run ()
-    {
+    public void run() {
         requestFocus();
         long lastTime = System.nanoTime();
         double ns = 1.6666666666666666E7D;
@@ -218,34 +205,31 @@ public abstract class StandardGame extends Canvas implements Runnable
         long timer = System.currentTimeMillis();
         int frames = 0;
         int updates = 0;
-        while ( this.running )
-        {
+        while (this.running) {
             boolean renderable = false;
 
             long now = System.nanoTime();
             delta += ( now - lastTime ) / ns;
             lastTime = now;
 
-            while ( delta >= 1.0D )
-            {
-                Command.update( ( float ) delta );
+            while (delta >= 1.0D) {
+                Command.update((float) delta);
 
-                tick();
+                this.tick();
 
-                delta--;
-                updates++;
+                delta --;
+                updates ++;
 
                 renderable = true;
             }
 
-            if ( renderable )
-            {
-                frames++;
+            if (renderable) {
+                frames ++;
                 StandardGame.bufferStrategy = getBufferStrategy();
-                StandardDraw.Renderer = ( Graphics2D ) StandardGame.bufferStrategy.getDrawGraphics();
+                StandardDraw.Renderer = (Graphics2D) StandardGame.bufferStrategy.getDrawGraphics();
 
-                StandardDraw.Renderer.setColor( Color.BLACK );
-                StandardDraw.Renderer.fillRect( 0, 0, this.getGameWidth(), this.getGameHeight() );
+                StandardDraw.Renderer.setColor(Color.BLACK);
+                StandardDraw.Renderer.fillRect(0, 0, this.getGameWidth(), this.getGameHeight());
 
                 this.render();
 
@@ -253,17 +237,14 @@ public abstract class StandardGame extends Canvas implements Runnable
                 StandardGame.bufferStrategy.show();
             }
 
-            if ( System.currentTimeMillis() - timer > 1000L )
-            {
+            if (System.currentTimeMillis() - timer > 1000L) {
                 timer += 1000L;
 
-                if ( this.titleFPS )
-                {
-                    this.window.setTitle( String.valueOf( this.window.getTitle() ) + " | " + updates + " ups, " + frames + " fps" );
+                if (this.titleFPS) {
+                    this.window.setTitle(String.valueOf(this.window.getTitle()) + " | " + updates + " ups, " + frames + " fps");
                 }
-                if ( this.consoleFPS )
-                {
-                    System.out.println( String.valueOf( this.window.getTitle() ) + " | " + updates + " ups, " + frames + " fps" );
+                if (this.consoleFPS) {
+                    System.out.println(String.valueOf(this.window.getTitle()) + " | " + updates + " ups, " + frames + " fps");
                 }
 
                 updates = 0;
@@ -277,77 +258,64 @@ public abstract class StandardGame extends Canvas implements Runnable
     /**
      * Handles all physics/game state/object state updates.
      */
-    public abstract void tick ();
+    public abstract void tick();
 
     /**
      * Renders graphics, text, sprites, etc. to the StandardWindowView. To use
      * this, call StandardDraw.Renderer to reference the G2D object.
      */
-    public abstract void render ();
+    public abstract void render();
 
-    public StandardGame getGame ()
-    {
+    public StandardGame getGame() {
         return this;
     }
 
-    public int getFPS ()
-    {
+    public int getFPS() {
         return this.currentFPS;
     }
 
-    public int getGameWidth ()
-    {
+    public int getGameWidth() {
         return this.window.width();
     }
 
-    public int getGameHeight ()
-    {
+    public int getGameHeight() {
         return this.window.height();
     }
 
-    public void framesToConsole ( boolean print )
-    {
+    public void framesToConsole(boolean print) {
         this.consoleFPS = print;
     }
 
-    public void framesToTitle ( boolean print )
-    {
+    public void framesToTitle(boolean print) {
         this.titleFPS = print;
     }
 
-    public StandardWindowView getWindow ()
-    {
+    public StandardWindowView getWindow() {
         return this.window;
     }
 
-    public Keyboard getKeyboard ()
-    {
+    public Keyboard getKeyboard() {
         return this.keyboard;
     }
 
-    public void setKeyboard ( Keyboard keyboard )
-    {
+    public void setKeyboard(Keyboard keyboard) {
         this.keyboard = keyboard;
     }
 
-    public Mouse getMouse ()
-    {
+    public Mouse getMouse() {
         return this.mouse;
     }
 
-    public void setMouse ( Mouse mouse )
-    {
+    public void setMouse(Mouse mouse) {
         this.mouse = mouse;
     }
 
-    public int getScreenWidth ()
-    {
-        return ( int ) StandardGame.SCREEN_DIMENSION.getWidth();
+    public int getScreenWidth() {
+        return (int) StandardGame.SCREEN_DIMENSION.getWidth();
     }
 
-    public int getScreenHeight ()
-    {
-        return ( int ) StandardGame.SCREEN_DIMENSION.getHeight();
+    public int getScreenHeight() {
+        return (int) StandardGame.SCREEN_DIMENSION.getHeight();
     }
 
 }
