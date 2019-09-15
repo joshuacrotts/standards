@@ -49,6 +49,9 @@ public final class StandardAnimation {
     //BI arrays.
     private int endFrameIndex = -1;
 
+    private int frameHaltPosition = -1; //Once the animation reaches the end frame,
+    //it will hit this frame and repeat from here.
+
     public StandardAnimation (StandardGameObject sgo, BufferedImage[] frames, double fps) {
         this.sgo = sgo;
         this.fps = fps;
@@ -57,6 +60,19 @@ public final class StandardAnimation {
         // By default, the end frame index is just the end of the frame index's array length.
         this.endFrameIndex = frames.length;
 
+        this.setCurrentFrameIndex(0);
+        this.setDefaultDimensions();
+    }
+
+    public StandardAnimation (StandardGameObject sgo, BufferedImage[] frames, double fps, int frameHaltPosition) {
+        this.sgo = sgo;
+        this.fps = fps;
+        this.view = new StandardAnimationView(frames, sgo);
+
+        // By default, the end frame index is just the end of the frame index's array length.
+        this.endFrameIndex = frames.length;
+
+        this.frameHaltPosition = frameHaltPosition;
         this.setCurrentFrameIndex(0);
         this.setDefaultDimensions();
     }
@@ -71,13 +87,22 @@ public final class StandardAnimation {
      */
     private void setCurrentFrameIndex (int frameIndex) {
         if (frameIndex < this.startFrameIndex || frameIndex >= this.endFrameIndex) {
-            this.frameIndex = this.startFrameIndex;
+            // If we hit the ending frame position and we have a frame halt position,
+            // we will reset the frame index pointer to this position.
+            if (frameIndex >= this.endFrameIndex && this.frameHaltPosition != -1) {
+                this.frameIndex = this.frameHaltPosition;
+            }
+            else {
+                this.frameIndex = this.startFrameIndex;
+            }
             this.view.setCurrentFrameIndex(this.frameIndex);
+
         }
         else {
             this.view.setCurrentFrameIndex(frameIndex);
             this.frameIndex = frameIndex;
         }
+
     }
 
     /**
@@ -151,8 +176,17 @@ public final class StandardAnimation {
         this.rotation = theta;
     }
 
+    public void setFrameHaltPosition (int frame) {
+        this.frameHaltPosition = frame;
+    }
+
     public double getRotation () {
         return this.rotation;
+    }
+
+    public void stopAnimation () {
+        this.frameIndex = this.startFrameIndex;
+        this.setCurrentFrameIndex(0);
     }
 
 }

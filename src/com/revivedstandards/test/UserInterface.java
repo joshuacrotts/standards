@@ -3,7 +3,6 @@ package com.revivedstandards.test;
 import com.revivedstandards.test.objects.TriangleGameObject;
 import com.revivedstandards.main.StandardCamera;
 import com.revivedstandards.main.StandardDraw;
-import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.test.commands.PauseCommand;
 import com.revivedstandards.util.StdOps;
 import com.revivedstandards.view.Renderable;

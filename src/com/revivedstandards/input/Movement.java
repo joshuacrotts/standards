@@ -53,4 +53,11 @@ public class Movement extends Command {
         this.player.setVelX(this.player.getVelX() + this.deltaX);
         this.player.setVelY(this.player.getVelY() + this.deltaY);
     }
+
+    @Override
+    public void released (float delta) {
+        this.player.getAnimationController().stopAnimation();
+        this.player.setVelX(0);
+        this.player.setVelY(0);
+    }
 }

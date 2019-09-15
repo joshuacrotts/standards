@@ -4,10 +4,6 @@ import com.revivedstandards.commands.Command;
 import com.revivedstandards.test.FollowTheMouseGameTest;
 import com.revivedstandards.test.GameState;
 
-/**
- *
- * @author Joshua
- */
 public class PauseCommand extends Command {
 
     private final FollowTheMouseGameTest sg;

@@ -7,7 +7,6 @@ import com.revivedstandards.handlers.StandardHandler;
 import com.revivedstandards.handlers.StandardParticleHandler;
 import com.revivedstandards.main.StandardCamera;
 import com.revivedstandards.main.StandardDraw;
-import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.DeathListener;
 import com.revivedstandards.model.StandardAnimation;
 import com.revivedstandards.model.StandardBoxParticle;

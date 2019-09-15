@@ -37,7 +37,6 @@ import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.StandardID;
 import com.revivedstandards.model.StandardLevel;
 import java.awt.Color;
-import java.awt.Font;
 
 public class FollowTheMouseGameTest extends StandardGame {
 

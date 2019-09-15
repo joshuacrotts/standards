@@ -53,6 +53,10 @@ public class StandardAnimatorController {
         StandardGameObject sgo = this.animation.getStandardGameObject();
         this.animation.getView().render(g2, sgo.getX(), sgo.getY(), sgo.getWidth(), sgo.getHeight(), this.animation.getRotation());
     }
+    
+    public void stopAnimation() {
+        this.animation.stopAnimation();
+    }
 
     public StandardAnimation getStandardAnimation () {
         return this.animation;
