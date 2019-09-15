@@ -313,7 +313,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
         this.mouse = mouse;
     }
 
-    public int getScreenWidth () {
+    private int getScreenWidth () {
         return (int) StandardGame.SCREEN_DIMENSION.getWidth();
     }
 

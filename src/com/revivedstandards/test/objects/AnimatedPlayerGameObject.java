@@ -1,7 +1,6 @@
 package com.revivedstandards.test.objects;
 
 import com.revivedstandards.controller.StandardAnimatorController;
-import com.revivedstandards.input.Movement;
 import com.revivedstandards.main.StandardCamera;
 import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.StandardAnimation;

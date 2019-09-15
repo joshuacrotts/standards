@@ -73,11 +73,15 @@ public class UserInterface implements Renderable, Updatable {
 
         // If the game is paused, we can draw a black square over the screen saying it's paused
         if (this.sg.getGameState() == GameState.PAUSED) {
-            Color c = StandardDraw.Renderer.getColor();
-            StandardDraw.Renderer.setColor(new Color(0, 0, 0, 0.5f));
-            StandardDraw.Renderer.fillRect((int) -2000, -2000, 50000, 10000);//Just draws a HUGE rectangle over hopefully affected areas
-            StandardDraw.text("PAUSED", (int) this.renderX, this.renderY, this.gameFont, 24f, Color.white);
-            StandardDraw.Renderer.setColor(c);
+            this.renderPauseScreen(g2);
         }
+    }
+
+    private void renderPauseScreen (Graphics2D g2) {
+        Color c = StandardDraw.Renderer.getColor();
+        StandardDraw.Renderer.setColor(new Color(0, 0, 0, 0.5f));
+        StandardDraw.Renderer.fillRect((int) -2000, -2000, 50000, 10000);//Just draws a HUGE rectangle over hopefully affected areas
+        StandardDraw.text("PAUSED", (int) this.renderX, this.renderY, this.gameFont, 24f, Color.white);
+        StandardDraw.Renderer.setColor(c);
     }
 }

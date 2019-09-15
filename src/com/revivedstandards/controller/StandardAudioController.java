@@ -88,14 +88,22 @@ public class StandardAudioController {
     }
 
     /**
-     * Plays the file at the supplied path.
+     * Plays the file at the supplied path. If the file is not in the hashmap,
+     * one copy is initialized into it.
      *
      * @param fileName
      */
     public static void play (String fileName) {
         int fileHash = fileName.hashCode();
 
-        LinkedList<StandardAudio> audioList = StandardAudioController.audioBuffer.get(fileHash);
+        LinkedList<StandardAudio> audioList;
+
+        if (StandardAudioController.audioBuffer.get(fileHash) == null) {
+            StandardAudioController.load(fileName);
+        }
+
+        audioList = StandardAudioController.audioBuffer.get(fileHash);
+
         for (int i = 0 ; i < audioList.size() ; i++) {
             StandardAudio audio = audioList.get(i);
             if (!audio.isPlaying()) {

@@ -2,7 +2,6 @@ package com.revivedstandards.test.commands;
 
 import com.revivedstandards.commands.Command;
 import com.revivedstandards.controller.StandardAnimatorController;
-import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.test.objects.AnimatedPlayerGameObject;
 
 public class MovementCommand extends Command {

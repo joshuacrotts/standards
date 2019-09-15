@@ -36,7 +36,6 @@ import com.revivedstandards.main.StandardDraw;
 import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.StandardID;
 import com.revivedstandards.model.StandardLevel;
-import java.awt.Color;
 
 public class FollowTheMouseGameTest extends StandardGame {
 
@@ -122,14 +121,14 @@ public class FollowTheMouseGameTest extends StandardGame {
     private void spawnBricks (int n, int dim) {
         //Horizontal top & bottom rows
         for (int x = 100 ; x <= n * 64 ; x += dim) {
-            this.sch.addEntity(new BrickGameObject(this, this.sch, x, 64, dim, Color.ORANGE));
-            this.sch.addEntity(new BrickGameObject(this, this.sch, x, n * 64, dim, Color.ORANGE));
+            this.sch.addEntity(new BrickGameObject(this, this.sch, x, 64, dim, StandardDraw.ORANGE));
+            this.sch.addEntity(new BrickGameObject(this, this.sch, x, n * 64, dim, StandardDraw.ORANGE));
         }
 
         //Vertical left & right row
         for (int y = 64 ; y <= n * 64 ; y += dim) {
-            this.sch.addEntity(new BrickGameObject(this, this.sch, 100, y, dim, Color.ORANGE));
-            this.sch.addEntity(new BrickGameObject(this, this.sch, n * 64, y, dim, Color.ORANGE));
+            this.sch.addEntity(new BrickGameObject(this, this.sch, 100, y, dim, StandardDraw.ORANGE));
+            this.sch.addEntity(new BrickGameObject(this, this.sch, n * 64, y, dim, StandardDraw.ORANGE));
         }
     }
 

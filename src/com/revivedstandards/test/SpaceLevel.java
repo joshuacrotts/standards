@@ -22,7 +22,6 @@ public class SpaceLevel extends StandardLevel {
         super(null, "src/res/img/bg/space_bg.jpg", null);
 
         this.player = player;
-        StandardAudioController.load("src/res/audio/music/level1.wav");
         StandardAudioController.play("src/res/audio/music/level1.wav");
     }
 

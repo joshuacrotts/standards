@@ -2,12 +2,12 @@ package com.revivedstandards.test;
 
 import com.revivedstandards.handlers.StandardParticleHandler;
 import com.revivedstandards.main.StandardCamera;
+import com.revivedstandards.main.StandardDraw;
 import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.StandardDragParticle;
 import com.revivedstandards.util.StdOps;
 import com.revivedstandards.view.Renderable;
 import com.revivedstandards.view.Updatable;
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 /**
@@ -30,11 +30,6 @@ public class RainController implements Renderable, Updatable {
     }
 
     @Override
-    public void render (Graphics2D g2) {
-        this.sph.render(g2);
-    }
-
-    @Override
     public void tick () {
 
         // Generates the min/max points for the rain to spawn
@@ -46,8 +41,14 @@ public class RainController implements Renderable, Updatable {
         int xPos = StdOps.rand(xGenMin, xGenMax);
         int yPos = StdOps.rand(yGenMin, yGenMax);
 
-        this.sph.addEntity(new StandardDragParticle(xPos, yPos, 10f, sph, Color.BLUE));
+        this.sph.addEntity(new StandardDragParticle(xPos, yPos, 10f, sph, StandardDraw.BLUE));
 
         this.sph.tick();
     }
+
+    @Override
+    public void render (Graphics2D g2) {
+        this.sph.render(g2);
+    }
+
 }
