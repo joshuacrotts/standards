@@ -31,14 +31,16 @@ import com.revivedstandards.commands.Command;
 import com.revivedstandards.controller.StandardAnimatorController;
 import com.revivedstandards.model.StandardGameObject;
 
-public class Movement extends Command {
+public class Movement extends Command
+{
 
     public StandardGameObject player;
     public StandardAnimatorController animator;
     public float deltaX;
     public float deltaY;
 
-    public Movement (StandardGameObject sgo, StandardAnimatorController sa, float deltax, float deltay) {
+    public Movement ( StandardGameObject sgo, StandardAnimatorController sa, float deltax, float deltay )
+    {
         this.player = sgo;
         this.animator = sa;
         this.deltaX = deltax;
@@ -46,18 +48,21 @@ public class Movement extends Command {
     }
 
     @Override
-    public void pressed (float delta) {
-        if (this.animator != null) {
+    public void pressed ( float delta )
+    {
+        if ( this.animator != null )
+        {
             this.animator.getStandardAnimation().advanceFrame();
         }
-        this.player.setVelX(this.player.getVelX() + this.deltaX);
-        this.player.setVelY(this.player.getVelY() + this.deltaY);
+        this.player.setVelX( this.player.getVelX() + this.deltaX );
+        this.player.setVelY( this.player.getVelY() + this.deltaY );
     }
 
     @Override
-    public void released (float delta) {
+    public void released ( float delta )
+    {
         this.player.getAnimationController().stopAnimation();
-        this.player.setVelX(0);
-        this.player.setVelY(0);
+        this.player.setVelX( 0 );
+        this.player.setVelY( 0 );
     }
 }

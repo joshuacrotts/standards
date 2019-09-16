@@ -32,7 +32,8 @@ package com.revivedstandards.model;
  * flag should be set in the subclass (trust me I tried to do this with event
  * listeners to no avail) called aliveFlag or something to that effect.
  */
-public interface DeathListener {
+public interface DeathListener
+{
 
     /**
      * Method to be overridden in the implementing class. Once the entities is

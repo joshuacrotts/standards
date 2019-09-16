@@ -33,7 +33,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-public class Mouse extends InputDevice implements MouseListener, MouseMotionListener, MouseWheelListener {
+public class Mouse extends InputDevice implements MouseListener, MouseMotionListener, MouseWheelListener
+{
 
     private static final int MAX_CHARS = 0x10;
     private int x = -1;
@@ -41,11 +42,12 @@ public class Mouse extends InputDevice implements MouseListener, MouseMotionList
     private int ax = -1;
     private int ay = -1;
 
-    public Mouse () {
-        super("Default Mouse", MAX_CHARS);
+    public Mouse ()
+    {
+        super( "Default Mouse", MAX_CHARS );
     }
 
-    private void update (MouseEvent e)//would probably be inherited from Analogue Interface
+    private void update ( MouseEvent e )//would probably be inherited from Analogue Interface
     {
         x = e.getX();
         y = e.getY();
@@ -54,46 +56,54 @@ public class Mouse extends InputDevice implements MouseListener, MouseMotionList
     }
 
     @Override
-    public void mousePressed (MouseEvent e) {
-        update(e);
+    public void mousePressed ( MouseEvent e )
+    {
+        update( e );
         int code = e.getButton();
-        set(code, true);
+        set( code, true );
     }
 
     @Override
-    public void mouseReleased (MouseEvent e) {
-        update(e);
+    public void mouseReleased ( MouseEvent e )
+    {
+        update( e );
         int code = e.getButton();
-        set(code, false);
+        set( code, false );
     }
 
     @Override
-    public void mouseClicked (MouseEvent e) {
-        update(e);
+    public void mouseClicked ( MouseEvent e )
+    {
+        update( e );
     }
 
     @Override
-    public void mouseEntered (MouseEvent e) {
-        update(e);
+    public void mouseEntered ( MouseEvent e )
+    {
+        update( e );
     }
 
     @Override
-    public void mouseExited (MouseEvent e) {
-        update(e);
+    public void mouseExited ( MouseEvent e )
+    {
+        update( e );
     }
 
     @Override
-    public void mouseMoved (MouseEvent e) {
-        update(e);
+    public void mouseMoved ( MouseEvent e )
+    {
+        update( e );
     }
 
     @Override
-    public void mouseDragged (MouseEvent e) {
-        update(e);
+    public void mouseDragged ( MouseEvent e )
+    {
+        update( e );
     }
 
     @Override
-    public void mouseWheelMoved (MouseWheelEvent e) {
+    public void mouseWheelMoved ( MouseWheelEvent e )
+    {
         // TODO Auto-generated method stub
     }
 
@@ -102,7 +112,8 @@ public class Mouse extends InputDevice implements MouseListener, MouseMotionList
      *
      * @return
      */
-    public int getMouseX () {
+    public int getMouseX ()
+    {
         return this.x;
     }
 
@@ -111,7 +122,8 @@ public class Mouse extends InputDevice implements MouseListener, MouseMotionList
      *
      * @return
      */
-    public int getMouseY () {
+    public int getMouseY ()
+    {
         return this.y;
     }
 
@@ -120,7 +132,8 @@ public class Mouse extends InputDevice implements MouseListener, MouseMotionList
      *
      * @return
      */
-    public int getAbsoluteMouseX () {
+    public int getAbsoluteMouseX ()
+    {
         return this.ax;
     }
 
@@ -129,7 +142,8 @@ public class Mouse extends InputDevice implements MouseListener, MouseMotionList
      *
      * @return
      */
-    public int getAbsoluteMouseY () {
+    public int getAbsoluteMouseY ()
+    {
         return this.ay;
     }
 }

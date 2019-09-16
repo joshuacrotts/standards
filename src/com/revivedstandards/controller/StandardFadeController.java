@@ -34,7 +34,8 @@ import java.awt.Color;
  * Instantiates a controller that continuously changes colors, ranging from
  * color1 to color2, with a translation time of alpha.
  */
-public class StandardFadeController {
+public class StandardFadeController
+{
 
     private double time;
     private boolean firstColor;
@@ -43,7 +44,8 @@ public class StandardFadeController {
     private final Color COLOR_ONE;
     private final Color COLOR_TWO;
 
-    public StandardFadeController (Color c1, Color c2, double alpha) {
+    public StandardFadeController ( Color c1, Color c2, double alpha )
+    {
         this.time = 0.0F;
         this.firstColor = true;
 
@@ -53,29 +55,34 @@ public class StandardFadeController {
         this.ALPHA = alpha;
     }
 
-    public Color combine () {
-        if (this.time <= 1.0F && this.firstColor) {
-            this.time = (float) (this.time + this.ALPHA);
+    public Color combine ()
+    {
+        if ( this.time <= 1.0F && this.firstColor )
+        {
+            this.time = ( float ) ( this.time + this.ALPHA );
         }
-        else {
+        else
+        {
 
             this.firstColor = false;
         }
-        if (this.time >= 0.0F && !this.firstColor) {
-            this.time = (float) (this.time - this.ALPHA);
+        if ( this.time >= 0.0F && !this.firstColor )
+        {
+            this.time = ( float ) ( this.time - this.ALPHA );
         }
-        else {
+        else
+        {
             this.firstColor = true;
         }
 
-        int r = (int) (this.time * this.COLOR_TWO.getRed() + (1.0F - this.time) * this.COLOR_ONE.getRed());
-        int g = (int) (this.time * this.COLOR_TWO.getGreen() + (1.0F - this.time) * this.COLOR_ONE.getGreen());
-        int b = (int) (this.time * this.COLOR_TWO.getBlue() + (1.0F - this.time) * this.COLOR_ONE.getBlue());
+        int r = ( int ) ( this.time * this.COLOR_TWO.getRed() + ( 1.0F - this.time ) * this.COLOR_ONE.getRed() );
+        int g = ( int ) ( this.time * this.COLOR_TWO.getGreen() + ( 1.0F - this.time ) * this.COLOR_ONE.getGreen() );
+        int b = ( int ) ( this.time * this.COLOR_TWO.getBlue() + ( 1.0F - this.time ) * this.COLOR_ONE.getBlue() );
 
-        r = StdOps.clamp(r, 0, 255);
-        g = StdOps.clamp(g, 0, 255);
-        b = StdOps.clamp(b, 0, 255);
+        r = StdOps.clamp( r, 0, 255 );
+        g = StdOps.clamp( g, 0, 255 );
+        b = StdOps.clamp( b, 0, 255 );
 
-        return new Color(r, g, b);
+        return new Color( r, g, b );
     }
 }

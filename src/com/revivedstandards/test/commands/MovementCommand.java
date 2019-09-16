@@ -4,14 +4,16 @@ import com.revivedstandards.commands.Command;
 import com.revivedstandards.controller.StandardAnimatorController;
 import com.revivedstandards.test.objects.AnimatedPlayerGameObject;
 
-public class MovementCommand extends Command {
+public class MovementCommand extends Command
+{
 
     public AnimatedPlayerGameObject player;
     public StandardAnimatorController animator;
     public float deltaX;
     public float deltaY;
 
-    public MovementCommand(AnimatedPlayerGameObject sgo, StandardAnimatorController sa, float deltax, float deltay) {
+    public MovementCommand ( AnimatedPlayerGameObject sgo, StandardAnimatorController sa, float deltax, float deltay )
+    {
         this.player = sgo;
         this.animator = sa;
         this.deltaX = deltax;
@@ -19,20 +21,23 @@ public class MovementCommand extends Command {
     }
 
     @Override
-    public void pressed (float delta) {
+    public void pressed ( float delta )
+    {
         this.player.setMoving( true );
-        if (this.animator != null) {
+        if ( this.animator != null )
+        {
             this.animator.getStandardAnimation().advanceFrame();
         }
-        this.player.setVelX(this.player.getVelX() + this.deltaX);
-        this.player.setVelY(this.player.getVelY() + this.deltaY);
+        this.player.setVelX( this.player.getVelX() + this.deltaX );
+        this.player.setVelY( this.player.getVelY() + this.deltaY );
     }
 
     @Override
-    public void released (float delta) {
+    public void released ( float delta )
+    {
         this.player.getAnimationController().stopAnimation();
         this.player.setMoving( false );
-        this.player.setVelX(0);
-        this.player.setVelY(0);
+        this.player.setVelX( 0 );
+        this.player.setVelY( 0 );
     }
 }

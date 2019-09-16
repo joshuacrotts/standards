@@ -32,7 +32,8 @@ import java.awt.image.BufferedImage;
 /**
  * This class represents the model for an animation.
  */
-public final class StandardAnimation {
+public final class StandardAnimation
+{
 
     private final StandardGameObject sgo;
     private final StandardAnimationView view;
@@ -52,28 +53,30 @@ public final class StandardAnimation {
     private int frameHaltPosition = -1; //Once the animation reaches the end frame,
     //it will hit this frame and repeat from here.
 
-    public StandardAnimation (StandardGameObject sgo, BufferedImage[] frames, double fps) {
+    public StandardAnimation ( StandardGameObject sgo, BufferedImage[] frames, double fps )
+    {
         this.sgo = sgo;
         this.fps = fps;
-        this.view = new StandardAnimationView(frames, sgo);
+        this.view = new StandardAnimationView( frames, sgo );
 
         // By default, the end frame index is just the end of the frame index's array length.
         this.endFrameIndex = frames.length;
 
-        this.setCurrentFrameIndex(0);
+        this.setCurrentFrameIndex( 0 );
         this.setDefaultDimensions();
     }
 
-    public StandardAnimation (StandardGameObject sgo, BufferedImage[] frames, double fps, int frameHaltPosition) {
+    public StandardAnimation ( StandardGameObject sgo, BufferedImage[] frames, double fps, int frameHaltPosition )
+    {
         this.sgo = sgo;
         this.fps = fps;
-        this.view = new StandardAnimationView(frames, sgo);
+        this.view = new StandardAnimationView( frames, sgo );
 
         // By default, the end frame index is just the end of the frame index's array length.
         this.endFrameIndex = frames.length;
 
         this.frameHaltPosition = frameHaltPosition;
-        this.setCurrentFrameIndex(0);
+        this.setCurrentFrameIndex( 0 );
         this.setDefaultDimensions();
     }
 
@@ -85,21 +88,26 @@ public final class StandardAnimation {
      *
      * @param frameIndex
      */
-    private void setCurrentFrameIndex (int frameIndex) {
-        if (frameIndex < this.startFrameIndex || frameIndex >= this.endFrameIndex) {
+    private void setCurrentFrameIndex ( int frameIndex )
+    {
+        if ( frameIndex < this.startFrameIndex || frameIndex >= this.endFrameIndex )
+        {
             // If we hit the ending frame position and we have a frame halt position,
             // we will reset the frame index pointer to this position.
-            if (frameIndex >= this.endFrameIndex && this.frameHaltPosition != -1) {
+            if ( frameIndex >= this.endFrameIndex && this.frameHaltPosition != -1 )
+            {
                 this.frameIndex = this.frameHaltPosition;
             }
-            else {
+            else
+            {
                 this.frameIndex = this.startFrameIndex;
             }
-            this.view.setCurrentFrameIndex(this.frameIndex);
+            this.view.setCurrentFrameIndex( this.frameIndex );
 
         }
-        else {
-            this.view.setCurrentFrameIndex(frameIndex);
+        else
+        {
+            this.view.setCurrentFrameIndex( frameIndex );
             this.frameIndex = frameIndex;
         }
 
@@ -108,17 +116,19 @@ public final class StandardAnimation {
     /**
      * Advances the current frame of animation to the next one in succession.
      */
-    public void advanceFrame () {
-        this.setCurrentFrameIndex(this.getCurrentFrameIndex() + 1);
+    public void advanceFrame ()
+    {
+        this.setCurrentFrameIndex( this.getCurrentFrameIndex() + 1 );
     }
 
     /**
      * Assigns the default SGO width/height to the width and height of the first
      * frame of animation.
      */
-    private void setDefaultDimensions () {
-        this.sgo.setWidth(this.getView().getCurrentFrame().getWidth());
-        this.sgo.setHeight(this.getView().getCurrentFrame().getHeight());
+    private void setDefaultDimensions ()
+    {
+        this.sgo.setWidth( this.getView().getCurrentFrame().getWidth() );
+        this.sgo.setHeight( this.getView().getCurrentFrame().getHeight() );
     }
 
     /**
@@ -139,54 +149,66 @@ public final class StandardAnimation {
      * @param startIndex
      * @param endIndex
      */
-    public void setFramePositions (int startIndex, int endIndex) {
+    public void setFramePositions ( int startIndex, int endIndex )
+    {
         this.startFrameIndex = startIndex;
         this.endFrameIndex = endIndex;
     }
 
-    public StandardGameObject getStandardGameObject () {
+    public StandardGameObject getStandardGameObject ()
+    {
         return this.sgo;
     }
 
-    public int getCurrentFrameIndex () {
+    public int getCurrentFrameIndex ()
+    {
         return this.frameIndex;
     }
 
-    public StandardAnimationView getView () {
+    public StandardAnimationView getView ()
+    {
         return this.view;
     }
 
-    public void setFrameSpeed (double fps) {
+    public void setFrameSpeed ( double fps )
+    {
         this.fps = fps;
     }
 
-    public double getFrameSpeed () {
+    public double getFrameSpeed ()
+    {
         return this.fps;
     }
 
-    public long getLastTime () {
+    public long getLastTime ()
+    {
         return this.lastTime;
     }
 
-    public void setLastTime (long t) {
+    public void setLastTime ( long t )
+    {
         this.lastTime = t;
     }
 
-    public void setRotation (double theta) {
+    public void setRotation ( double theta )
+    {
         this.rotation = theta;
     }
 
-    public void setFrameHaltPosition (int frame) {
+    public void setFrameHaltPosition ( int frame )
+    {
         this.frameHaltPosition = frame;
     }
 
-    public double getRotation () {
+    public double getRotation ()
+    {
         return this.rotation;
     }
 
-    public void stopAnimation () {
+    public void stopAnimation ()
+    {
         this.frameIndex = this.startFrameIndex;
-        this.setCurrentFrameIndex(0);
+        this.setCurrentFrameIndex( 0 );
     }
 
 }

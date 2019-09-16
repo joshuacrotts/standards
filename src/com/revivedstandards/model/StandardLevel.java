@@ -34,7 +34,8 @@ import com.revivedstandards.view.Updatable;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public abstract class StandardLevel implements Renderable, Updatable {
+public abstract class StandardLevel implements Renderable, Updatable
+{
 
     //
     //  File locations for the level data itself, and the background image
@@ -51,16 +52,18 @@ public abstract class StandardLevel implements Renderable, Updatable {
 
     public StandardHandler stdHandler;
 
-    public StandardLevel (String fileLocation, String bgImagePath, StandardHandler stdHandler) {
+    public StandardLevel ( String fileLocation, String bgImagePath, StandardHandler stdHandler )
+    {
         this.fileLocation = fileLocation;
         this.bgImagePath = bgImagePath;
         this.stdHandler = stdHandler;
 
-        if (this.fileLocation != null) {
-            this.levelData = StdOps.loadImage(this.fileLocation);
+        if ( this.fileLocation != null )
+        {
+            this.levelData = StdOps.loadImage( this.fileLocation );
         }
 
-        this.bgImage = StdOps.loadImage(this.bgImagePath);
+        this.bgImage = StdOps.loadImage( this.bgImagePath );
     }
 
     public abstract void loadLevelData ();
@@ -69,37 +72,45 @@ public abstract class StandardLevel implements Renderable, Updatable {
     public abstract void tick ();
 
     @Override
-    public abstract void render (Graphics2D g2);
+    public abstract void render ( Graphics2D g2 );
 
-    public String getFileLocation () {
+    public String getFileLocation ()
+    {
         return this.fileLocation;
     }
 
-    public void setFileLocation (String fileLocation) {
+    public void setFileLocation ( String fileLocation )
+    {
         this.fileLocation = fileLocation;
     }
 
-    public BufferedImage getLevelData () {
+    public BufferedImage getLevelData ()
+    {
         return this.levelData;
     }
 
-    public void setLevelData (BufferedImage levelData) {
+    public void setLevelData ( BufferedImage levelData )
+    {
         this.levelData = levelData;
     }
 
-    public String getBgImagePath () {
+    public String getBgImagePath ()
+    {
         return this.bgImagePath;
     }
 
-    public void setBgImagePath (String bgImagePath) {
+    public void setBgImagePath ( String bgImagePath )
+    {
         this.bgImagePath = bgImagePath;
     }
 
-    public BufferedImage getBgImage () {
+    public BufferedImage getBgImage ()
+    {
         return this.bgImage;
     }
 
-    public void setBgImage (BufferedImage bgImage) {
+    public void setBgImage ( BufferedImage bgImage )
+    {
         this.bgImage = bgImage;
     }
 }

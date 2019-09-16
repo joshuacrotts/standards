@@ -27,6 +27,7 @@
  */
 package com.revivedstandards.view;
 
-public enum ShapeType {
+public enum ShapeType
+{
     CIRCLE, RECTANGLE;
 }

@@ -36,7 +36,8 @@ import java.awt.Graphics2D;
 /**
  * This class represents a standard box particle.
  */
-public class StandardBoxParticle extends StandardParticle {
+public class StandardBoxParticle extends StandardParticle
+{
 
     //
     //  Circle or rectangle
@@ -47,49 +48,55 @@ public class StandardBoxParticle extends StandardParticle {
     //  Velocity factors that are continuously applied to the
     //  particle's dx and dy.
     //
-    private double velXFactor = StdOps.randBounds(-0.3, 0.0, 0.0, 0.3);
-    private double velYFactor = StdOps.randBounds(-0.3, 0.0, 0.0, 0.3);
+    private double velXFactor = StdOps.randBounds( -0.3, 0.0, 0.0, 0.3 );
+    private double velYFactor = StdOps.randBounds( -0.3, 0.0, 0.0, 0.3 );
 
     //
     //  In order to use variable velocities, this boolean must be checked.
     //
     private final boolean variableVelocity;
 
-    public StandardBoxParticle (double x, double y, double dimension,
+    public StandardBoxParticle ( double x, double y, double dimension,
             double velX, double velY, Color c, double life,
             StandardParticleHandler sph, double rotationAngle,
-            ShapeType shape, boolean variableVelocity) {
-        super(x, y, life, sph, c, rotationAngle);
+            ShapeType shape, boolean variableVelocity )
+    {
+        super( x, y, life, sph, c, rotationAngle );
 
-        super.setWidth((int) dimension);
-        super.setHeight((int) dimension);
-        super.setVelX(velX);
-        super.setVelY(velY);
+        super.setWidth( ( int ) dimension );
+        super.setHeight( ( int ) dimension );
+        super.setVelX( velX );
+        super.setVelY( velY );
         this.variableVelocity = variableVelocity;
         this.shapeType = shape;
     }
 
     @Override
-    public void tick () {
-        if (this.variableVelocity) {
-            this.setVelX(this.getVelX() + this.velXFactor);
-            this.setVelY(this.getVelY() + this.velYFactor);
+    public void tick ()
+    {
+        if ( this.variableVelocity )
+        {
+            this.setVelX( this.getVelX() + this.velXFactor );
+            this.setVelY( this.getVelY() + this.velYFactor );
         }
 
         super.updatePosition();
     }
 
     @Override
-    public void render (Graphics2D g2) {
-        g2.setColor(this.getColor());
+    public void render ( Graphics2D g2 )
+    {
+        g2.setColor( this.getColor() );
 
-        if (this.shapeType == ShapeType.RECTANGLE) {
-            g2.fillRect((int) this.getX(), (int) this.getY(),
-                    (int) this.getWidth(), (int) this.getHeight());
+        if ( this.shapeType == ShapeType.RECTANGLE )
+        {
+            g2.fillRect( ( int ) this.getX(), ( int ) this.getY(),
+                    ( int ) this.getWidth(), ( int ) this.getHeight() );
         }
-        else {
-            g2.fillOval((int) this.getX(), (int) this.getY(),
-                    (int) this.getWidth(), (int) this.getHeight());
+        else
+        {
+            g2.fillOval( ( int ) this.getX(), ( int ) this.getY(),
+                    ( int ) this.getWidth(), ( int ) this.getHeight() );
         }
     }
 
@@ -106,12 +113,14 @@ public class StandardBoxParticle extends StandardParticle {
      * @param min
      * @param max
      */
-    public void setVariableVelocityX (int min, int max) {
-        if (!this.variableVelocity) {
-            throw new IllegalStateException("To set the variable velocities, "
-                    + "this particle must have variable velocities enabled.");
+    public void setVariableVelocityX ( int min, int max )
+    {
+        if ( !this.variableVelocity )
+        {
+            throw new IllegalStateException( "To set the variable velocities, "
+                    + "this particle must have variable velocities enabled." );
         }
-        this.velXFactor = StdOps.randBounds(min, 0.0, 0.0, max);
+        this.velXFactor = StdOps.randBounds( min, 0.0, 0.0, max );
     }
 
     /**
@@ -127,11 +136,13 @@ public class StandardBoxParticle extends StandardParticle {
      * @param min
      * @param max
      */
-    public void setVariableVelocityY (int min, int max) {
-        if (!this.variableVelocity) {
-            throw new IllegalStateException("To set the variable velocities, "
-                    + "this particle must have variable velocities enabled.");
+    public void setVariableVelocityY ( int min, int max )
+    {
+        if ( !this.variableVelocity )
+        {
+            throw new IllegalStateException( "To set the variable velocities, "
+                    + "this particle must have variable velocities enabled." );
         }
-        this.velYFactor = StdOps.randBounds(min, 0.0, 0.0, max);
+        this.velYFactor = StdOps.randBounds( min, 0.0, 0.0, max );
     }
 }

@@ -42,17 +42,20 @@ import java.util.ArrayList;
  * inside the handler. The SGO (or subclass of SGO) must have tick() and
  * render(G2D) implemented, or this will not work.
  */
-public class StandardHandler implements Renderable, Updatable {
+public class StandardHandler implements Renderable, Updatable
+{
 
     private ArrayList<StandardGameObject> entities;
     private StandardCamera stdCamera;
 
-    public StandardHandler (StandardCamera stdCamera) {
+    public StandardHandler ( StandardCamera stdCamera )
+    {
         this.entities = new ArrayList();
         this.stdCamera = stdCamera;
     }
 
-    public StandardHandler () {
+    public StandardHandler ()
+    {
         this.entities = new ArrayList();
     }
 
@@ -63,7 +66,8 @@ public class StandardHandler implements Renderable, Updatable {
      *
      * @param obj
      */
-    public static void Object (StandardGameObject obj) {
+    public static void Object ( StandardGameObject obj )
+    {
         obj.tick();
     }
 
@@ -72,7 +76,8 @@ public class StandardHandler implements Renderable, Updatable {
      *
      * @param handler
      */
-    public static void Handler (StandardHandler handler) {
+    public static void Handler ( StandardHandler handler )
+    {
         handler.tick();
     }
 
@@ -83,33 +88,41 @@ public class StandardHandler implements Renderable, Updatable {
      * @param stdHandler
      * @param n
      */
-    public static void Add (StandardGameObject obj, StandardHandler stdHandler, int n) {
-        for (int i = 0 ; i < n ; i++) {
-            stdHandler.addEntity(obj);
+    public static void Add ( StandardGameObject obj, StandardHandler stdHandler, int n )
+    {
+        for ( int i = 0 ; i < n ; i++ )
+        {
+            stdHandler.addEntity( obj );
         }
     }
 
     @Override
-    public void tick () {
-        for (int i = 0 ; i < this.entities.size() ; i++) {
-            ((StandardGameObject) this.entities.get(i)).tick();
+    public void tick ()
+    {
+        for ( int i = 0 ; i < this.entities.size() ; i++ )
+        {
+            ( ( StandardGameObject ) this.entities.get( i ) ).tick();
         }
     }
 
     @Override
-    public void render (Graphics2D g2) {
+    public void render ( Graphics2D g2 )
+    {
         int vpo = 300;
         Rectangle cam = null;
-        if (this.stdCamera != null) {
-            cam = new Rectangle((int) (this.stdCamera.getX() - vpo - this.stdCamera.getVpw()),
-                    (int) (this.stdCamera.getY() - this.stdCamera.getVph()),
-                    this.stdCamera.getVpw() * 2 + vpo * 2, this.stdCamera.getVph() * 2);
+        if ( this.stdCamera != null )
+        {
+            cam = new Rectangle( ( int ) ( this.stdCamera.getX() - vpo - this.stdCamera.getVpw() ),
+                    ( int ) ( this.stdCamera.getY() - this.stdCamera.getVph() ),
+                    this.stdCamera.getVpw() * 2 + vpo * 2, this.stdCamera.getVph() * 2 );
         }
-        for (int i = 0 ; i < this.entities.size() ; i++) {
-            StandardGameObject o = (StandardGameObject) this.entities.get(i);
+        for ( int i = 0 ; i < this.entities.size() ; i++ )
+        {
+            StandardGameObject o = ( StandardGameObject ) this.entities.get( i );
 
-            if ((cam != null && (o.getBounds().intersects(cam) || this.stdCamera == null))) {
-                o.render(g2);
+            if ( ( cam != null && ( o.getBounds().intersects( cam ) || this.stdCamera == null ) ) )
+            {
+                o.render( g2 );
             }
         }
     }
@@ -120,78 +133,98 @@ public class StandardHandler implements Renderable, Updatable {
      *
      * @param g2
      */
-    public void stdRender (Graphics2D g2) {
-        this.entities.forEach((entity) -> {
-            entity.render(g2);
-        });
+    public void stdRender ( Graphics2D g2 )
+    {
+        this.entities.forEach( ( entity ) ->
+        {
+            entity.render( g2 );
+        } );
     }
 
-    public void setEntities (ArrayList<StandardGameObject> entities) {
+    public void setEntities ( ArrayList<StandardGameObject> entities )
+    {
         this.entities = entities;
     }
 
-    public void addEntity (StandardGameObject obj) {
-        this.entities.add(obj);
+    public void addEntity ( StandardGameObject obj )
+    {
+        this.entities.add( obj );
     }
 
-    public void removeEntity (StandardGameObject obj) {
-        this.entities.remove(obj);
+    public void removeEntity ( StandardGameObject obj )
+    {
+        this.entities.remove( obj );
     }
 
-    public void clearEntities () {
-        for (int i = 0 ; i < this.entities.size() ; i++) {
-            if (((StandardGameObject) this.entities.get(i)).getId() != StandardID.Player) {
-                this.entities.remove(i);
+    public void clearEntities ()
+    {
+        for ( int i = 0 ; i < this.entities.size() ; i++ )
+        {
+            if ( ( ( StandardGameObject ) this.entities.get( i ) ).getId() != StandardID.Player )
+            {
+                this.entities.remove( i );
                 i--;
             }
         }
     }
 
-    public void clearAllEntities () {
+    public void clearAllEntities ()
+    {
         this.entities.clear();
     }
 
-    public void sort () {
-        for (int i = 0 ; i < this.entities.size() ; i++) {
-            if (((StandardGameObject) this.entities.get(i)).getId() == StandardID.Player) {
-                this.entities.add(0, (StandardGameObject) this.entities.get(i));
-                removeEntity((StandardGameObject) this.entities.get(i));
+    public void sort ()
+    {
+        for ( int i = 0 ; i < this.entities.size() ; i++ )
+        {
+            if ( ( ( StandardGameObject ) this.entities.get( i ) ).getId() == StandardID.Player )
+            {
+                this.entities.add( 0, ( StandardGameObject ) this.entities.get( i ) );
+                removeEntity( ( StandardGameObject ) this.entities.get( i ) );
             }
 
-            if (((StandardGameObject) this.entities.get(i)).getId() == StandardID.Enemy) {
-                this.entities.add(1, (StandardGameObject) this.entities.get(i));
-                removeEntity((StandardGameObject) this.entities.get(i));
+            if ( ( ( StandardGameObject ) this.entities.get( i ) ).getId() == StandardID.Enemy )
+            {
+                this.entities.add( 1, ( StandardGameObject ) this.entities.get( i ) );
+                removeEntity( ( StandardGameObject ) this.entities.get( i ) );
             }
         }
     }
 
-    private boolean validCollison (StandardGameObject obj2) {
-        return ((obj2.getId() == StandardID.Block || obj2.getId() == StandardID.Brick
+    private boolean validCollison ( StandardGameObject obj2 )
+    {
+        return ( ( obj2.getId() == StandardID.Block || obj2.getId() == StandardID.Brick
                 || obj2.getId() == StandardID.Obstacle || obj2.getId() == StandardID.NPC
-                || obj2.getId() == StandardID.Powerup) && obj2.getId() != StandardID.Player
-                && obj2.getId() != StandardID.Enemy);
+                || obj2.getId() == StandardID.Powerup ) && obj2.getId() != StandardID.Player
+                && obj2.getId() != StandardID.Enemy );
     }
 
-    public void checkCollisions () {
+    public void checkCollisions ()
+    {
     }
 
-    public int size () {
+    public int size ()
+    {
         return this.entities.size();
     }
 
-    public StandardGameObject get (int i) {
-        return (StandardGameObject) this.entities.get(i);
+    public StandardGameObject get ( int i )
+    {
+        return ( StandardGameObject ) this.entities.get( i );
     }
 
-    public ArrayList<StandardGameObject> getEntities () {
+    public ArrayList<StandardGameObject> getEntities ()
+    {
         return this.entities;
     }
 
-    public void setCamera (StandardCamera cam) {
+    public void setCamera ( StandardCamera cam )
+    {
         this.stdCamera = cam;
     }
 
-    public StandardCamera getCamera () {
+    public StandardCamera getCamera ()
+    {
         return this.stdCamera;
     }
 }

@@ -34,7 +34,8 @@ import java.io.File;
  * Command, InputDevice, Keyboard, Mouse, and other miscellaneous file parsing
  * locations.
  */
-public class StdConsts {
+public class StdConsts
+{
 
     public static final int MOUSE_MASK = -2147483648;
     public static final int KEYBOARD_MASK = 0;

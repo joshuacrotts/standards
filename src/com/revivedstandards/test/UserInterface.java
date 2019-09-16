@@ -17,7 +17,8 @@ import java.awt.event.KeyEvent;
  *
  * @author Joshua
  */
-public class UserInterface implements Renderable, Updatable {
+public class UserInterface implements Renderable, Updatable
+{
 
     //
     // Global instance variables
@@ -43,45 +44,50 @@ public class UserInterface implements Renderable, Updatable {
     //
     private final Font gameFont;
 
-    public UserInterface (FollowTheMouseGameTest sg, TriangleGameObject obj, StandardCamera sc) {
+    public UserInterface ( FollowTheMouseGameTest sg, TriangleGameObject obj, StandardCamera sc )
+    {
         this.sg = sg;
         this.sc = sc;
         this.obj = obj;
 
-        this.gameFont = StdOps.initFont("src/res/fonts/chargen.ttf", 0f);
+        this.gameFont = StdOps.initFont( "src/res/fonts/chargen.ttf", 0f );
 
-        this.pauseCommand = new PauseCommand(sg);
-        this.pauseCommand.bind(this.sg.getKeyboard(), KeyEvent.VK_P);
+        this.pauseCommand = new PauseCommand( sg );
+        this.pauseCommand.bind( this.sg.getKeyboard(), KeyEvent.VK_P );
 
     }
 
     @Override
-    public void tick () {
-        this.renderX = (int) this.obj.getX();
-        this.renderY = (int) this.obj.getY();
+    public void tick ()
+    {
+        this.renderX = ( int ) this.obj.getX();
+        this.renderY = ( int ) this.obj.getY();
     }
 
     @Override
-    public void render (Graphics2D g2) {
+    public void render ( Graphics2D g2 )
+    {
         // Debug information
-        StandardDraw.text("GAME", this.renderX, this.renderY - 320, this.gameFont, 36f, Color.yellow);
-        StandardDraw.text("FPS: " + this.sg.getFPS(), this.renderX - 620, this.renderY - 330, this.gameFont, 20f, Color.yellow);
-        StandardDraw.text("Beta Testing Purposes ONLY", this.renderX + 300, this.renderY - 330, this.gameFont, 20f, Color.yellow);
+        StandardDraw.text( "GAME", this.renderX, this.renderY - 320, this.gameFont, 36f, Color.yellow );
+        StandardDraw.text( "FPS: " + this.sg.getFPS(), this.renderX - 620, this.renderY - 330, this.gameFont, 20f, Color.yellow );
+        StandardDraw.text( "Beta Testing Purposes ONLY", this.renderX + 300, this.renderY - 330, this.gameFont, 20f, Color.yellow );
 
         // Actual Player info
-        StandardDraw.text("Ammo: " + this.obj.getBulletCount(), this.renderX - 620, this.renderY - 305, this.gameFont, 20f, Color.yellow);
+        StandardDraw.text( "Ammo: " + this.obj.getBulletCount(), this.renderX - 620, this.renderY - 305, this.gameFont, 20f, Color.yellow );
 
         // If the game is paused, we can draw a black square over the screen saying it's paused
-        if (this.sg.getGameState() == GameState.PAUSED) {
-            this.renderPauseScreen(g2);
+        if ( this.sg.getGameState() == GameState.PAUSED )
+        {
+            this.renderPauseScreen( g2 );
         }
     }
 
-    private void renderPauseScreen (Graphics2D g2) {
+    private void renderPauseScreen ( Graphics2D g2 )
+    {
         Color c = StandardDraw.Renderer.getColor();
-        StandardDraw.Renderer.setColor(new Color(0, 0, 0, 0.5f));
-        StandardDraw.Renderer.fillRect((int) -2000, -2000, 50000, 10000);//Just draws a HUGE rectangle over hopefully affected areas
-        StandardDraw.text("PAUSED", (int) this.renderX, this.renderY, this.gameFont, 24f, Color.white);
-        StandardDraw.Renderer.setColor(c);
+        StandardDraw.Renderer.setColor( new Color( 0, 0, 0, 0.5f ) );
+        StandardDraw.Renderer.fillRect( ( int ) -2000, -2000, 50000, 10000 );//Just draws a HUGE rectangle over hopefully affected areas
+        StandardDraw.text( "PAUSED", ( int ) this.renderX, this.renderY, this.gameFont, 24f, Color.white );
+        StandardDraw.Renderer.setColor( c );
     }
 }
