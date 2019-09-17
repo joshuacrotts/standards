@@ -45,18 +45,25 @@ import java.util.ArrayList;
 public class StandardHandler implements Renderable, Updatable
 {
 
+    //
+    //  ArrayList of StandardGameObjects
+    //
     private ArrayList<StandardGameObject> entities;
-    private StandardCamera stdCamera;
+
+    //
+    //  StandardCamera for the StandardHandler
+    //
+    private StandardCamera                stdCamera;
 
     public StandardHandler ( StandardCamera stdCamera )
     {
-        this.entities = new ArrayList();
+        this.entities  = new ArrayList();
         this.stdCamera = stdCamera;
     }
 
     public StandardHandler ()
     {
-        this.entities = new ArrayList();
+        this.entities  = new ArrayList();
     }
 
     /**
@@ -108,14 +115,16 @@ public class StandardHandler implements Renderable, Updatable
     @Override
     public void render ( Graphics2D g2 )
     {
-        int vpo = 300;
+        int vpo       = 300;
         Rectangle cam = null;
+
         if ( this.stdCamera != null )
         {
             cam = new Rectangle( ( int ) ( this.stdCamera.getX() - vpo - this.stdCamera.getVpw() ),
-                    ( int ) ( this.stdCamera.getY() - this.stdCamera.getVph() ),
-                    this.stdCamera.getVpw() * 2 + vpo * 2, this.stdCamera.getVph() * 2 );
+                                 ( int ) ( this.stdCamera.getY() - this.stdCamera.getVph() ),
+                                           this.stdCamera.getVpw() * 2 + vpo * 2, this.stdCamera.getVph() * 2 );
         }
+
         for ( int i = 0 ; i < this.entities.size() ; i++ )
         {
             StandardGameObject o = ( StandardGameObject ) this.entities.get( i );

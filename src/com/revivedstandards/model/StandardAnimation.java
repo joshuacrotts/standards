@@ -34,29 +34,51 @@ import java.awt.image.BufferedImage;
  */
 public final class StandardAnimation
 {
-
+    //
+    //  Underlying parent StandardGameObject
+    //
     private final StandardGameObject sgo;
+
+    //
+    //  View for the animation; renders the current frame pointed by
+    //  frameIndex.
+    //
     private final StandardAnimationView view;
 
-    private int frameIndex;     // Current frame index in the array of images
-    private long lastTime = 0;  // Time between the last system call and the current one
-    private double fps;         // How many frames of animation should are played have per second
-    private double rotation;    // Rotation of the current frame
+    // Current frame index in the array of images
+    private int                         frameIndex;
 
-    private int startFrameIndex = 0;    //Determines where in the sprite sheet the
-    //pointer should start. This is mainly for sprite
-    //sheets that share multiple animations to save
-    //memory on not having to rely on various
-    //BI arrays.
-    private int endFrameIndex = -1;
+    // Time between the last system call and the current one
+    private long                        lastTime          = 0;
 
-    private int frameHaltPosition = -1; //Once the animation reaches the end frame,
+    // How many frames of animation should are played have per second
+    private double                      fps;
+
+    // Rotation of the current frame
+    private double                      rotation;
+
+    // Should we mirror the image along the y axis?
+    private boolean                     mirror            = false;
+
+    //  Determines where in the sprite sheet the
+    //  pointer should START (not continue from). This is mainly for sprite
+    //  sheets that share multiple animations to save
+    //  memory on not having to rely on various
+    //  BI arrays.
+    //
+    private int                         startFrameIndex   = 0;
+    private int                         endFrameIndex     = -1;
+
+    //
+    //Once the animation reaches the ending frame,
     //it will hit this frame and repeat from here.
+    //
+    private int                         frameHaltPosition = -1;
 
     public StandardAnimation ( StandardGameObject sgo, BufferedImage[] frames, double fps )
     {
-        this.sgo = sgo;
-        this.fps = fps;
+        this.sgo  = sgo;
+        this.fps  = fps;
         this.view = new StandardAnimationView( frames, sgo );
 
         // By default, the end frame index is just the end of the frame index's array length.
@@ -68,8 +90,8 @@ public final class StandardAnimation
 
     public StandardAnimation ( StandardGameObject sgo, BufferedImage[] frames, double fps, int frameHaltPosition )
     {
-        this.sgo = sgo;
-        this.fps = fps;
+        this.sgo  = sgo;
+        this.fps  = fps;
         this.view = new StandardAnimationView( frames, sgo );
 
         // By default, the end frame index is just the end of the frame index's array length.
@@ -103,7 +125,6 @@ public final class StandardAnimation
                 this.frameIndex = this.startFrameIndex;
             }
             this.view.setCurrentFrameIndex( this.frameIndex );
-
         }
         else
         {
@@ -152,7 +173,17 @@ public final class StandardAnimation
     public void setFramePositions ( int startIndex, int endIndex )
     {
         this.startFrameIndex = startIndex;
-        this.endFrameIndex = endIndex;
+        this.endFrameIndex   = endIndex;
+    }
+
+    /**
+     * Resets the current animation to the beginning, also resets the frame
+     * index to 0.
+     */
+    public void stopAnimation ()
+    {
+        this.frameIndex = this.startFrameIndex;
+        this.setCurrentFrameIndex( 0 );
     }
 
     public StandardGameObject getStandardGameObject ()
@@ -205,10 +236,20 @@ public final class StandardAnimation
         return this.rotation;
     }
 
-    public void stopAnimation ()
+    /**
+     * Mirrors the image along the y-axis. BE AWARE, this is very
+     * buggy. It is best to just manually create the reversed images.
+     * 
+     * @param mirror
+     */
+    public void setMirrored ( boolean mirror )
     {
-        this.frameIndex = this.startFrameIndex;
-        this.setCurrentFrameIndex( 0 );
+        this.mirror = mirror;
+    }
+
+    public boolean isMirrored ()
+    {
+        return this.mirror;
     }
 
 }

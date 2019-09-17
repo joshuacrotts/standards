@@ -51,7 +51,6 @@ import java.awt.image.BufferStrategy;
  * 'super.addMouseListener/MouseMotionListener
  * /addKeyListener/MouseWheelListener, etc. Any listeners that java.awt.Canvas
  * supports are supported by StandardGame.
- *
  */
 public abstract class StandardGame extends Canvas implements Runnable
 {
@@ -104,7 +103,7 @@ public abstract class StandardGame extends Canvas implements Runnable
 
         this.createBufferStrategy( 3 );
 
-        this.bufferStrategy = this.getBufferStrategy();
+        StandardGame.bufferStrategy = this.getBufferStrategy();
 
         this.mouse = new Mouse();
         this.keyboard = new Keyboard();
@@ -159,7 +158,7 @@ public abstract class StandardGame extends Canvas implements Runnable
         this.window = new StandardWindowView( this.getScreenWidth(), this.getScreenHeight(), title, this );
         this.createBufferStrategy( 3 );
 
-        this.bufferStrategy = this.getBufferStrategy();
+        StandardGame.bufferStrategy = this.getBufferStrategy();
 
         this.mouse = new Mouse();
         this.keyboard = new Keyboard();

@@ -22,9 +22,22 @@ import java.awt.image.BufferedImage;
 public class BulletGameObject extends StandardGameObject implements DeathListener
 {
 
+    //
+    //  Miscellaneous variables
+    //
     private final FollowTheMouseGameTest sg;
     private final StandardCollisionHandler sch;
     private final StandardCamera sc;
+
+    //
+    //  Static reference to the BufferedImages
+    //
+    private static final BufferedImage[] frames = new BufferedImage[ 4 ];
+
+    //
+    //  Handler for particle explosions after the bullet
+    //  collides with a wall.
+    //
     private StandardParticleHandler explosionHandler;
 
     //
@@ -37,13 +50,12 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
         super( x, y, StandardID.Projectile );
         this.sg = sg;
         this.sch = parentContainer;
-        this.setAnimation( new StandardAnimatorController( new StandardAnimation( this, this.initImages(), 20 ) ) );
+        this.setAnimation( new StandardAnimatorController( new StandardAnimation( this, frames, 20 ) ) );
         this.setWidth( this.getWidth() );
         this.setHeight( this.getHeight() );
         this.setAlive( true );
         this.setVelX( parent.getVelX() * 5 );
         this.setVelY( parent.getVelY() * 5 );
-        this.getAnimationController().getStandardAnimation().setRotation( parent.getAngle() );
 
         this.sch.flagAlive( this.getId() );
         this.sch.addCollider( this.getId() );
@@ -97,23 +109,6 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
 
     }
 
-    /**
-     * Instantiates the buffered image array.
-     *
-     * @return
-     */
-    private BufferedImage[] initImages ()
-    {
-        BufferedImage[] images = new BufferedImage[ 3 ];
-
-        for ( int i = 0 ; i < images.length ; i++ )
-        {
-            images[ i ] = ( StdOps.loadImage( "src/res/img/bullet/bullet_colors/bullet_" + i + ".png" ) );
-        }
-
-        return images;
-    }
-
     @Override
     public void uponDeath ()
     {
@@ -121,6 +116,21 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
         this.explosionHandler = new StandardParticleHandler( 800 );
         this.explosionHandler.setCamera( this.sc );
         this.summonDeathParticles( 200 );
+    }
+
+    /**
+     * Instantiates the buffered image array.
+     *
+     * @return
+     */
+    private static BufferedImage[] initImages ()
+    {
+        for ( int i = 0 ; i < BulletGameObject.frames.length ; i++ )
+        {
+            BulletGameObject.frames[ i ] = ( StdOps.loadImage( "src/res/img/bullet/bullet_colors/bullet_" + i + ".png" ) );
+        }
+
+        return BulletGameObject.frames;
     }
 
     /**
@@ -134,10 +144,10 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
         for ( int i = 0 ; i < n ; i++ )
         {
             this.explosionHandler.addEntity( new StandardBoxParticle( this.getX(), this.getY(), StdOps.rand( 0.5, 2.5 ),
-                    StdOps.randBounds( -5, -0.1, 0.1, 5 ),
-                    StdOps.randBounds( -5, -1, 1, 5 ),
-                    this.getRandomRGYB( StdOps.rand( 0, 3 ) ),
-                    4f, this.explosionHandler, 0.0, ShapeType.CIRCLE, true ) );
+                                                                      StdOps.randBounds( -5, -0.1, 0.1, 5 ),
+                                                                      StdOps.randBounds( -5, -1, 1, 5 ),
+                                                                      BulletGameObject.getRandomRGYB( StdOps.rand( 0, 3 ) ),
+                                                                      4f, this.explosionHandler, 0.0, ShapeType.CIRCLE, true ) );
         }
 
         this.aliveFlag = false;
@@ -159,7 +169,7 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
      * @param n
      * @return
      */
-    private Color getRandomRGYB ( int n )
+    private static Color getRandomRGYB ( int n )
     {
         switch ( n )
         {
@@ -174,5 +184,13 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
         }
 
         return null;
+    }
+
+    //
+    //  Initializes the bullet frames
+    //
+    static
+    {
+        BulletGameObject.initImages();
     }
 }

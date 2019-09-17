@@ -46,12 +46,12 @@ public class StandardTrail extends StandardGameObject
 {
 
     //
-    //  Information regarding the lifespan and visibility of the 
-    //  trail. 
+    //  Information regarding the lifespan and visibility of the
+    //  trail.
     //
-    private double angle = 0.0;
-    private float alpha = 1.0F;
-    private float life = -1f;
+    private double  angle   = 0.0;
+    private float   alpha   = 1.0F;
+    private float   life    = -1f;
     private boolean isImage = false;
 
     //
@@ -59,8 +59,8 @@ public class StandardTrail extends StandardGameObject
     //  to an image. If we are rendering an image, the SGO's current sprite
     //  is referenced.
     //
-    private Color color;
-    private ShapeType shape;
+    private Color                    color;
+    private ShapeType                shape;
     private final StandardGameObject obj;
 
     //
@@ -69,32 +69,32 @@ public class StandardTrail extends StandardGameObject
     private final StandardHandler stdHandler;
 
     public StandardTrail ( double x, double y, double width, double height,
-            double angle, float life, Color color,
-            StandardGameObject o, StandardHandler stdHandler,
-            ShapeType shape )
+                           double angle, float life, Color color,
+                           StandardGameObject o, StandardHandler stdHandler,
+                           ShapeType shape )
     {
         super( x, y, ( int ) width, ( int ) height, StandardID.Trail );
-        this.color = color;
-        this.life = life;
-        this.shape = shape;
-        this.angle = angle;
+        this.color      = color;
+        this.life       = life;
+        this.shape      = shape;
+        this.angle      = angle;
         this.stdHandler = stdHandler;
-        this.isImage = false;
-        this.obj = o;
+        this.isImage    = false;
+        this.obj        = o;
 
         this.checkNullShape();
     }
 
     public StandardTrail ( double x, double y, double angle, float life, StandardGameObject obj,
-            StandardHandler stdHandler )
+                           StandardHandler stdHandler )
     {
         super( x, y, StandardID.Trail );
 
-        this.obj = obj;
+        this.obj        = obj;
         this.stdHandler = stdHandler;
-        this.angle = angle;
-        this.life = life;
-        this.isImage = true;
+        this.angle      = angle;
+        this.life       = life;
+        this.isImage    = true;
 
         this.setWidth( this.obj.getCurrentSprite().getWidth() );
         this.setHeight( this.obj.getCurrentSprite().getHeight() );

@@ -47,7 +47,7 @@ public class StandardWindowView extends Canvas
 
     private final String ICON = "src/res/img/stds_icon.png";
     private final JFrame FRAME;
-    private String title;
+    private final String TITLE;
 
     private int width;
     private int height;
@@ -58,7 +58,7 @@ public class StandardWindowView extends Canvas
 
         this.width = width;
         this.height = height;
-        this.title = title;
+        this.TITLE = title;
 
         this.FRAME.setMinimumSize( new Dimension( width, height ) );
         this.FRAME.setMaximumSize( new Dimension( width, height ) );
@@ -82,7 +82,7 @@ public class StandardWindowView extends Canvas
         this.FRAME = new JFrame();
 
         this.FRAME.setTitle( title );
-        this.title = title;
+        this.TITLE = title;
 
         // Sets dimensions
         this.width = width;
@@ -144,7 +144,7 @@ public class StandardWindowView extends Canvas
 
     public String getTitle ()
     {
-        return title;
+        return TITLE;
     }
 
     public void setTitle ( String title )

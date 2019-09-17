@@ -46,7 +46,16 @@ import org.apache.commons.math3.util.FastMath;
 public class StandardCollisionHandler extends StandardHandler
 {
 
-    private static final Set<StandardID> DEATH_FLAGS = new HashSet<>();
+    //
+    //  Set of StandardID's that, upon collision with some object,
+    //  their alive flags are set to false.
+    //
+    private static final Set<StandardID> DEATH_FLAGS     = new HashSet<>();
+
+    //
+    //  Set of StandardIDs that have collision properties and should be
+    //  marked as having a collision.
+    //
     private static final Set<StandardID> COLLISION_FLAGS = new HashSet<>();
 
     public StandardCollisionHandler ( StandardCamera c )
@@ -61,8 +70,8 @@ public class StandardCollisionHandler extends StandardHandler
         int vpo = 300;
 
         Rectangle cam = new Rectangle( ( int ) ( this.getCamera().getX() - vpo - this.getCamera().getVpw() ),
-                ( int ) ( this.getCamera().getY() - this.getCamera().getVph() ),
-                this.getCamera().getVpw() * 2 + vpo * 2, this.getCamera().getVph() * 2 );
+                                       ( int ) ( this.getCamera().getY() - this.getCamera().getVph() ),
+                                                 this.getCamera().getVpw() * 2 + vpo * 2, this.getCamera().getVph() * 2 );
 
         for ( int i = 0 ; i < this.getEntities().size() ; i++ )
         {
@@ -81,7 +90,7 @@ public class StandardCollisionHandler extends StandardHandler
                         if ( obj1 != obj2 && obj1.getId() != StandardID.Ignore && obj1.isAlive() && obj2.isAlive() )
                         {
                             if ( StandardCollisionHandler.COLLISION_FLAGS.contains( obj2.getId() )
-                                    && ( obj2.getId() != StandardID.Camera ) )
+                                                        && ( obj2.getId() != StandardID.Camera ) )
                             {
                                 StandardCollisionHandler.intersection( obj1, obj2, norm );
 
@@ -114,7 +123,6 @@ public class StandardCollisionHandler extends StandardHandler
 
                             }
                         }
-                        continue;
                     }
                 }
             }
@@ -144,7 +152,7 @@ public class StandardCollisionHandler extends StandardHandler
         StandardCollisionHandler.COLLISION_FLAGS.add( id );
     }
 
-    public static void intersection ( StandardGameObject r1, StandardGameObject r2, double[] norm )
+    private static void intersection ( StandardGameObject r1, StandardGameObject r2, double[] norm )
     {
         double x1 = r1.getX() - FastMath.signum( r1.getVelX() );
         double y1 = r1.getY() - FastMath.signum( r1.getVelY() );
@@ -189,10 +197,5 @@ public class StandardCollisionHandler extends StandardHandler
             norm[ 0 ] = 0.0D;
             norm[ 1 ] = ( ( b1.y < b2.y ) ? -1 : 1 );
         }
-    }
-
-    public static void Handler ( StandardCollisionHandler sh )
-    {
-        sh.tick();
     }
 }

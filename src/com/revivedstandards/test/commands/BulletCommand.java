@@ -21,7 +21,6 @@ import com.revivedstandards.test.objects.TriangleGameObject;
  */
 public class BulletCommand extends Command
 {
-
     private final FollowTheMouseGameTest sg;
     private final TriangleGameObject obj;
     private final StandardCollisionHandler globalHandler;

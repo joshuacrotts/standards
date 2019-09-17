@@ -4,7 +4,7 @@ import com.revivedstandards.commands.Command;
 import com.revivedstandards.controller.StandardAnimatorController;
 import com.revivedstandards.test.objects.AnimatedPlayerGameObject;
 
-public class MovementCommand extends Command
+public class MoveCommand extends Command
 {
 
     public AnimatedPlayerGameObject player;
@@ -12,18 +12,21 @@ public class MovementCommand extends Command
     public float deltaX;
     public float deltaY;
 
-    public MovementCommand ( AnimatedPlayerGameObject sgo, StandardAnimatorController sa, float deltax, float deltay )
+    public MoveCommand ( AnimatedPlayerGameObject sgo, StandardAnimatorController sa, float deltax, float deltay )
     {
-        this.player = sgo;
+        this.player   = sgo;
         this.animator = sa;
-        this.deltaX = deltax;
-        this.deltaY = deltay;
+        this.deltaX   = deltax;
+        this.deltaY   = deltay;
     }
 
     @Override
     public void pressed ( float delta )
     {
+        //  Allows for the SGO to have multiple SAC's
+        this.player.setAnimation( this.animator );
         this.player.setMoving( true );
+
         if ( this.animator != null )
         {
             this.animator.getStandardAnimation().advanceFrame();

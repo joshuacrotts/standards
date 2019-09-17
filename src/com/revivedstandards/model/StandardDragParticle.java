@@ -96,7 +96,6 @@ public class StandardDragParticle extends StandardParticle
             this.setY( this.getY() + this.getVelY() );
             this.setAlive( ( System.nanoTime() - this.getDeath() <= 0L ) );
         }
-
     }
 
     @Override

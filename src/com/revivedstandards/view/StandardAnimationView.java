@@ -32,8 +32,20 @@ import java.awt.image.BufferedImage;
 public class StandardAnimationView implements Renderable
 {
 
+    //
+    //  BufferedImage frames for the StandardAnimation model.
+    //  These may need to be moved TO the model?
+    //
     private final BufferedImage[] animationFrames;
+
+    //
+    //  Parent StandardGameObject
+    //
     private final StandardGameObject obj;
+
+    //
+    //  Reference to the current frame of animation
+    //
     private BufferedImage currentFrame;
 
     public StandardAnimationView ( BufferedImage[] frames, StandardGameObject obj )
@@ -45,9 +57,40 @@ public class StandardAnimationView implements Renderable
     @Override
     public void render ( Graphics2D g2 )
     {
-        g2.drawImage( this.currentFrame, ( int ) obj.getX(), ( int ) obj.getY(), this.currentFrame.getWidth(), this.currentFrame.getHeight(), null );
+        g2.drawImage( this.currentFrame, ( int ) this.obj.getX(), ( int ) this.obj.getY(),
+                      this.currentFrame.getWidth(), this.currentFrame.getHeight(), null );
     }
 
+    /**
+     * Renders the current frame at the parent's
+     * x and y position. Theta is a rotation factor in degrees.
+     *
+     * @param g2
+     * @param theta
+     */
+    public void render ( Graphics2D g2, double theta )
+    {
+        AffineTransform backup = g2.getTransform();
+        AffineTransform transform = new AffineTransform();
+        transform.rotate( theta, ( this.obj.getX() + this.currentFrame.getWidth() / 2.0f ),
+                                 ( this.obj.getY() + this.currentFrame.getHeight() / 2.0f ) );
+
+        g2.transform( transform );
+        g2.drawImage( this.currentFrame, ( int ) this.obj.getX(), ( int ) this.obj.getY(),
+                      this.currentFrame.getWidth(), this.currentFrame.getHeight(), null );
+
+        g2.setTransform( backup );
+    }
+
+    /**
+     * Renders the current frame at a specific x and y location other than the
+     * parent's x and y. Theta is a rotation factor in degrees.
+     *
+     * @param g2
+     * @param x
+     * @param y
+     * @param theta
+     */
     public void render ( Graphics2D g2, double x, double y, double theta )
     {
         AffineTransform backup = g2.getTransform();
@@ -68,12 +111,6 @@ public class StandardAnimationView implements Renderable
         g2.transform( transform );
         g2.drawImage( this.currentFrame, ( int ) x, ( int ) y, ( int ) width, ( int ) height, null );
         g2.setTransform( backup );
-    }
-
-    public void renderBounds ( Graphics2D g2, Rectangle rect )
-    {
-        g2.drawRect( ( int ) rect.getX(), ( int ) rect.getY(),
-                ( int ) rect.getWidth(), ( int ) rect.getHeight() );
     }
 
     public BufferedImage[] getFrames ()

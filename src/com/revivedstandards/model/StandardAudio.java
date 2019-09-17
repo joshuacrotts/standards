@@ -45,7 +45,12 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public final class StandardAudio
 {
 
+    //
+    //  Javax clip object holding audio information.
+    //
     private Clip audioClip;
+
+    //  Path and name of audiofile.
     private String fileName;
 
     public static int INFINITELY = Clip.LOOP_CONTINUOUSLY;

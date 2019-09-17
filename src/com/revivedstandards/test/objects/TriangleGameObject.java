@@ -71,8 +71,8 @@ public class TriangleGameObject extends StandardGameObject
         //      Causes the arrow to follow the cursor wherever on the screen //
         //*******************************************************************//
         // Save the mouse position
-        double mx = this.sc.getX() + this.sg.getMouse().getMouseX() - this.sc.getVpw();
-        double my = this.sc.getY() + this.sg.getMouse().getMouseY() - this.sc.getVph();
+        double mx    = this.sc.getX() + this.sg.getMouse().getMouseX() - this.sc.getVpw();
+        double my    = this.sc.getY() + this.sg.getMouse().getMouseY() - this.sc.getVph();
 
         // Calculate the distance between the sprite and the mouse
         double diffX = this.getX() - mx - 8;
@@ -80,21 +80,21 @@ public class TriangleGameObject extends StandardGameObject
 
         // Use the pythagorean theorem to solve for the hypotenuse distance
         double distance = ( double ) FastMath.sqrt( ( ( this.getX() - mx ) * ( this.getX() - mx ) )
-                + ( ( this.getY() - my ) * ( this.getY() - my ) ) );
+                                                  + ( ( this.getY() - my ) * ( this.getY() - my ) ) );
 
         // Sets the velocity according to how far away the sprite is from the cursor
-        this.setVelX( ( this.APPROACH_VEL / distance ) * diffX );
-        this.setVelY( ( this.APPROACH_VEL / distance ) * diffY );
+        this.setVelX( ( ( this.APPROACH_VEL / distance ) * ( int ) diffX ) );
+        this.setVelY( ( ( this.APPROACH_VEL / distance ) * ( int ) diffY ) );
 
         //*****************************************************************//
         //      Calculates the angle the ship needs to be in to face the   //
         //      cursor                                                     //
         //*****************************************************************//
         float xSign = ( float ) FastMath.signum( mx - this.getX() );
-        double dx = FastMath.abs( mx - this.getX() );
-        double dy = FastMath.abs( my - this.getY() );
+        double dx   = FastMath.abs( mx - this.getX() );
+        double dy   = FastMath.abs( my - this.getY() );
 
-        this.angle = ( float ) ( ( xSign ) * ( FastMath.atan( ( dx ) / ( dy ) ) ) );
+        this.angle  = ( float ) ( ( xSign ) * ( FastMath.atan( ( dx ) / ( dy ) ) ) );
 
         // If we're in Q1 (+x, -+y) or in Q2 (-x, +y)
         if ( ( mx > this.getX() && my > this.getY() ) || ( mx < this.getX() && my > this.getY() ) )

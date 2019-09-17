@@ -63,7 +63,6 @@ public class StandardFadeController
         }
         else
         {
-
             this.firstColor = false;
         }
         if ( this.time >= 0.0F && !this.firstColor )
@@ -75,14 +74,10 @@ public class StandardFadeController
             this.firstColor = true;
         }
 
-        int r = ( int ) ( this.time * this.COLOR_TWO.getRed() + ( 1.0F - this.time ) * this.COLOR_ONE.getRed() );
+        int r = ( int ) ( this.time * this.COLOR_TWO.getRed()   + ( 1.0F - this.time ) * this.COLOR_ONE.getRed() );
         int g = ( int ) ( this.time * this.COLOR_TWO.getGreen() + ( 1.0F - this.time ) * this.COLOR_ONE.getGreen() );
-        int b = ( int ) ( this.time * this.COLOR_TWO.getBlue() + ( 1.0F - this.time ) * this.COLOR_ONE.getBlue() );
+        int b = ( int ) ( this.time * this.COLOR_TWO.getBlue()  + ( 1.0F - this.time ) * this.COLOR_ONE.getBlue() );
 
-        r = StdOps.clamp( r, 0, 255 );
-        g = StdOps.clamp( g, 0, 255 );
-        b = StdOps.clamp( b, 0, 255 );
-
-        return new Color( r, g, b );
+        return new Color( StdOps.clamp( r, 0, 255 ), StdOps.clamp( g, 0, 255 ), StdOps.clamp( b, 0, 255 ) );
     }
 }

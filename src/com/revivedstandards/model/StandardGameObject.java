@@ -354,6 +354,12 @@ public abstract class StandardGameObject implements Renderable, Updatable
         return this.bounds;
     }
 
+    /**
+     * Returns a 2D rectangle around the StandardGameObject representing
+     * its collision boundaries. Good for debugging purposes.
+     * 
+     * @return
+     */
     public Rectangle getBounds ()
     {
         this.bounds = new Rectangle( ( int ) this.x, ( int ) this.y, this.width, this.height );

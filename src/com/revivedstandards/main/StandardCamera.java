@@ -107,8 +107,8 @@ public class StandardCamera extends StandardGameObject
         {
             location = this.minX;
         }
-        this.setVelX( ( location - this.getX() ) * this.snap );
-        this.setX( this.getX() + this.getVelX() );
+        this.setVelX( ( int ) ( ( location - this.getX() ) * this.snap ) );
+        this.setX( ( int ) ( this.getX() + this.getVelX() ) );
     }
 
     public void tickY ()
@@ -122,8 +122,8 @@ public class StandardCamera extends StandardGameObject
         {
             location = this.minY;
         }
-        this.setVelY( ( location - this.getY() ) * this.snap );
-        this.setY( this.getY() + this.getVelY() );
+        this.setVelY( ( int ) ( ( location - this.getY() ) * this.snap ) );
+        this.setY( ( int ) ( this.getY() + this.getVelY() ) );
 
     }
 

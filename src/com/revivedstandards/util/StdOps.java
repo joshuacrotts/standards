@@ -184,8 +184,10 @@ public abstract class StdOps
 
     /**
      * Algorithm: http://ilab.usc.edu/wiki/index.php/Fast_Square_Root
+     * @param x
+     * @return
      */
-    public static float fastsqrt ( float x )
+    public static float fastSqrt ( float x )
     {
         float xhalf = 0.5f * x;
         float u = x;

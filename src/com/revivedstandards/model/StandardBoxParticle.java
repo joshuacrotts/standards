@@ -57,9 +57,9 @@ public class StandardBoxParticle extends StandardParticle
     private final boolean variableVelocity;
 
     public StandardBoxParticle ( double x, double y, double dimension,
-            double velX, double velY, Color c, double life,
-            StandardParticleHandler sph, double rotationAngle,
-            ShapeType shape, boolean variableVelocity )
+                                 double velX, double velY, Color c, double life,
+                                 StandardParticleHandler sph, double rotationAngle,
+                                 ShapeType shape, boolean variableVelocity )
     {
         super( x, y, life, sph, c, rotationAngle );
 
@@ -90,13 +90,13 @@ public class StandardBoxParticle extends StandardParticle
 
         if ( this.shapeType == ShapeType.RECTANGLE )
         {
-            g2.fillRect( ( int ) this.getX(), ( int ) this.getY(),
-                    ( int ) this.getWidth(), ( int ) this.getHeight() );
+            g2.fillRect( ( int ) this.getX(),     ( int ) this.getY(),
+                         ( int ) this.getWidth(), ( int ) this.getHeight() );
         }
         else
         {
-            g2.fillOval( ( int ) this.getX(), ( int ) this.getY(),
-                    ( int ) this.getWidth(), ( int ) this.getHeight() );
+            g2.fillOval( ( int ) this.getX(),     ( int ) this.getY(),
+                         ( int ) this.getWidth(), ( int ) this.getHeight() );
         }
     }
 
@@ -118,7 +118,7 @@ public class StandardBoxParticle extends StandardParticle
         if ( !this.variableVelocity )
         {
             throw new IllegalStateException( "To set the variable velocities, "
-                    + "this particle must have variable velocities enabled." );
+                       + "this particle must have variable velocities enabled." );
         }
         this.velXFactor = StdOps.randBounds( min, 0.0, 0.0, max );
     }
@@ -141,7 +141,7 @@ public class StandardBoxParticle extends StandardParticle
         if ( !this.variableVelocity )
         {
             throw new IllegalStateException( "To set the variable velocities, "
-                    + "this particle must have variable velocities enabled." );
+                       + "this particle must have variable velocities enabled." );
         }
         this.velYFactor = StdOps.randBounds( min, 0.0, 0.0, max );
     }

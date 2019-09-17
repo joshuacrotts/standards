@@ -66,6 +66,11 @@ public abstract class StandardLevel implements Renderable, Updatable
         this.bgImage = StdOps.loadImage( this.bgImagePath );
     }
 
+    /**
+     * Level data will use the image specified by fileLocation and
+     * read in whatever data is necessary to spawn entities or other
+     * game objects.
+     */
     public abstract void loadLevelData ();
 
     @Override

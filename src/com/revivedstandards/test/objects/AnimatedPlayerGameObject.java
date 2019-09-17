@@ -6,7 +6,7 @@ import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.StandardAnimation;
 import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.model.StandardID;
-import com.revivedstandards.test.commands.MovementCommand;
+import com.revivedstandards.test.commands.MoveCommand;
 import com.revivedstandards.util.StdOps;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -15,10 +15,23 @@ import java.awt.image.BufferedImage;
 public class AnimatedPlayerGameObject extends StandardGameObject
 {
 
+    //
+    //  Game and Camera variables
+    //
     private final StandardGame sg;
     private final StandardCamera sc;
 
-    private final MovementCommand rightMovement;
+    //
+    //  Movements
+    //
+    private final MoveCommand rightMovement;
+    private final MoveCommand leftMovement;
+
+    //
+    //  BufferedImages shared across many references of this object.
+    //
+    private static final BufferedImage[] leftFrames;
+    private static final BufferedImage[] rightFrames;
 
     private boolean moving = false;
     private final int spriteSize = 156;
@@ -27,15 +40,31 @@ public class AnimatedPlayerGameObject extends StandardGameObject
     {
         super( x, y, StandardID.Player );
 
+        //  Assigns the default game and camera vars
         this.sg = sg;
         this.sc = sc;
 
         this.setWidth( spriteSize );
         this.setHeight( spriteSize );
 
-        this.setAnimation( new StandardAnimatorController( new StandardAnimation( this, this.getFrames(), 20, 16 ) ) );
+        //  Creates two StandardAnimatorControllers
+        StandardAnimatorController leftController  = new StandardAnimatorController( (
+                                                     new StandardAnimation( this, leftFrames, StdOps.rand( 10, 30 ), 16 ) ) );
+        StandardAnimatorController rightController = new StandardAnimatorController( (
+                                                     new StandardAnimation( this, rightFrames, StdOps.rand( 10, 30 ), 16 ) ) );
 
-        this.rightMovement = new MovementCommand( this, this.getAnimationController(), 2.0f, 0f );
+        //  Defaults animation to the right controller
+        this.setAnimation( rightController );
+
+        //
+        //  Initializes movement objects
+        //  After initializing the left & right controllers, we delegate control
+        //  over when they're set to the commands.
+        //
+        this.leftMovement = new MoveCommand( this, leftController, -2.0f, 0f );
+        this.leftMovement.bind( this.sg.getKeyboard(), KeyEvent.VK_A );
+
+        this.rightMovement = new MoveCommand( this, rightController, 2.0f, 0f );
         this.rightMovement.bind( this.sg.getKeyboard(), KeyEvent.VK_D );
     }
 
@@ -60,7 +89,19 @@ public class AnimatedPlayerGameObject extends StandardGameObject
         }
     }
 
-    private BufferedImage[] getFrames ()
+    private static BufferedImage[] initLeftFrames ()
+    {
+        BufferedImage[] frames = new BufferedImage[ 32 ];
+
+        for ( int i = 0 ; i < frames.length ; i++ )
+        {
+            frames[ i ] = StdOps.loadImage( "src/res/img/char_walk_l/walk_l_" + i + ".png" );
+        }
+
+        return frames;
+    }
+
+    private static BufferedImage[] initRightFrames ()
     {
         BufferedImage[] frames = new BufferedImage[ 32 ];
 
@@ -75,6 +116,15 @@ public class AnimatedPlayerGameObject extends StandardGameObject
     public void setMoving ( boolean b )
     {
         this.moving = b;
+    }
+
+    //
+    //  Initializes the frame arrays
+    //
+    static
+    {
+        leftFrames = AnimatedPlayerGameObject.initLeftFrames();
+        rightFrames = AnimatedPlayerGameObject.initRightFrames();
     }
 
 }

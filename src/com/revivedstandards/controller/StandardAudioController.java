@@ -40,7 +40,13 @@ import java.util.LinkedList;
  */
 public class StandardAudioController
 {
-
+    //
+    //  Underlying HashMap which maps the hashCode() of the file's location
+    //  in the system (/res/audio/...wav) to a LinkedList of StandardAudio
+    //  objects. This acts as the buffer; when the user plays a track
+    //  specified by the file name (and location), it will look up the
+    //  corresponding list and find a track that is not playing.
+    //
     private static HashMap<Integer, LinkedList<StandardAudio>> audioBuffer;
 
     /**
