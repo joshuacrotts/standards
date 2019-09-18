@@ -54,8 +54,8 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
         this.setWidth( this.getWidth() );
         this.setHeight( this.getHeight() );
         this.setAlive( true );
-        this.setVelX( parent.getVelX() * 5 );
-        this.setVelY( parent.getVelY() * 5 );
+        this.setVelX( parent.getVelX() * 10 );
+        this.setVelY( parent.getVelY() * 10 );
 
         this.sch.flagAlive( this.getId() );
         this.sch.addCollider( this.getId() );

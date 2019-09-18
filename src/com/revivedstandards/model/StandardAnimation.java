@@ -26,6 +26,7 @@
  */
 package com.revivedstandards.model;
 
+import com.revivedstandards.controller.StandardAnimatorController;
 import com.revivedstandards.view.StandardAnimationView;
 import java.awt.image.BufferedImage;
 
@@ -44,6 +45,12 @@ public final class StandardAnimation
     //  frameIndex.
     //
     private final StandardAnimationView view;
+
+    //
+    //  Reference to an animation that this animation should
+    //  return to upon completion.
+    //
+    private StandardAnimatorController  returnAnimation   = null;
 
     // Current frame index in the array of images
     private int                         frameIndex;
@@ -112,7 +119,7 @@ public final class StandardAnimation
      */
     private void setCurrentFrameIndex ( int frameIndex )
     {
-        if ( frameIndex < this.startFrameIndex || frameIndex >= this.endFrameIndex )
+        if ( ( frameIndex < this.startFrameIndex || frameIndex >= this.endFrameIndex ) && this.returnAnimation == null )
         {
             // If we hit the ending frame position and we have a frame halt position,
             // we will reset the frame index pointer to this position.
@@ -120,7 +127,12 @@ public final class StandardAnimation
             {
                 this.frameIndex = this.frameHaltPosition;
             }
-            else
+            else if ( this.returnAnimation != null )
+            {
+                this.stopAnimation();
+                this.sgo.setAnimation( returnAnimation );
+                return;
+            }
             {
                 this.frameIndex = this.startFrameIndex;
             }
@@ -131,7 +143,6 @@ public final class StandardAnimation
             this.view.setCurrentFrameIndex( frameIndex );
             this.frameIndex = frameIndex;
         }
-
     }
 
     /**
@@ -184,6 +195,11 @@ public final class StandardAnimation
     {
         this.frameIndex = this.startFrameIndex;
         this.setCurrentFrameIndex( 0 );
+    }
+
+    public void setReturnAnimation( StandardAnimatorController sac )
+    {
+        this.returnAnimation = sac;
     }
 
     public StandardGameObject getStandardGameObject ()
@@ -239,7 +255,7 @@ public final class StandardAnimation
     /**
      * Mirrors the image along the y-axis. BE AWARE, this is very
      * buggy. It is best to just manually create the reversed images.
-     * 
+     *
      * @param mirror
      */
     public void setMirrored ( boolean mirror )

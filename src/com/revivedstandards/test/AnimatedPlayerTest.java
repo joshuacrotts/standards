@@ -18,11 +18,6 @@ public class AnimatedPlayerTest extends StandardGame
         this.sh = new StandardHandler();
         this.sh.addEntity( this.player );
 
-        for ( int i = 0, y = 100 ; i < 100 ; i++, y += 50 )
-        {
-            this.sh.addEntity( new AnimatedPlayerGameObject( this, null, 200, y ) );
-        }
-
         this.StartGame();
     }
 

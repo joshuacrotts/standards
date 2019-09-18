@@ -82,6 +82,7 @@ public class StandardAnimatorController
         this.animation.stopAnimation();
     }
 
+
     public StandardAnimation getStandardAnimation ()
     {
         return this.animation;
