@@ -221,6 +221,7 @@ public abstract class StandardGameObject implements Renderable, Updatable
     public void setAnimation ( StandardAnimatorController animation )
     {
         this.activeAnimation = animation;
+        this.activeAnimation.stopAnimation();
     }
 
     public double getX ()
