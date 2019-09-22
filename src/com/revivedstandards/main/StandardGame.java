@@ -188,18 +188,17 @@ public abstract class StandardGame extends Canvas implements Runnable
     {
         if ( !this.running )
         {
+            System.out.println("Not running");
             return;
         }
-        try
-        {
-            this.thread.join();
-        }
-        catch ( InterruptedException e )
-        {
-            e.printStackTrace();
-        }
+        //  Closes window
+        this.window.getFrame().dispose();
+
+        //  Closes the thread
+        this.thread.interrupt();
+
+        //  Flags the game as no longer running
         this.running = false;
-        System.exit( 0 );
     }
 
     /**
