@@ -115,12 +115,7 @@ public class StandardCollisionHandler extends StandardHandler
                                 obj1.setVelX( obj1.getVelX() - norm[ 0 ] * dot * res );
                                 obj1.setVelY( obj1.getVelY() - norm[ 1 ] * dot * res );
 
-                                if ( StandardCollisionHandler.DEATH_FLAGS.
-                                        contains( obj1.getId() ) )
-                                {
-                                    obj1.setAlive( false );
-                                }
-
+                               this.handleCollision(obj1, obj2);
                             }
                         }
                     }
@@ -129,6 +124,15 @@ public class StandardCollisionHandler extends StandardHandler
             obj1.tick();
         }
     }
+
+    /**
+     * User-defined method to determine what happens INTERNALLY when two objects collide.
+     * @param obj1
+     * @param obj2
+     */
+    public void handleCollision(StandardGameObject obj1, StandardGameObject obj2) {
+        
+    };
 
     /**
      * Adding an ID to this method will cause the collision handler to set the
@@ -197,5 +201,13 @@ public class StandardCollisionHandler extends StandardHandler
             norm[ 0 ] = 0.0D;
             norm[ 1 ] = ( ( b1.y < b2.y ) ? -1 : 1 );
         }
+    }
+
+    public boolean isInColliders( StandardID id ) {
+        return COLLISION_FLAGS.contains(id);
+    }
+
+    public boolean isInDeathFlags( StandardID id ) {
+        return DEATH_FLAGS.contains(id);
     }
 }
