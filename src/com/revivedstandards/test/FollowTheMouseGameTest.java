@@ -154,6 +154,6 @@ public class FollowTheMouseGameTest extends StandardGame
     public static void main ( String[] args )
     {
         FollowTheMouseGameTest gameTest = new FollowTheMouseGameTest();
-        gameTest.StartGame();
+        gameTest.startGame();
     }
 }

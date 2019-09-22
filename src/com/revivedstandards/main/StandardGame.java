@@ -54,7 +54,6 @@ import java.awt.image.BufferStrategy;
  */
 public abstract class StandardGame extends Canvas implements Runnable
 {
-
     //
     //  Default screen size
     //
@@ -171,7 +170,7 @@ public abstract class StandardGame extends Canvas implements Runnable
     /**
      * Initializes the thread and starts the game loop.
      */
-    public void StartGame ()
+    public void startGame ()
     {
         if ( this.running )
         {
@@ -185,7 +184,7 @@ public abstract class StandardGame extends Canvas implements Runnable
     /**
      * Halts the thread, stops the game.
      */
-    public void StopGame ()
+    public void stopGame ()
     {
         if ( !this.running )
         {
@@ -271,7 +270,7 @@ public abstract class StandardGame extends Canvas implements Runnable
             }
         }
 
-        StopGame();
+        this.stopGame();
     }
 
     /**
@@ -305,12 +304,12 @@ public abstract class StandardGame extends Canvas implements Runnable
         return this.window.height();
     }
 
-    public void framesToConsole ( boolean print )
+    public void printFramesToConsole ( boolean print )
     {
         this.consoleFPS = print;
     }
 
-    public void framesToTitle ( boolean print )
+    public void printFramesToTitle ( boolean print )
     {
         this.titleFPS = print;
     }

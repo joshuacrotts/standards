@@ -18,7 +18,7 @@ public class AnimatedPlayerTest extends StandardGame
         this.sh = new StandardHandler();
         this.sh.addEntity( this.player );
 
-        this.StartGame();
+        this.startGame();
     }
 
     @Override
