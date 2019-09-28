@@ -87,6 +87,11 @@ public class StandardCollisionHandler extends StandardHandler
                         norm[ 0 ] = 0.0D;
                         norm[ 1 ] = 0.0D;
 
+                        if ( obj1.getBounds().intersects( obj2.getBounds() ) )
+                        {
+                            this.handleBoundsCollision(obj1, obj2);
+                        }
+
                         if ( obj1 != obj2 && obj1.getId() != StandardID.Ignore && obj1.isAlive() && obj2.isAlive() )
                         {
                             if ( StandardCollisionHandler.COLLISION_FLAGS.contains( obj2.getId() )
@@ -130,9 +135,21 @@ public class StandardCollisionHandler extends StandardHandler
      * @param obj1
      * @param obj2
      */
-    public void handleCollision(StandardGameObject obj1, StandardGameObject obj2) {
-        
-    };
+    public void handleCollision( StandardGameObject obj1, StandardGameObject obj2 )
+    {
+    }
+
+    /**
+     * User-defined method to determine what happens INTERNALLY when the BOUNDS of two
+     * objects collide (not necessarily the point of impact; rather the AABB
+     * bounds of the objects. These do not use the StandardID colliders to determine
+     * collisions.
+     * @param obj1
+     * @param obj2
+     */
+    public void handleBoundsCollision( StandardGameObject obj1, StandardGameObject obj2 )
+    {
+    }
 
     /**
      * Adding an ID to this method will cause the collision handler to set the
