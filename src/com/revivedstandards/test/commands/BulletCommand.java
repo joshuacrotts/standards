@@ -19,32 +19,29 @@ import com.revivedstandards.test.objects.TriangleGameObject;
  *
  * @author Joshua
  */
-public class BulletCommand extends Command
-{
+public class BulletCommand extends Command {
+
     private final FollowTheMouseGameTest sg;
     private final TriangleGameObject obj;
     private final StandardCollisionHandler globalHandler;
 
-    public BulletCommand ( FollowTheMouseGameTest sg, TriangleGameObject obj, StandardCollisionHandler gh )
-    {
+    public BulletCommand(FollowTheMouseGameTest sg, TriangleGameObject obj, StandardCollisionHandler gh) {
         this.sg = sg;
         this.obj = obj;
         this.globalHandler = gh;
     }
 
     @Override
-    public void pressed ( float dt )
-    {
-        if ( this.obj.getBulletCount() == 0 || this.sg.getGameState() == GameState.PAUSED )
-        {
+    public void pressed(float dt) {
+        if (this.obj.getBulletCount() == 0 || this.sg.getGameState() == GameState.PAUSED) {
             return;
         }
 
-        this.globalHandler.addEntity( new BulletGameObject( this.sg, this.globalHandler, this.obj.getCamera(), this.obj,
-                ( int ) this.obj.getX() + this.obj.getWidth() / 2,
-                ( int ) this.obj.getY() + this.obj.getHeight() / 2 ) );
+        this.globalHandler.addEntity(new BulletGameObject(this.sg, this.globalHandler, this.obj.getCamera(), this.obj,
+                (int) this.obj.getX() + this.obj.getWidth() / 2,
+                (int) this.obj.getY() + this.obj.getHeight() / 2));
 
-        StandardAudioController.play( "src/res/audio/sfx/laser_sfx.wav" );
+        StandardAudioController.play("src/res/audio/sfx/laser_sfx.wav");
 
         this.obj.decrementBulletCount();
     }

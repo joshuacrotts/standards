@@ -27,64 +27,58 @@
  */
 package com.revivedstandards.model;
 
-import com.revivedstandards.handlers.StandardHandler;
+import com.revivedstandards.handlers.StandardParticleHandler;
 import java.awt.Color;
 
-public abstract class StandardParticle extends StandardGameObject
-{
+public abstract class StandardParticle extends StandardGameObject {
+
+    //  Default color of a particle is black.
     private Color color = Color.BLACK;
-    private StandardHandler handler;
+    
+    //  Reference to handler for the particle.
+    private StandardParticleHandler handler;
     private double rotationAngle;
 
-    public StandardParticle ( double x, double y, double life )
-    {
-        super( ( int ) x, ( int ) y, StandardID.Particle );
+    public StandardParticle(double x, double y, double life) {
+        super((int) x, (int) y, StandardID.Particle);
         life *= 1.0E9D;
-        this.setDeath( System.nanoTime() + ( long ) life );
+        this.setDeath(System.nanoTime() + (long) life);
     }
 
-    public StandardParticle ( double x, double y, StandardHandler handler )
-    {
-        super( ( int ) x, ( int ) y, StandardID.Particle );
+    public StandardParticle(double x, double y, StandardParticleHandler handler) {
+        super((int) x, (int) y, StandardID.Particle);
         this.handler = handler;
     }
 
-    public StandardParticle ( double x, double y, double life, StandardHandler handler )
-    {
-        this( x, y, handler );
+    public StandardParticle(double x, double y, double life, StandardParticleHandler handler) {
+        this(x, y, handler);
         life *= 1.0E9D;
-        this.setDeath( System.nanoTime() + ( long ) life );
+        this.setDeath(System.nanoTime() + (long) life);
     }
 
-    public StandardParticle ( double x, double y, double life, StandardHandler handler, Color c )
-    {
-        this( x, y, life, handler );
+    public StandardParticle(double x, double y, double life, StandardParticleHandler handler, Color c) {
+        this(x, y, life, handler);
         this.color = c;
     }
 
-    public StandardParticle ( double x, double y, double life, StandardHandler handler, Color c, double rotationAngle )
-    {
-        this( x, y, life, handler, c );
+    public StandardParticle(double x, double y, double life, StandardParticleHandler handler, Color c, double rotationAngle) {
+        this(x, y, life, handler, c);
         this.rotationAngle = rotationAngle;
     }
 
-    public double getAngle ()
-    {
+    public double getAngle() {
         return this.rotationAngle;
     }
 
-    public StandardHandler getHandler ()
-    {
+    public StandardParticleHandler getHandler() {
         return this.handler;
     }
 
-    public void setColor ( Color c )
-    {
+    public void setColor(Color c) {
         this.color = c;
     }
 
-    public Color getColor ()
-    {
+    public Color getColor() {
         return this.color;
     }
 }

@@ -32,8 +32,7 @@ package com.revivedstandards.view;
  * information about themselves or other objects within their respective class
  * to the game loop.
  */
-public interface Updatable
-{
+public interface Updatable {
 
-    public abstract void tick ();
+    public abstract void tick();
 }

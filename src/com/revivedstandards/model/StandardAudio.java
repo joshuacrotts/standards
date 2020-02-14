@@ -42,8 +42,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * should never be directly instantiated by the programmer; they should only be
  * instantiated by the controller, via load().
  */
-public final class StandardAudio
-{
+public final class StandardAudio {
 
     //
     //  Javax clip object holding audio information.
@@ -55,9 +54,8 @@ public final class StandardAudio
 
     public static int INFINITELY = Clip.LOOP_CONTINUOUSLY;
 
-    public StandardAudio ( String fileLocation )
-    {
-        this.load( fileLocation );
+    public StandardAudio(String fileLocation) {
+        this.load(fileLocation);
     }
 
     /**
@@ -69,24 +67,20 @@ public final class StandardAudio
      *
      * @param fileName
      */
-    public void load ( String fileName )
-    {
+    public void load(String fileName) {
         this.fileName = fileName;
 
-        try
-        {
+        try {
             //  Find the file and load it into an Audio Input Stream
-            File audioFile = new File( this.fileName );
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream( audioFile );
+            File audioFile = new File(this.fileName);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
             AudioFormat format = audioStream.getFormat();
-            DataLine.Info info = new DataLine.Info( Clip.class, format );
-            this.audioClip = ( Clip ) AudioSystem.getLine( info );
+            DataLine.Info info = new DataLine.Info(Clip.class, format);
+            this.audioClip = (Clip) AudioSystem.getLine(info);
 
             //  Open the lip and load samples from the AIS
-            this.audioClip.open( audioStream );
-        }
-        catch ( UnsupportedAudioFileException | IOException | LineUnavailableException e )
-        {
+            this.audioClip.open(audioStream);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
@@ -94,10 +88,8 @@ public final class StandardAudio
     /**
      * Starts the clip.
      */
-    public void start ()
-    {
-        if ( !this.audioClip.isRunning() )
-        {
+    public void start() {
+        if ( ! this.audioClip.isRunning()) {
             this.audioClip.start();
         }
     }
@@ -105,10 +97,8 @@ public final class StandardAudio
     /**
      * Stops the current audio track.
      */
-    public void stop ()
-    {
-        if ( this.audioClip.isRunning() )
-        {
+    public void stop() {
+        if (this.audioClip.isRunning()) {
             this.audioClip.stop();
         }
     }
@@ -119,28 +109,21 @@ public final class StandardAudio
      *
      * @param n
      */
-    public void loop ( int n )
-    {
-        if ( n < 0 )
-        {
-            throw new IllegalArgumentException( "Cannot loop for less than 0 times." );
-        }
-        else if ( n >= 0 && n < StandardAudio.INFINITELY )
-        {
-            this.audioClip.loop( n );
-        }
-        else
-        {
-            this.audioClip.loop( Clip.LOOP_CONTINUOUSLY );
+    public void loop(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("Cannot loop for less than 0 times.");
+        } else if (n >= 0 && n < StandardAudio.INFINITELY) {
+            this.audioClip.loop(n);
+        } else {
+            this.audioClip.loop(Clip.LOOP_CONTINUOUSLY);
         }
     }
 
     /**
      * Sets the frame position of the current audio clip to 0.
      */
-    public void resetFramePosition ()
-    {
-        this.audioClip.setFramePosition( 0 );
+    public void resetFramePosition() {
+        this.audioClip.setFramePosition(0);
     }
 
     /**
@@ -148,18 +131,15 @@ public final class StandardAudio
      *
      * @param x
      */
-    public void setFramePosition ( int x )
-    {
-        this.audioClip.setFramePosition( x );
+    public void setFramePosition(int x) {
+        this.audioClip.setFramePosition(x);
     }
 
-    public boolean isPlaying ()
-    {
+    public boolean isPlaying() {
         return this.audioClip.isRunning();
     }
 
-    public String getFileName ()
-    {
+    public String getFileName() {
         return this.fileName;
     }
 

@@ -27,8 +27,7 @@
  */
 package com.revivedstandards.model;
 
-public enum StandardID
-{
+public enum StandardID {
     Player, Particle, Trail, Enemy, Wall, Obstacle, StandardGameObject,
     StandardButton, Interactor, Entity, Weapon, NPC, Large, Multi,
     Powerup, Block, Brick, NULL, Pipe, Camera, Skeleton, Zombie, Boss,

@@ -46,10 +46,7 @@ import javax.imageio.ImageIO;
  * Clamping a value to a specific range - Loading an image, fast math from Quake
  * III (sqrt and inverse sqrt())
  */
-public abstract class StdOps
-{
-
-    private static final int SQRT_MAGIC = 0x5f3759df;
+public abstract class StdOps {
 
     /**
      * Returns a random integer between min and max.
@@ -58,13 +55,11 @@ public abstract class StdOps
      * @param max
      * @return random integer
      */
-    public static int rand ( int min, int max )
-    {
-        if ( min >= max )
-        {
-            throw new IllegalArgumentException( " Max must be smaller than min " );
+    public static int rand(int min, int max) {
+        if (min >= max) {
+            throw new IllegalArgumentException(" Max must be smaller than min ");
         }
-        return ThreadLocalRandom.current().nextInt( min, max + 1 );
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 
     /**
@@ -81,16 +76,12 @@ public abstract class StdOps
      * In the end, min leq x leq minUpperBound OR maxLowerBound leq x leq max;
      * @return
      */
-    public static double randBounds ( double min, double minUpperBound, double maxLowerBound, double max )
-    {
+    public static double randBounds(double min, double minUpperBound, double maxLowerBound, double max) {
         double n;
 
-        do
-        {
-            n = StdOps.rand( min, max );
-
-        }
-        while ( ( n < min || n > minUpperBound ) && ( n < maxLowerBound || n > max ) );
+        do {
+            n = StdOps.rand(min, max);
+        } while (( n < min || n > minUpperBound ) && ( n < maxLowerBound || n > max ));
 
         return n;
     }
@@ -102,14 +93,12 @@ public abstract class StdOps
      * @param max
      * @return
      */
-    public static double rand ( double min, double max )
-    {
-        if ( min >= max )
-        {
-            throw new IllegalArgumentException( " Max must be smaller than min " );
+    public static double rand(double min, double max) {
+        if (min >= max) {
+            throw new IllegalArgumentException("Max must be smaller than min.");
         }
 
-        return ThreadLocalRandom.current().nextDouble( min, max + 1 );
+        return ThreadLocalRandom.current().nextDouble(min, max + 1);
     }
 
     /**
@@ -122,10 +111,10 @@ public abstract class StdOps
      * @param y - y position of rectangle
      * @param width - width of rectangle
      * @param height - height of rectangle
-     * @return
+     * @return true if the coordinates of the mouse are over the rectangle
+     * passed.
      */
-    public static boolean mouseOver ( int mx, int my, int x, int y, int width, int height )
-    {
+    public static boolean mouseOver(int mx, int my, int x, int y, int width, int height) {
         return ( ( mx > x ) && ( mx < x + width ) ) && ( ( my > y ) && ( my < y + height ) );
     }
 
@@ -136,64 +125,51 @@ public abstract class StdOps
      * @param min
      * @param max
      */
-    public static int clamp ( int num, int min, int max )
-    {
-        if ( num < min )
-        {
+    public static int clamp(int num, int min, int max) {
+        if (num < min) {
             num = min;
-        }
-        else if ( num > max )
-        {
+        } else if (num > max) {
             num = max;
         }
 
         return num;
     }
 
-    public static Font initFont ( String path, float size )
-    {
+    /**
+     * Initializes a font from a specified path and size.
+     *
+     * @param path
+     * @param size
+     * @return
+     */
+    public static Font initFont(String path, float size) {
         Font f = null;
 
-        try
-        {
-            f = Font.createFont( Font.TRUETYPE_FONT, new File( path ) ).deriveFont( size );
+        try {
+            f = Font.createFont(Font.TRUETYPE_FONT, new File(path)).deriveFont(size);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont( Font.createFont( Font.TRUETYPE_FONT, new File( path ) ) );
-        }
-        catch ( FontFormatException | IOException e )
-        {
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(path)));
+        } catch (FontFormatException | IOException e) {
             e.printStackTrace();
             return null;
         }
         return f;
     }
 
-    public static BufferedImage loadImage ( String path )
-    {
+    /**
+     * Loads an image from a file.
+     *
+     * @param path
+     * @return
+     */
+    public static BufferedImage loadImage(String path) {
         BufferedImage sprite = null;
-        try
-        {
-            sprite = ImageIO.read( new File( path ) );
-        }
-        catch ( IOException e )
-        {
+        try {
+            sprite = ImageIO.read(new File(path));
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return sprite;
-    }
-
-    /**
-     * Algorithm: http://ilab.usc.edu/wiki/index.php/Fast_Square_Root
-     * @param x
-     * @return
-     */
-    public static float fastSqrt ( float x )
-    {
-        float xhalf = 0.5f * x;
-        float u = x;
-        int i = 0;
-        i = StdOps.SQRT_MAGIC - ( i >> 1 );  // gives initial guess y0
-        return x * u * ( 1.5f - xhalf * u * u );// Newton step, repeating increases accuracy
     }
 
     /**
@@ -202,12 +178,11 @@ public abstract class StdOps
      * @param x
      * @return
      */
-    public static double fastInvSqrt ( double x )
-    {
+    public static double fastInvSqrt(double x) {
         double xhalf = 0.5d * x;
-        long i = Double.doubleToLongBits( x );
+        long i = Double.doubleToLongBits(x);
         i = 0x5fe6ec85e7de30daL - ( i >> 1 );
-        x = Double.longBitsToDouble( i );
+        x = Double.longBitsToDouble(i);
         x *= ( 1.5d - xhalf * x * x );
         return x;
     }

@@ -43,14 +43,13 @@ import org.apache.commons.math3.util.FastMath;
  * them, the colliding object stops moving. Otherwise, it functions as a normal
  * StandardHandler. Refer to the StandardID enum for these values.
  */
-public class StandardCollisionHandler extends StandardHandler
-{
+public class StandardCollisionHandler extends StandardHandler {
 
     //
     //  Set of StandardID's that, upon collision with some object,
     //  their alive flags are set to false.
     //
-    private static final Set<StandardID> DEATH_FLAGS     = new HashSet<>();
+    private static final Set<StandardID> DEATH_FLAGS = new HashSet<>();
 
     //
     //  Set of StandardIDs that have collision properties and should be
@@ -58,69 +57,54 @@ public class StandardCollisionHandler extends StandardHandler
     //
     private static final Set<StandardID> COLLISION_FLAGS = new HashSet<>();
 
-    public StandardCollisionHandler ( StandardCamera c )
-    {
-        this.setCamera( c );
+    public StandardCollisionHandler(StandardCamera c) {
+        this.setCamera(c);
     }
 
     @Override
-    public void tick ()
-    {
-        double[] norm = new double[ 2 ];
+    public void tick() {
+        double[] norm = new double[2];
         int vpo = 300;
 
-        Rectangle cam = new Rectangle( ( int ) ( this.getCamera().getX() - vpo - this.getCamera().getVpw() ),
-                                       ( int ) ( this.getCamera().getY() - this.getCamera().getVph() ),
-                                                 this.getCamera().getVpw() * 2 + vpo * 2, this.getCamera().getVph() * 2 );
+        Rectangle cam = new Rectangle((int) ( this.getCamera().getX() - vpo - this.getCamera().getVpw() ),
+                (int) ( this.getCamera().getY() - this.getCamera().getVph() ),
+                this.getCamera().getVpw() * 2 + vpo * 2, this.getCamera().getVph() * 2);
 
-        for ( int i = 0 ; i < this.getEntities().size() ; i++ )
-        {
-            StandardGameObject obj1 = ( StandardGameObject ) this.getEntities().get( i );
+        for (int i = 0; i < this.getEntities().size(); i ++) {
+            StandardGameObject obj1 = (StandardGameObject) this.getEntities().get(i);
 
-            if ( obj1.getBounds().intersects( cam ) )
-            {
-                if ( StandardCollisionHandler.COLLISION_FLAGS.contains( obj1.getId() ) )
-                {
-                    for ( int j = 0 ; j < this.getEntities().size() ; j++ )
-                    {
-                        StandardGameObject obj2 = ( StandardGameObject ) this.getEntities().get( j );
-                        norm[ 0 ] = 0.0D;
-                        norm[ 1 ] = 0.0D;
+            if (obj1.getBounds().intersects(cam)) {
+                if (StandardCollisionHandler.COLLISION_FLAGS.contains(obj1.getId())) {
+                    for (int j = 0; j < this.getEntities().size(); j ++) {
+                        StandardGameObject obj2 = (StandardGameObject) this.getEntities().get(j);
+                        norm[0] = 0.0D;
+                        norm[1] = 0.0D;
 
-                        if ( obj1.getBounds().intersects( obj2.getBounds() ) )
-                        {
+                        if (obj1.getBounds().intersects(obj2.getBounds())) {
                             this.handleBoundsCollision(obj1, obj2);
                         }
 
-                        if ( obj1 != obj2 && obj1.getId() != StandardID.Ignore && obj1.isAlive() && obj2.isAlive() )
-                        {
-                            if ( StandardCollisionHandler.COLLISION_FLAGS.contains( obj2.getId() )
-                                                        && ( obj2.getId() != StandardID.Camera ) )
-                            {
-                                StandardCollisionHandler.intersection( obj1, obj2, norm );
+                        if (obj1 != obj2 && obj1.getId() != StandardID.Ignore && obj1.isAlive() && obj2.isAlive()) {
+                            if (StandardCollisionHandler.COLLISION_FLAGS.contains(obj2.getId())
+                                    && ( obj2.getId() != StandardID.Camera )) {
+                                StandardCollisionHandler.intersection(obj1, obj2, norm);
 
                                 // Fixes vertical collisions....???
-                                if ( norm[ 1 ] == -1.0D )
-                                {
-                                }
-                                else if ( norm[ 1 ] == 1.0D )
-                                {
-                                }
-                                else if ( norm[ 0 ] == 0.0D )
-                                {
+                                if (norm[1] ==  - 1.0D) {
+                                } else if (norm[1] == 1.0D) {
+                                } else if (norm[0] == 0.0D) {
                                     continue;
                                 }
 
                                 double res = obj2.getRestitution();
-                                double dot = obj1.getVelX() * norm[ 0 ] + obj1.getVelY() * norm[ 1 ];
-                                if ( dot > -1.2D )
-                                {
+                                double dot = obj1.getVelX() * norm[0] + obj1.getVelY() * norm[1];
+                                if (dot >  - 1.2D) {
                                 }
 
-                                obj1.setVelX( obj1.getVelX() - norm[ 0 ] * dot * res );
-                                obj1.setVelY( obj1.getVelY() - norm[ 1 ] * dot * res );
+                                obj1.setVelX(obj1.getVelX() - norm[0] * dot * res);
+                                obj1.setVelY(obj1.getVelY() - norm[1] * dot * res);
 
-                               this.handleCollision(obj1, obj2);
+                                this.handleCollision(obj1, obj2);
                             }
                         }
                     }
@@ -131,24 +115,25 @@ public class StandardCollisionHandler extends StandardHandler
     }
 
     /**
-     * User-defined method to determine what happens INTERNALLY when two objects collide.
+     * User-defined method to determine what happens INTERNALLY when two objects
+     * collide.
+     *
      * @param obj1
      * @param obj2
      */
-    public void handleCollision( StandardGameObject obj1, StandardGameObject obj2 )
-    {
+    public void handleCollision(StandardGameObject obj1, StandardGameObject obj2) {
     }
 
     /**
-     * User-defined method to determine what happens INTERNALLY when the BOUNDS of two
-     * objects collide (not necessarily the point of impact; rather the AABB
-     * bounds of the objects. These do not use the StandardID colliders to determine
-     * collisions.
+     * User-defined method to determine what happens INTERNALLY when the BOUNDS
+     * of two objects collide (not necessarily the point of impact; rather the
+     * AABB bounds of the objects. These do not use the StandardID colliders to
+     * determine collisions.
+     *
      * @param obj1
      * @param obj2
      */
-    public void handleBoundsCollision( StandardGameObject obj1, StandardGameObject obj2 )
-    {
+    public void handleBoundsCollision(StandardGameObject obj1, StandardGameObject obj2) {
     }
 
     /**
@@ -158,9 +143,8 @@ public class StandardCollisionHandler extends StandardHandler
      *
      * @param id
      */
-    public void flagAlive ( StandardID id )
-    {
-        StandardCollisionHandler.DEATH_FLAGS.add( id );
+    public void flagAlive(StandardID id) {
+        StandardCollisionHandler.DEATH_FLAGS.add(id);
     }
 
     /**
@@ -168,15 +152,13 @@ public class StandardCollisionHandler extends StandardHandler
      *
      * @param id
      */
-    public void addCollider ( StandardID id )
-    {
-        StandardCollisionHandler.COLLISION_FLAGS.add( id );
+    public void addCollider(StandardID id) {
+        StandardCollisionHandler.COLLISION_FLAGS.add(id);
     }
 
-    private static void intersection ( StandardGameObject r1, StandardGameObject r2, double[] norm )
-    {
-        double x1 = r1.getX() - FastMath.signum( r1.getVelX() );
-        double y1 = r1.getY() - FastMath.signum( r1.getVelY() );
+    private static void intersection(StandardGameObject r1, StandardGameObject r2, double[] norm) {
+        double x1 = r1.getX() - FastMath.signum(r1.getVelX());
+        double y1 = r1.getY() - FastMath.signum(r1.getVelY());
         double x2 = r2.getX();
         double y2 = r2.getY();
 
@@ -185,46 +167,42 @@ public class StandardCollisionHandler extends StandardHandler
         double w2 = r2.getWidth();
         double h2 = r2.getHeight();
 
-        Rectangle2D.Double b1 = new Rectangle2D.Double( x1, y1, w1, h1 );
-        Rectangle2D.Double b2 = new Rectangle2D.Double( x2, y2, w2, h2 );
-        Rectangle2D.Double bx = new Rectangle2D.Double( x1, y1, w1, h1 );
+        Rectangle2D.Double b1 = new Rectangle2D.Double(x1, y1, w1, h1);
+        Rectangle2D.Double b2 = new Rectangle2D.Double(x2, y2, w2, h2);
+        Rectangle2D.Double bx = new Rectangle2D.Double(x1, y1, w1, h1);
 
-        if ( !b1.intersects( b2 ) )
-        {
+        if ( ! b1.intersects(b2)) {
 
-            norm[ 0 ] = 0.0D;
-            norm[ 1 ] = 0.0D;
+            norm[0] = 0.0D;
+            norm[1] = 0.0D;
             return;
         }
 
         bx.x -= r1.getVelX();
         b1.y -= r1.getVelY();
 
-        if ( !bx.intersects( b2 ) )
-        {
+        if ( ! bx.intersects(b2)) {
 
-            norm[ 0 ] = ( ( bx.x < b2.x ) ? -1 : 1 );
-            norm[ 1 ] = 0.0D;
-            if ( !b1.intersects( b2 ) )
-            {
-                norm[ 1 ] = ( ( b1.y < b2.y ) ? -1 : 1 );
+            norm[0] = ( ( bx.x < b2.x ) ? -1 : 1 );
+            norm[1] = 0.0D;
+            if ( ! b1.intersects(b2)) {
+                norm[1] = ( ( b1.y < b2.y ) ? -1 : 1 );
             }
             return;
         }
 
-        if ( !b1.intersects( b2 ) )
-        {
+        if ( ! b1.intersects(b2)) {
 
-            norm[ 0 ] = 0.0D;
-            norm[ 1 ] = ( ( b1.y < b2.y ) ? -1 : 1 );
+            norm[0] = 0.0D;
+            norm[1] = ( ( b1.y < b2.y ) ? -1 : 1 );
         }
     }
 
-    public boolean isInColliders( StandardID id ) {
+    public boolean isInColliders(StandardID id) {
         return COLLISION_FLAGS.contains(id);
     }
 
-    public boolean isInDeathFlags( StandardID id ) {
+    public boolean isInDeathFlags(StandardID id) {
         return DEATH_FLAGS.contains(id);
     }
 }

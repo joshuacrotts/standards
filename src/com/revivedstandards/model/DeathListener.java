@@ -32,17 +32,21 @@ package com.revivedstandards.model;
  * flag should be set in the subclass (trust me I tried to do this with event
  * listeners to no avail) called aliveFlag or something to that effect.
  */
-public interface DeathListener
-{
+public interface DeathListener {
 
     /**
      * Method to be overridden in the implementing class. Once the entities is
      * in a "death" state, this method should be called but only once via some
-     * extra if (deathState) uponDeath() deathState = false; clause or something
-     * similar.
+     * extra: 
+     * 
+     * if (deathState) {
+     *      uponDeath() 
+     * } 
+     * 
+     * deathState = false; 
      *
      * This is useful for if the enemy/object disperses particles, drops items,
      * etc upon their "death".
      */
-    public abstract void uponDeath ();
+    public abstract void uponDeath();
 }

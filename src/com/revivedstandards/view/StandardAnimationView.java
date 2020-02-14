@@ -28,8 +28,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class StandardAnimationView implements Renderable
-{
+public class StandardAnimationView implements Renderable {
 
     //
     //  BufferedImage frames for the StandardAnimation model.
@@ -38,47 +37,44 @@ public class StandardAnimationView implements Renderable
     private final BufferedImage[] animationFrames;
 
     //
-    //  Parent StandardGameObject
+    //  Parent StandardGameObject.
     //
     private final StandardGameObject obj;
 
     //
-    //  Reference to the current frame of animation
+    //  Reference to the current frame of animation.
     //
     private BufferedImage currentFrame;
 
-    public StandardAnimationView ( BufferedImage[] frames, StandardGameObject obj )
-    {
+    public StandardAnimationView(BufferedImage[] frames, StandardGameObject obj) {
         this.animationFrames = frames;
         this.obj = obj;
     }
 
     @Override
-    public void render ( Graphics2D g2 )
-    {
-        g2.drawImage( this.currentFrame, ( int ) this.obj.getX(), ( int ) this.obj.getY(),
-                      this.currentFrame.getWidth(), this.currentFrame.getHeight(), null );
+    public void render(Graphics2D g2) {
+        g2.drawImage(this.currentFrame, (int) this.obj.getX(), (int) this.obj.getY(),
+                this.currentFrame.getWidth(), this.currentFrame.getHeight(), null);
     }
 
     /**
-     * Renders the current frame at the parent's
-     * x and y position. Theta is a rotation factor in degrees.
+     * Renders the current frame at the parent's x and y position. Theta is a
+     * rotation factor in degrees.
      *
      * @param g2
      * @param theta
      */
-    public void render ( Graphics2D g2, double theta )
-    {
+    public void render(Graphics2D g2, double theta) {
         AffineTransform backup = g2.getTransform();
         AffineTransform transform = new AffineTransform();
-        transform.rotate( theta, ( this.obj.getX() + this.currentFrame.getWidth() / 2.0f ),
-                                 ( this.obj.getY() + this.currentFrame.getHeight() / 2.0f ) );
+        transform.rotate(theta, ( this.obj.getX() + this.currentFrame.getWidth() / 2.0f ),
+                ( this.obj.getY() + this.currentFrame.getHeight() / 2.0f ));
 
-        g2.transform( transform );
-        g2.drawImage( this.currentFrame, ( int ) this.obj.getX(), ( int ) this.obj.getY(),
-                      this.currentFrame.getWidth(), this.currentFrame.getHeight(), null );
+        g2.transform(transform);
+        g2.drawImage(this.currentFrame, (int) this.obj.getX(), (int) this.obj.getY(),
+                this.currentFrame.getWidth(), this.currentFrame.getHeight(), null);
 
-        g2.setTransform( backup );
+        g2.setTransform(backup);
     }
 
     /**
@@ -90,41 +86,36 @@ public class StandardAnimationView implements Renderable
      * @param y
      * @param theta
      */
-    public void render ( Graphics2D g2, double x, double y, double theta )
-    {
+    public void render(Graphics2D g2, double x, double y, double theta) {
         AffineTransform backup = g2.getTransform();
         AffineTransform transform = new AffineTransform();
-        transform.rotate( theta, ( x + this.currentFrame.getWidth() / 2.0f ), ( y + this.currentFrame.getHeight() / 2.0f ) );
+        transform.rotate(theta, ( x + this.currentFrame.getWidth() / 2.0f ), ( y + this.currentFrame.getHeight() / 2.0f ));
 
-        g2.transform( transform );
-        g2.drawImage( this.currentFrame, ( int ) x, ( int ) y, this.currentFrame.getWidth(), this.currentFrame.getHeight(), null );
-        g2.setTransform( backup );
+        g2.transform(transform);
+        g2.drawImage(this.currentFrame, (int) x, (int) y, this.currentFrame.getWidth(), this.currentFrame.getHeight(), null);
+        g2.setTransform(backup);
     }
 
-    public void render ( Graphics2D g2, double x, double y, double width, double height, double theta )
-    {
+    public void render(Graphics2D g2, double x, double y, double width, double height, double theta) {
         AffineTransform backup = g2.getTransform();
         AffineTransform transform = new AffineTransform();
-        transform.rotate( theta, ( x + this.currentFrame.getWidth() / 2.0f ), ( y + this.currentFrame.getHeight() / 2.0f ) );
+        transform.rotate(theta, ( x + this.currentFrame.getWidth() / 2.0f ), ( y + this.currentFrame.getHeight() / 2.0f ));
 
-        g2.transform( transform );
-        g2.drawImage( this.currentFrame, ( int ) x, ( int ) y, ( int ) width, ( int ) height, null );
-        g2.setTransform( backup );
+        g2.transform(transform);
+        g2.drawImage(this.currentFrame, (int) x, (int) y, (int) width, (int) height, null);
+        g2.setTransform(backup);
     }
 
-    public BufferedImage[] getFrames ()
-    {
+    public BufferedImage[] getFrames() {
         return this.animationFrames;
     }
 
-    public BufferedImage getCurrentFrame ()
-    {
+    public BufferedImage getCurrentFrame() {
         return this.currentFrame;
     }
 
-    public void setCurrentFrameIndex ( int frame )
-    {
-        this.currentFrame = this.animationFrames[ frame ];
+    public void setCurrentFrameIndex(int frame) {
+        this.currentFrame = this.animationFrames[frame];
     }
 
 }

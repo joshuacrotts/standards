@@ -19,8 +19,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class BulletGameObject extends StandardGameObject implements DeathListener
-{
+public class BulletGameObject extends StandardGameObject implements DeathListener {
 
     //
     //  Miscellaneous variables
@@ -32,7 +31,7 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
     //
     //  Static reference to the BufferedImages
     //
-    private static final BufferedImage[] frames = new BufferedImage[ 4 ];
+    private static final BufferedImage[] frames = new BufferedImage[4];
 
     //
     //  Handler for particle explosions after the bullet
@@ -45,77 +44,65 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
     //
     private boolean aliveFlag = true;
 
-    public BulletGameObject ( FollowTheMouseGameTest sg, StandardCollisionHandler parentContainer, StandardCamera sc, TriangleGameObject parent, int x, int y )
-    {
-        super( x, y, StandardID.Projectile );
+    public BulletGameObject(FollowTheMouseGameTest sg, StandardCollisionHandler parentContainer, StandardCamera sc, TriangleGameObject parent, int x, int y) {
+        super(x, y, StandardID.Projectile);
         this.sg = sg;
         this.sch = parentContainer;
-        this.setAnimation( new StandardAnimatorController( new StandardAnimation( this, frames, 20 ) ) );
-        this.setWidth( this.getWidth() );
-        this.setHeight( this.getHeight() );
-        this.setAlive( true );
-        this.setVelX( parent.getVelX() * 10 );
-        this.setVelY( parent.getVelY() * 10 );
+        this.setAnimation(new StandardAnimatorController(new StandardAnimation(this, frames, 20)));
+        this.setWidth(this.getWidth());
+        this.setHeight(this.getHeight());
+        this.setAlive(true);
+        this.setVelX(parent.getVelX() * 10);
+        this.setVelY(parent.getVelY() * 10);
 
-        this.sch.flagAlive( this.getId() );
-        this.sch.addCollider( this.getId() );
+        this.sch.flagAlive(this.getId());
+        this.sch.addCollider(this.getId());
 
         this.sc = sc;
     }
 
     @Override
-    public void tick ()
-    {
+    public void tick() {
         this.updatePosition();
 
         //As long as the object is alive, we can tick it.
-        if ( this.isAlive() )
-        {
+        if (this.isAlive()) {
             this.getAnimationController().tick();
-        }
-        else
-        {
+        } else {
             // Do this only once.
-            if ( this.aliveFlag )
-            {
+            if (this.aliveFlag) {
                 this.uponDeath();
                 this.aliveFlag = false;
             }
 
             // If the size of the exphandler (MAX_PARTICLES - dead ones) == 0,
             // we can set this entity to be dead, and remove it from the handler.
-            if ( this.explosionHandler.size() == 0 )
-            {
-                this.setAlive( false );
+            if (this.explosionHandler.size() == 0) {
+                this.setAlive(false);
             }
 
-            StandardHandler.Handler( this.explosionHandler );
+            StandardHandler.Handler(this.explosionHandler);
         }
     }
 
     @Override
-    public void render ( Graphics2D g2 )
-    {
+    public void render(Graphics2D g2) {
         // If they're alive, draw the frame that the bullet animation is on.
         // Otherwise, render the explosion handler
-        if ( this.isAlive() )
-        {
-            this.getAnimationController().renderFrame( g2 );
-        }
-        else
-        {
-            StandardDraw.Handler( this.explosionHandler );
+        if (this.isAlive()) {
+            this.getAnimationController().renderFrame(g2);
+        } else {
+            StandardDraw.renderHandler(this.explosionHandler);
         }
 
     }
 
     @Override
-    public void uponDeath ()
-    {
-        this.playRandomExplosionSFX( StdOps.rand( 0, 2 ) );
-        this.explosionHandler = new StandardParticleHandler( 800 );
-        this.explosionHandler.setCamera( this.sc );
-        this.summonDeathParticles( 200 );
+    public void uponDeath() {
+        this.playRandomExplosionSFX(StdOps.rand(0, 2));
+        this.explosionHandler = new StandardParticleHandler(800);
+        this.explosionHandler.setCamera(this.sc);
+        this.summonDeathParticles(200);
     }
 
     /**
@@ -123,11 +110,9 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
      *
      * @return
      */
-    private static BufferedImage[] initImages ()
-    {
-        for ( int i = 0 ; i < BulletGameObject.frames.length ; i++ )
-        {
-            BulletGameObject.frames[ i ] = ( StdOps.loadImage( "src/res/img/bullet/bullet_colors/bullet_" + i + ".png" ) );
+    private static BufferedImage[] initImages() {
+        for (int i = 0; i < BulletGameObject.frames.length; i ++) {
+            BulletGameObject.frames[i] = ( StdOps.loadImage("src/res/img/bullet/bullet_colors/bullet_" + i + ".png") );
         }
 
         return BulletGameObject.frames;
@@ -139,15 +124,13 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
      *
      * @param n
      */
-    private void summonDeathParticles ( int n )
-    {
-        for ( int i = 0 ; i < n ; i++ )
-        {
-            this.explosionHandler.addEntity( new StandardBoxParticle( this.getX(), this.getY(), StdOps.rand( 0.5, 2.5 ),
-                                                                      StdOps.randBounds( -5, -0.1, 0.1, 5 ),
-                                                                      StdOps.randBounds( -5, -1, 1, 5 ),
-                                                                      BulletGameObject.getRandomRGYB( StdOps.rand( 0, 3 ) ),
-                                                                      4f, this.explosionHandler, 0.0, ShapeType.CIRCLE, true ) );
+    private void summonDeathParticles(int n) {
+        for (int i = 0; i < n; i ++) {
+            this.explosionHandler.addEntity(new StandardBoxParticle(this.getX(), this.getY(), StdOps.rand(0.5, 2.5),
+                    StdOps.randBounds(-5,  - 0.1, 0.1, 5),
+                    StdOps.randBounds(-5, -1, 1, 5),
+                    BulletGameObject.getRandomRGYB(StdOps.rand(0, 3)),
+                    4f, this.explosionHandler, 0.0, ShapeType.CIRCLE, true));
         }
 
         this.aliveFlag = false;
@@ -158,9 +141,8 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
      *
      * @param n
      */
-    private void playRandomExplosionSFX ( int n )
-    {
-        StandardAudioController.play( "src/res/audio/sfx/damage_" + n + ".wav" );
+    private void playRandomExplosionSFX(int n) {
+        StandardAudioController.play("src/res/audio/sfx/damage_" + n + ".wav");
     }
 
     /**
@@ -169,10 +151,8 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
      * @param n
      * @return
      */
-    private static Color getRandomRGYB ( int n )
-    {
-        switch ( n )
-        {
+    private static Color getRandomRGYB(int n) {
+        switch (n) {
             case 0:
                 return StandardDraw.RED;
             case 1:
@@ -189,8 +169,7 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
     //
     //  Initializes the bullet frames
     //
-    static
-    {
+    static {
         BulletGameObject.initImages();
     }
 }
