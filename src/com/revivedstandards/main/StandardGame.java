@@ -305,6 +305,29 @@ public abstract class StandardGame extends Canvas implements Runnable {
     public void setMouse(Mouse mouse) {
         this.mouse = mouse;
     }
+    
+    @Override
+    public int getWidth() {
+        throw new UnsupportedOperationException("Are you looking for getGameWidth()?");
+    }
+    
+    @Override
+    public int getHeight() {
+        throw new UnsupportedOperationException("Are you looking for getGameHeight()?");
+    }
+    
+    /**
+     * @return the actual pane size, excluding the hideous JFrame borders.
+     * So, if you need the actual content-pane's width to draw a geometric
+     * shape without having to offset it, this is what you want.
+     */
+    public int getContentPaneWidth() {
+        return (int) this.getWindow().getFrame().getContentPane().getWidth();
+    }
+    
+    public int getContentPaneHeight() {
+        return (int) this.getWindow().getFrame().getContentPane().getHeight();
+    }
 
     private int getScreenWidth() {
         return (int) StandardGame.SCREEN_DIMENSION.getWidth();

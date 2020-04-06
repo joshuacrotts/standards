@@ -58,8 +58,7 @@ public class StandardWindowView extends Canvas {
 
         this.FRAME.setMinimumSize(new Dimension(width, height));
         this.FRAME.setMaximumSize(new Dimension(width, height));
-        this.FRAME.setPreferredSize(new Dimension(width, height));
-        this.FRAME.getContentPane().setSize(new Dimension(width, height));
+        this.FRAME.getContentPane().setPreferredSize(new Dimension(width, height));
 
         this.FRAME.setResizable(false);
         this.FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,8 +84,7 @@ public class StandardWindowView extends Canvas {
         // Sets frame information
         this.FRAME.setMinimumSize(new Dimension(width, height));
         this.FRAME.setMaximumSize(new Dimension(width, height));
-        this.FRAME.setPreferredSize(new Dimension(width, height));
-        this.FRAME.getContentPane().setSize(new Dimension(width, height));
+        this.FRAME.getContentPane().setPreferredSize(new Dimension(width, height));
         this.FRAME.setResizable(false);
         this.FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.FRAME.setLocationRelativeTo(null);
