@@ -4,7 +4,8 @@
   <img width="200" height="200" src="FC1DF5CE-9F77-40B6-A3D0-770565BFD11F.png">
 </p>
 
-[![CodeFactor](https://www.codefactor.io/repository/github/joshuacrotts/standards/badge)](https://www.codefactor.io/repository/github/joshuacrotts/Standards) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/JoshuaCrotts/Standards) ![GitHub repo size](https://img.shields.io/github/repo-size/JoshuaCrotts/Standards) ![GitHub contributors](https://img.shields.io/github/contributors/JoshuaCrotts/Standards)
+[![CodeFactor](https://www.codefactor.io/repository/github/joshuacrotts/Standards/badge)](https://www.codefactor.io/repository/github/joshuacrotts/Standards) ![GitHub contributors](https://img.shields.io/github/contributors/JoshuaCrotts/Standards) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/JoshuaCrotts/Standards) ![GitHub repo size](https://img.shields.io/github/repo-size/JoshuaCrotts/Standards)  ![](https://tokei.rs/b1/github/JoshuaCrotts/Standards) ![](https://tokei.rs/b1/github/JoshuaCrotts/Standards?category=files) [![GitHub issues open](https://img.shields.io/github/issues/JoshuaCrotts/Standards)]() 
+[![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/JoshuaCrotts/Standards)]()
 
 Standards is the new (and revived) version of the former Standards 1.0/2.0 library. It is based in Java, and includes all the basic materials and code necessary to create a basic game.
 
