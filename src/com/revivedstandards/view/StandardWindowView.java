@@ -27,7 +27,7 @@
  */
 package com.revivedstandards.view;
 
-import com.revivedstandards.main.StandardGame;
+import com.revivedstandards.platform.StandardGame;
 import com.revivedstandards.util.StdOps;
 import java.awt.Canvas;
 import java.awt.Color;

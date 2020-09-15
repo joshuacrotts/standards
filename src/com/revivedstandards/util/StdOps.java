@@ -165,14 +165,48 @@ public abstract class StdOps {
 	 */
 	public static int clamp(int num, int min, int max) {
 		if (num < min) {
-			num = min;
+			return min;
 		} else if (num > max) {
-			num = max;
+			return max;
 		}
 
 		return num;
 	}
 
+	/**
+	 * 
+	 * @param n
+	 * @param oldMin
+	 * @param oldMax
+	 * @param newMin
+	 * @param newMax
+	 * @return
+	 */
+	public static double normalize(double n, double oldMin, double oldMax, double newMin, double newMax) {
+		if (n < oldMin || n > oldMax) {
+			throw new IllegalArgumentException("Number cannot be outside the range [" + oldMin + ", " + oldMax + "].");
+		}
+		
+		return (((n - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
+	}
+
+	/**
+	 * Normalizes a number between 0.0 and 1.0.
+	 * @param n
+	 * @param oldMin
+	 * @param oldMax
+	 * @return
+	 */
+	public static double normalize(double n, double oldMin, double oldMax) {
+		return normalize(n, oldMin, oldMax, 0.0, 1.0);
+	}
+	
+	/**
+	 * 
+	 * @param path
+	 * @param size
+	 * @return
+	 */
 	public static Font initFont(String path, float size) {
 		Font f = null;
 
@@ -187,6 +221,12 @@ public abstract class StdOps {
 		return f;
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @param size
+	 * @return
+	 */
 	public static Font initFont(InputStream path, float size) {
 		Font f = null;
 
@@ -201,6 +241,11 @@ public abstract class StdOps {
 		return f;
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 */
 	public static BufferedImage loadImage(String path) {
 		BufferedImage sprite = null;
 		try {
@@ -211,6 +256,11 @@ public abstract class StdOps {
 		return sprite;
 	}
 
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 */
 	public static BufferedImage loadImage(InputStream path) {
 		BufferedImage sprite = null;
 		try {

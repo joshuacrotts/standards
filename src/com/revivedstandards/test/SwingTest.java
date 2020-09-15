@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.revivedstandards.main.StandardSwingApplication;
+import com.revivedstandards.platform.StandardSwingApplication;
 
 public class SwingTest extends StandardSwingApplication {
 	

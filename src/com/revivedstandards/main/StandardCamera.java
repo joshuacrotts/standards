@@ -29,6 +29,8 @@ package com.revivedstandards.main;
 
 import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.model.StandardID;
+import com.revivedstandards.platform.StandardGame;
+
 import java.awt.Graphics2D;
 
 /**

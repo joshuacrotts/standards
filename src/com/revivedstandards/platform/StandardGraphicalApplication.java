@@ -1,4 +1,4 @@
-package com.revivedstandards.main;
+package com.revivedstandards.platform;
 
 public abstract class StandardGraphicalApplication extends StandardGame {
 

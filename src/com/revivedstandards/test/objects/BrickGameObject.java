@@ -2,9 +2,10 @@ package com.revivedstandards.test.objects;
 
 import com.revivedstandards.controller.StandardFadeController;
 import com.revivedstandards.handlers.StandardCollisionHandler;
-import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.model.StandardID;
+import com.revivedstandards.platform.StandardGame;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 

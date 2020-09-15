@@ -1,10 +1,14 @@
-package com.revivedstandards.main;
+package com.revivedstandards.platform;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.revivedstandards.util.StandardComplexNumber;
 
 public abstract class StandardConsoleApplication {
 
@@ -109,6 +113,42 @@ public abstract class StandardConsoleApplication {
 
 		return n;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public StandardComplexNumber readComplex() {
+		Pattern pattern = Pattern.compile("([0-9]+)\\s?([+-])\\s?(-?[0-9])i");
+		Matcher matcher = null;
+		
+		// Verify that we can actually parse this string.
+		try {
+			String complexString = this.reader.readLine();
+			matcher = pattern.matcher(complexString);
+			
+			if (!matcher.matches()) {
+				throw new IllegalArgumentException("Cannot match this as scientific notation!");
+			}
+			
+		} catch (IllegalArgumentException | IOException ex) {
+			Logger.getLogger(StandardConsoleApplication.class.getName()).log(Level.SEVERE, null, ex);
+			System.exit(1);
+		}
+		
+		// Pull the tokens from the matcher.
+		double real = Double.parseDouble(matcher.group(1));
+		String sign = matcher.group(2);
+		double imaginary = Double.parseDouble(matcher.group(3));
+		
+		// If we have a negative as the operator, flip the imaginary number
+		// to fit a + bi.
+		if (sign.equals("-")) {
+			imaginary *= -1;
+		}
+		
+		return new StandardComplexNumber(real, imaginary);
+	}
 
 	/**
 	 * Reads in a scientific number.
@@ -117,27 +157,22 @@ public abstract class StandardConsoleApplication {
 	 */
 	public double readScientificNumber() {
 		String scientificNotation = null;
-		String pattern = "[+-]?[0-9]+[.]?[0-9]*([Ee]-?[0-9]+)?";
-
+		Pattern pattern = Pattern.compile("[+-]?[0-9]+[.]?[0-9]*([Ee]-?[0-9]+)?");
+		Matcher matcher = null;
+		
 		try {
 			scientificNotation = this.reader.readLine();
-			if (!scientificNotation.matches(pattern)) {
+			matcher = pattern.matcher(scientificNotation);
+			
+			if (!matcher.matches()) {
 				throw new IllegalArgumentException("Cannot match this as scientific notation!");
 			}
+			
 		} catch (IllegalArgumentException | IOException ex) {
 			Logger.getLogger(StandardConsoleApplication.class.getName()).log(Level.SEVERE, null, ex);
 			System.exit(1);
 		}
 
-		double number = 0;
-
-		try {
-			double d = Double.parseDouble(scientificNotation);
-		} catch (NumberFormatException ex) {
-			Logger.getLogger(StandardConsoleApplication.class.getName()).log(Level.SEVERE, null, ex);
-			System.exit(1);
-		}
-
-		return number;
+		return Double.parseDouble(scientificNotation);
 	}
 }

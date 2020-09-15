@@ -2,10 +2,10 @@ package com.revivedstandards.test.objects;
 
 import com.revivedstandards.controller.StandardAnimatorController;
 import com.revivedstandards.main.StandardCamera;
-import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.StandardAnimation;
 import com.revivedstandards.model.StandardGameObject;
 import com.revivedstandards.model.StandardID;
+import com.revivedstandards.platform.StandardGame;
 import com.revivedstandards.test.commands.MoveCommand;
 import com.revivedstandards.util.StdOps;
 import java.awt.Graphics2D;

@@ -33,9 +33,9 @@ import com.revivedstandards.handlers.StandardCollisionHandler;
 import com.revivedstandards.handlers.StandardHandler;
 import com.revivedstandards.main.StandardCamera;
 import com.revivedstandards.main.StandardDraw;
-import com.revivedstandards.main.StandardGame;
 import com.revivedstandards.model.StandardID;
 import com.revivedstandards.model.StandardLevel;
+import com.revivedstandards.platform.StandardGame;
 
 public class FollowTheMouseGameTest extends StandardGame {
 

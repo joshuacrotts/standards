@@ -1,4 +1,4 @@
-package com.revivedstandards.main;
+package com.revivedstandards.platform;
 
 import java.awt.Component;
 import java.awt.Dimension;

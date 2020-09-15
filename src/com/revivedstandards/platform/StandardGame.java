@@ -25,11 +25,12 @@
  * StandardAudio, we use the javax.sound (Trail's Sound) Oracle API.
  * ===========================================================================
  */
-package com.revivedstandards.main;
+package com.revivedstandards.platform;
 
 import com.revivedstandards.commands.Command;
 import com.revivedstandards.input.Keyboard;
 import com.revivedstandards.input.Mouse;
+import com.revivedstandards.main.StandardDraw;
 import com.revivedstandards.view.StandardWindowView;
 import java.awt.Canvas;
 import java.awt.Color;

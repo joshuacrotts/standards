@@ -3,7 +3,7 @@ package com.revivedstandards.test;
 import com.revivedstandards.handlers.StandardHandler;
 import com.revivedstandards.test.objects.AnimatedPlayerGameObject;
 import com.revivedstandards.main.StandardDraw;
-import com.revivedstandards.main.StandardGame;
+import com.revivedstandards.platform.StandardGame;
 import com.revivedstandards.util.StdOps;
 
 public class AnimatedPlayerTest extends StandardGame {
