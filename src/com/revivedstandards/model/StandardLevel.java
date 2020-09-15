@@ -34,88 +34,76 @@ import com.revivedstandards.view.Updatable;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public abstract class StandardLevel implements Renderable, Updatable
-{
+public abstract class StandardLevel implements Renderable, Updatable {
 
-    //
-    //  File locations for the level data itself, and the background image
-    //  for said level.
-    //
-    private String fileLocation;
-    private String bgImagePath;
+	//
+	// File locations for the level data itself, and the background image
+	// for said level.
+	//
+	private String fileLocation;
+	private String bgImagePath;
 
-    //
-    //  BufferedImage references for the levelData image, and the background image.
-    //
-    private BufferedImage levelData;
-    private BufferedImage bgImage;
+	//
+	// BufferedImage references for the levelData image, and the background image.
+	//
+	private BufferedImage levelData;
+	private BufferedImage bgImage;
 
-    public StandardHandler stdHandler;
+	public StandardHandler stdHandler;
 
-    public StandardLevel ( String fileLocation, String bgImagePath, StandardHandler stdHandler )
-    {
-        this.fileLocation = fileLocation;
-        this.bgImagePath = bgImagePath;
-        this.stdHandler = stdHandler;
+	public StandardLevel(String fileLocation, String bgImagePath, StandardHandler stdHandler) {
+		this.fileLocation = fileLocation;
+		this.bgImagePath = bgImagePath;
+		this.stdHandler = stdHandler;
 
-        if ( this.fileLocation != null )
-        {
-            this.levelData = StdOps.loadImage( this.fileLocation );
-        }
+		if (this.fileLocation != null) {
+			this.levelData = StdOps.loadImage(this.fileLocation);
+		}
 
-        this.bgImage = StdOps.loadImage( this.bgImagePath );
-    }
+		this.bgImage = StdOps.loadImage(this.bgImagePath);
+	}
 
-    /**
-     * Level data will use the image specified by fileLocation and
-     * read in whatever data is necessary to spawn entities or other
-     * game objects.
-     */
-    public abstract void loadLevelData ();
+	/**
+	 * Level data will use the image specified by fileLocation and read in whatever
+	 * data is necessary to spawn entities or other game objects.
+	 */
+	public abstract void loadLevelData();
 
-    @Override
-    public abstract void tick ();
+	@Override
+	public abstract void tick();
 
-    @Override
-    public abstract void render ( Graphics2D g2 );
+	@Override
+	public abstract void render(Graphics2D g2);
 
-    public String getFileLocation ()
-    {
-        return this.fileLocation;
-    }
+	public String getFileLocation() {
+		return this.fileLocation;
+	}
 
-    public void setFileLocation ( String fileLocation )
-    {
-        this.fileLocation = fileLocation;
-    }
+	public void setFileLocation(String fileLocation) {
+		this.fileLocation = fileLocation;
+	}
 
-    public BufferedImage getLevelData ()
-    {
-        return this.levelData;
-    }
+	public BufferedImage getLevelData() {
+		return this.levelData;
+	}
 
-    public void setLevelData ( BufferedImage levelData )
-    {
-        this.levelData = levelData;
-    }
+	public void setLevelData(BufferedImage levelData) {
+		this.levelData = levelData;
+	}
 
-    public String getBgImagePath ()
-    {
-        return this.bgImagePath;
-    }
+	public String getBgImagePath() {
+		return this.bgImagePath;
+	}
 
-    public void setBgImagePath ( String bgImagePath )
-    {
-        this.bgImagePath = bgImagePath;
-    }
+	public void setBgImagePath(String bgImagePath) {
+		this.bgImagePath = bgImagePath;
+	}
 
-    public BufferedImage getBgImage ()
-    {
-        return this.bgImage;
-    }
+	public BufferedImage getBgImage() {
+		return this.bgImage;
+	}
 
-    public void setBgImage ( BufferedImage bgImage )
-    {
-        this.bgImage = bgImage;
-    }
+	public void setBgImage(BufferedImage bgImage) {
+		this.bgImage = bgImage;
+	}
 }

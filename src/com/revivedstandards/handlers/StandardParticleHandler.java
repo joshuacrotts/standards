@@ -41,128 +41,106 @@ import java.util.ArrayList;
  * particles are dead/are oldest, and assigns new particles to these spots in
  * the ArrayList, as opposed to simply adding a new index, or removing one.
  */
-public class StandardParticleHandler extends StandardHandler
-{
+public class StandardParticleHandler extends StandardHandler {
 
-    private final int MAX_PARTICLES;
-    private int dead;
-    private int oldest;
-    private int replace;
+	private final int MAX_PARTICLES;
+	private int dead;
+	private int oldest;
+	private int replace;
 
-    public StandardParticleHandler ( int max )
-    {
-        this.MAX_PARTICLES = max;
-        this.dead          = this.MAX_PARTICLES;
-        this.oldest        = 0;
-        this.replace       = this.MAX_PARTICLES;
+	public StandardParticleHandler(int max) {
+		this.MAX_PARTICLES = max;
+		this.dead = this.MAX_PARTICLES;
+		this.oldest = 0;
+		this.replace = this.MAX_PARTICLES;
 
-        this.setEntities( new ArrayList( this.MAX_PARTICLES + 1 ) );
+		this.setEntities(new ArrayList(this.MAX_PARTICLES + 1));
 
-        for ( int i = 0 ; i < this.MAX_PARTICLES ; i++ )
-        {
-            this.getEntities().add( null );
-        }
-    }
+		for (int i = 0; i < this.MAX_PARTICLES; i++) {
+			this.getEntities().add(null);
+		}
+	}
 
-    @Override
-    public void tick ()
-    {
-        if ( this.dead < this.MAX_PARTICLES )
-        {
-            for ( int i = this.dead ; i < this.MAX_PARTICLES ; i++ )
-            {
-                StandardGameObject particle = ( StandardGameObject ) this.getEntities().get( i );
+	@Override
+	public void tick() {
+		if (this.dead < this.MAX_PARTICLES) {
+			for (int i = this.dead; i < this.MAX_PARTICLES; i++) {
+				StandardGameObject particle = (StandardGameObject) this.getEntities().get(i);
 
-                if ( particle.isAlive() )
-                {
-                    particle.tick();
-                }
-                else
-                {
-                    StandardGameObject swap = ( StandardGameObject ) this.getEntities().get( this.dead );
-                    this.getEntities().set( i, swap );
-                    this.getEntities().set( this.dead++, null );
-                }
-            }
-        }
-    }
+				if (particle.isAlive()) {
+					particle.tick();
+				} else {
+					StandardGameObject swap = (StandardGameObject) this.getEntities().get(this.dead);
+					this.getEntities().set(i, swap);
+					this.getEntities().set(this.dead++, null);
+				}
+			}
+		}
+	}
 
-    @Override
-    public void render ( Graphics2D g2 )
-    {
-        for ( int i = 0 ; i < this.getEntities().size() ; i++ )
-        {
-            StandardGameObject particle = ( StandardGameObject ) this.getEntities().get( i );
+	@Override
+	public void render(Graphics2D g2) {
+		for (int i = 0; i < this.getEntities().size(); i++) {
+			StandardGameObject particle = (StandardGameObject) this.getEntities().get(i);
 
-            if ( particle != null && particle.isAlive() && this.getCamera().SGOInBounds( particle ) )
-            {
-                particle.render( g2 );
-            }
-        }
-    }
+			if (particle != null && particle.isAlive() && this.getCamera().SGOInBounds(particle)) {
+				particle.render(g2);
+			}
+		}
+	}
 
-    /**
-     * Adds a particle to the Standard Particle Handler. This is a custom
-     * algorithm for placing a particle in a spot that houses an already-dead
-     * particle, to prevent having add and remove spots in the arraylist. It
-     * speeds up the process tremendously.
-     *
-     * If you need to iterate over the SPH, start from MAX-PARTICLES - 1, to 0.
-     * The first entity is inserted at the back of the list, and it works it way
-     * to the front (all particles are marked as dead upon instantiation of the
-     * handler).
-     *
-     * @param particle
-     */
-    @Override
-    public void addEntity ( StandardGameObject particle )
-    {
-        if ( this.dead == 0 )
-        {
-            if ( this.replace == 0 )
-            {
-                this.replace = this.MAX_PARTICLES;
-            }
-            this.getEntities().set( --this.replace, particle );
-            return;
-        }
-        this.getEntities().set( --this.dead, particle );
-    }
+	/**
+	 * Adds a particle to the Standard Particle Handler. This is a custom algorithm
+	 * for placing a particle in a spot that houses an already-dead particle, to
+	 * prevent having add and remove spots in the arraylist. It speeds up the
+	 * process tremendously.
+	 *
+	 * If you need to iterate over the SPH, start from MAX-PARTICLES - 1, to 0. The
+	 * first entity is inserted at the back of the list, and it works it way to the
+	 * front (all particles are marked as dead upon instantiation of the handler).
+	 *
+	 * @param particle
+	 */
+	@Override
+	public void addEntity(StandardGameObject particle) {
+		if (this.dead == 0) {
+			if (this.replace == 0) {
+				this.replace = this.MAX_PARTICLES;
+			}
+			this.getEntities().set(--this.replace, particle);
+			return;
+		}
+		this.getEntities().set(--this.dead, particle);
+	}
 
-    @Override
-    public void removeEntity ( StandardGameObject obj )
-    {
-        super.removeEntity( obj );
-    }
+	@Override
+	public void removeEntity(StandardGameObject obj) {
+		super.removeEntity(obj);
+	}
 
-    /**
-     * Returns the number of "alive" elements; not the size of the
-     * actual ArrayList.
-     * @return
-     */
-    @Override
-    public int size ()
-    {
-        return this.MAX_PARTICLES - this.dead;
-    }
+	/**
+	 * Returns the number of "alive" elements; not the size of the actual ArrayList.
+	 * 
+	 * @return
+	 */
+	@Override
+	public int size() {
+		return this.MAX_PARTICLES - this.dead;
+	}
 
-    public int getOldestIndex ()
-    {
-        return this.oldest;
-    }
+	public int getOldestIndex() {
+		return this.oldest;
+	}
 
-    public int getDeadIndex ()
-    {
-        return this.dead;
-    }
+	public int getDeadIndex() {
+		return this.dead;
+	}
 
-    public int getReplaceIndex ()
-    {
-        return this.replace;
-    }
+	public int getReplaceIndex() {
+		return this.replace;
+	}
 
-    public int getMaxParticles ()
-    {
-        return this.MAX_PARTICLES;
-    }
+	public int getMaxParticles() {
+		return this.MAX_PARTICLES;
+	}
 }
