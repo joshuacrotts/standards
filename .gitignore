@@ -3,3 +3,4 @@
 *.xml
 *.class
 /bin/
+/build/

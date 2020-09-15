@@ -305,12 +305,12 @@ public abstract class StandardGame extends Canvas implements Runnable
         return this.window.height();
     }
 
-    public void framesToConsole ( boolean print )
+    public void printFramesToConsole ( boolean print )
     {
         this.consoleFPS = print;
     }
 
-    public void framesToTitle ( boolean print )
+    public void printFramesToTitle ( boolean print )
     {
         this.titleFPS = print;
     }

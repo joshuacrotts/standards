@@ -16,6 +16,6 @@ The version of Standards under the **master** branch is the public release versi
 The API is linked [here](https://joshuacrotts.us/Standards).
 
 # Download/Releases
-The releases come in the form of .JAR files. Download the .JAR file [here](https://github.com/JoshuaCrotts/Standards/tree/development/dist/Standards.jar), and include it in your project's libraries.
+The releases come in the form of .JAR files. Download the .JAR file [here](https://github.com/JoshuaCrotts/Standards/tree/master/dist/Standards.jar), and include it in your project's libraries.
 
 
