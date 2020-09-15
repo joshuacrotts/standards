@@ -43,100 +43,100 @@ import javax.swing.JFrame;
  * once it is instantiated.
  */
 public class StandardWindowView extends Canvas {
-	private final JFrame FRAME;
-	private final String TITLE;
+  private final JFrame FRAME;
+  private final String TITLE;
 
-	private int width;
-	private int height;
+  private int width;
+  private int height;
 
-	public StandardWindowView(int width, int height, String title, StandardGame game, GraphicsConfiguration gc) {
-		this.FRAME = new JFrame(title, gc);
+  public StandardWindowView(int width, int height, String title, StandardGame game, GraphicsConfiguration gc) {
+    this.FRAME = new JFrame(title, gc);
 
-		this.width = width;
-		this.height = height;
-		this.TITLE = title;
+    this.width = width;
+    this.height = height;
+    this.TITLE = title;
 
-		this.FRAME.setMinimumSize(new Dimension(width, height));
-		this.FRAME.setMaximumSize(new Dimension(width, height));
-		this.FRAME.setPreferredSize(new Dimension(width, height));
-		this.FRAME.getContentPane().setSize(new Dimension(width, height));
-		// this.FRAME.setIconImage( StdOps.loadImage( this.ICON ) );
+    this.FRAME.setMinimumSize(new Dimension(width, height));
+    this.FRAME.setMaximumSize(new Dimension(width, height));
+    this.FRAME.setPreferredSize(new Dimension(width, height));
+    this.FRAME.getContentPane().setSize(new Dimension(width, height));
+    // this.FRAME.setIconImage( StdOps.loadImage( this.ICON ) );
 
-		this.FRAME.setResizable(false);
-		this.FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.FRAME.setLocationRelativeTo(null);
+    this.FRAME.setResizable(false);
+    this.FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.FRAME.setLocationRelativeTo(null);
 
-		this.FRAME.add(game);
-		this.FRAME.pack();
+    this.FRAME.add(game);
+    this.FRAME.pack();
 
-		this.FRAME.setVisible(true);
+    this.FRAME.setVisible(true);
 
-	}
+  }
 
-	public StandardWindowView(int width, int height, String title, Object game) {
-		this.FRAME = new JFrame();
+  public StandardWindowView(int width, int height, String title, Object game) {
+    this.FRAME = new JFrame();
 
-		this.FRAME.setTitle(title);
-		this.TITLE = title;
+    this.FRAME.setTitle(title);
+    this.TITLE = title;
 
-		// Sets dimensions
-		this.width = width;
-		this.height = height;
+    // Sets dimensions
+    this.width = width;
+    this.height = height;
 
-		// Sets frame information
-		this.FRAME.setMinimumSize(new Dimension(width, height));
-		this.FRAME.setMaximumSize(new Dimension(width, height));
-		this.FRAME.setPreferredSize(new Dimension(width, height));
-		this.FRAME.getContentPane().setSize(new Dimension(width, height));
-		// this.FRAME.setIconImage( StdOps.loadImage( this.ICON ) );
-		this.FRAME.setResizable(false);
-		this.FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.FRAME.setLocationRelativeTo(null);
+    // Sets frame information
+    this.FRAME.setMinimumSize(new Dimension(width, height));
+    this.FRAME.setMaximumSize(new Dimension(width, height));
+    this.FRAME.setPreferredSize(new Dimension(width, height));
+    this.FRAME.getContentPane().setSize(new Dimension(width, height));
+    // this.FRAME.setIconImage( StdOps.loadImage( this.ICON ) );
+    this.FRAME.setResizable(false);
+    this.FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.FRAME.setLocationRelativeTo(null);
 
-		this.FRAME.add((Component) game);
-		this.FRAME.pack();
+    this.FRAME.add((Component) game);
+    this.FRAME.pack();
 
-		this.FRAME.setVisible(true);
+    this.FRAME.setVisible(true);
 
-	}
+  }
 
-	public void setBackgroundColor(Color color) {
-		this.FRAME.setBackground(color);
-	}
+  public void setBackgroundColor(Color color) {
+    this.FRAME.setBackground(color);
+  }
 
-	/**
-	 * @return the provided width of the frame.
-	 */
-	public int width() {
-		return width;
-	}
+  /**
+   * @return the provided width of the frame.
+   */
+  public int width() {
+    return width;
+  }
 
-	/**
-	 *
-	 * @return the provided height of the frame.
-	 */
-	public int height() {
-		return height;
-	}
+  /**
+   *
+   * @return the provided height of the frame.
+   */
+  public int height() {
+    return height;
+  }
 
-	public JFrame getFrame() {
-		return FRAME;
-	}
+  public JFrame getFrame() {
+    return FRAME;
+  }
 
-	public void setWidth(short width) {
-		this.width = width;
-	}
+  public void setWidth(short width) {
+    this.width = width;
+  }
 
-	public void setHeight(short height) {
-		this.height = height;
-	}
+  public void setHeight(short height) {
+    this.height = height;
+  }
 
-	public String getTitle() {
-		return TITLE;
-	}
+  public String getTitle() {
+    return TITLE;
+  }
 
-	public void setTitle(String title) {
-		this.FRAME.setTitle(title);
-	}
+  public void setTitle(String title) {
+    this.FRAME.setTitle(title);
+  }
 
 }

@@ -34,5 +34,5 @@ package com.revivedstandards.view;
  */
 public interface Updatable {
 
-	public abstract void tick();
+  public abstract void tick();
 }

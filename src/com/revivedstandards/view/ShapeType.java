@@ -28,5 +28,5 @@
 package com.revivedstandards.view;
 
 public enum ShapeType {
-	CIRCLE, RECTANGLE;
+  CIRCLE, RECTANGLE;
 }

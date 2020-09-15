@@ -34,196 +34,196 @@ import java.awt.image.BufferedImage;
  */
 public final class StandardAnimation {
 
-	/* Underlying parent StandardGameObject. */
-	private final StandardGameObject sgo;
+  /* Underlying parent StandardGameObject. */
+  private final StandardGameObject sgo;
 
-	/*
-	 * View for the animation; renders the current frame pointed by frameIndex.
-	 */
-	private final StandardAnimationView view;
+  /*
+   * View for the animation; renders the current frame pointed by frameIndex.
+   */
+  private final StandardAnimationView view;
 
-	// Current frame index in the array of images
-	private int frameIndex;
+  // Current frame index in the array of images
+  private int frameIndex;
 
-	// Time between the last system call and the current one
-	private long lastTime = 0;
+  // Time between the last system call and the current one
+  private long lastTime = 0;
 
-	// How many frames of animation should are played have per second
-	private double fps;
+  // How many frames of animation should are played have per second
+  private double fps;
 
-	// Rotation of the current frame
-	private double rotation;
+  // Rotation of the current frame
+  private double rotation;
 
-	// Should we mirror the image along the y axis?
-	private boolean mirror = false;
+  // Should we mirror the image along the y axis?
+  private boolean mirror = false;
 
-	// Determines where in the sprite sheet the
-	// pointer should START (not continue from). This is mainly for sprite
-	// sheets that share multiple animations to save
-	// memory on not having to rely on various
-	// BI arrays.
-	//
-	private int startFrameIndex = 0;
-	private int endFrameIndex = -1;
+  // Determines where in the sprite sheet the
+  // pointer should START (not continue from). This is mainly for sprite
+  // sheets that share multiple animations to save
+  // memory on not having to rely on various
+  // BI arrays.
+  //
+  private int startFrameIndex = 0;
+  private int endFrameIndex = -1;
 
-	//
-	// Once the animation reaches the ending frame,
-	// it will hit this frame and repeat from here.
-	//
-	private int frameHaltPosition = -1;
+  //
+  // Once the animation reaches the ending frame,
+  // it will hit this frame and repeat from here.
+  //
+  private int frameHaltPosition = -1;
 
-	public StandardAnimation(StandardGameObject sgo, BufferedImage[] frames, double fps) {
-		this.sgo = sgo;
-		this.fps = fps;
-		this.view = new StandardAnimationView(frames, sgo);
+  public StandardAnimation(StandardGameObject sgo, BufferedImage[] frames, double fps) {
+    this.sgo = sgo;
+    this.fps = fps;
+    this.view = new StandardAnimationView(frames, sgo);
 
-		// By default, the end frame index is just the end of the frame index's array
-		// length.
-		this.endFrameIndex = frames.length;
+    // By default, the end frame index is just the end of the frame index's array
+    // length.
+    this.endFrameIndex = frames.length;
 
-		this.setCurrentFrameIndex(0);
-		this.setDefaultDimensions();
-	}
+    this.setCurrentFrameIndex(0);
+    this.setDefaultDimensions();
+  }
 
-	public StandardAnimation(StandardGameObject sgo, BufferedImage[] frames, double fps, int frameHaltPosition) {
-		this.sgo = sgo;
-		this.fps = fps;
-		this.view = new StandardAnimationView(frames, sgo);
+  public StandardAnimation(StandardGameObject sgo, BufferedImage[] frames, double fps, int frameHaltPosition) {
+    this.sgo = sgo;
+    this.fps = fps;
+    this.view = new StandardAnimationView(frames, sgo);
 
-		// By default, the end frame index is just the end of the frame index's array
-		// length.
-		this.endFrameIndex = frames.length;
+    // By default, the end frame index is just the end of the frame index's array
+    // length.
+    this.endFrameIndex = frames.length;
 
-		this.frameHaltPosition = frameHaltPosition;
-		this.setCurrentFrameIndex(0);
-		this.setDefaultDimensions();
-	}
+    this.frameHaltPosition = frameHaltPosition;
+    this.setCurrentFrameIndex(0);
+    this.setDefaultDimensions();
+  }
 
-	/**
-	 * Sets the current frame of animation with the supplied index.
-	 *
-	 * Contacts the view to set its current frame bufferedimage variable to point to
-	 * frameIndex's position in the bufferedimage array.
-	 *
-	 * @param frameIndex
-	 */
-	private void setCurrentFrameIndex(int frameIndex) {
-		if (frameIndex < this.startFrameIndex || frameIndex >= this.endFrameIndex) {
-			// If we hit the ending frame position and we have a frame halt position,
-			// we will reset the frame index pointer to this position.
-			if (frameIndex >= this.endFrameIndex && this.frameHaltPosition != -1) {
-				this.frameIndex = this.frameHaltPosition;
-			} else {
-				this.frameIndex = this.startFrameIndex;
-			}
-			this.view.setCurrentFrameIndex(this.frameIndex);
-		} else {
-			this.view.setCurrentFrameIndex(frameIndex);
-			this.frameIndex = frameIndex;
-		}
+  /**
+   * Sets the current frame of animation with the supplied index.
+   *
+   * Contacts the view to set its current frame bufferedimage variable to point to
+   * frameIndex's position in the bufferedimage array.
+   *
+   * @param frameIndex
+   */
+  private void setCurrentFrameIndex(int frameIndex) {
+    if (frameIndex < this.startFrameIndex || frameIndex >= this.endFrameIndex) {
+      // If we hit the ending frame position and we have a frame halt position,
+      // we will reset the frame index pointer to this position.
+      if (frameIndex >= this.endFrameIndex && this.frameHaltPosition != -1) {
+        this.frameIndex = this.frameHaltPosition;
+      } else {
+        this.frameIndex = this.startFrameIndex;
+      }
+      this.view.setCurrentFrameIndex(this.frameIndex);
+    } else {
+      this.view.setCurrentFrameIndex(frameIndex);
+      this.frameIndex = frameIndex;
+    }
 
-	}
+  }
 
-	/**
-	 * Advances the current frame of animation to the next one in succession.
-	 */
-	public void advanceFrame() {
-		this.setCurrentFrameIndex(this.getCurrentFrameIndex() + 1);
-	}
+  /**
+   * Advances the current frame of animation to the next one in succession.
+   */
+  public void advanceFrame() {
+    this.setCurrentFrameIndex(this.getCurrentFrameIndex() + 1);
+  }
 
-	/**
-	 * Assigns the default SGO width/height to the width and height of the first
-	 * frame of animation.
-	 */
-	private void setDefaultDimensions() {
-		this.sgo.setWidth(this.getView().getCurrentFrame().getWidth());
-		this.sgo.setHeight(this.getView().getCurrentFrame().getHeight());
-	}
+  /**
+   * Assigns the default SGO width/height to the width and height of the first
+   * frame of animation.
+   */
+  private void setDefaultDimensions() {
+    this.sgo.setWidth(this.getView().getCurrentFrame().getWidth());
+    this.sgo.setHeight(this.getView().getCurrentFrame().getHeight());
+  }
 
-	/**
-	 * This method is for assigning end and start indexes for animating different
-	 * frames contained in the same bufferedimage array.
-	 *
-	 * For instance, if the sprite sheet has 4 sprites for each animation set
-	 * (walking left, walking right, walking up, walking down), this means buffered
-	 * image indexes 0-3 are reserved for walking left, 4-7 are for walking right,
-	 * 8-11 are for walking up, and 12-15 are for walking down.
-	 *
-	 * However, for each set, the last index is exclusive. Therefore, it should be
-	 * one higher than what your indexes say. In the above example, to tell the
-	 * animation to loop through the walking left frames, the function call would be
-	 * setFramePositions(0, 4), as the algorithm will iterate over frames 0, 1, 2,
-	 * and 3.
-	 *
-	 * @param startIndex
-	 * @param endIndex
-	 */
-	public void setFramePositions(int startIndex, int endIndex) {
-		this.startFrameIndex = startIndex;
-		this.endFrameIndex = endIndex;
-	}
+  /**
+   * This method is for assigning end and start indexes for animating different
+   * frames contained in the same bufferedimage array.
+   *
+   * For instance, if the sprite sheet has 4 sprites for each animation set
+   * (walking left, walking right, walking up, walking down), this means buffered
+   * image indexes 0-3 are reserved for walking left, 4-7 are for walking right,
+   * 8-11 are for walking up, and 12-15 are for walking down.
+   *
+   * However, for each set, the last index is exclusive. Therefore, it should be
+   * one higher than what your indexes say. In the above example, to tell the
+   * animation to loop through the walking left frames, the function call would be
+   * setFramePositions(0, 4), as the algorithm will iterate over frames 0, 1, 2,
+   * and 3.
+   *
+   * @param startIndex
+   * @param endIndex
+   */
+  public void setFramePositions(int startIndex, int endIndex) {
+    this.startFrameIndex = startIndex;
+    this.endFrameIndex = endIndex;
+  }
 
-	/**
-	 * Resets the current animation to the beginning, also resets the frame index to
-	 * 0.
-	 */
-	public void stopAnimation() {
-		this.frameIndex = this.startFrameIndex;
-		this.setCurrentFrameIndex(0);
-	}
+  /**
+   * Resets the current animation to the beginning, also resets the frame index to
+   * 0.
+   */
+  public void stopAnimation() {
+    this.frameIndex = this.startFrameIndex;
+    this.setCurrentFrameIndex(0);
+  }
 
-	public StandardGameObject getStandardGameObject() {
-		return this.sgo;
-	}
+  public StandardGameObject getStandardGameObject() {
+    return this.sgo;
+  }
 
-	public int getCurrentFrameIndex() {
-		return this.frameIndex;
-	}
+  public int getCurrentFrameIndex() {
+    return this.frameIndex;
+  }
 
-	public StandardAnimationView getView() {
-		return this.view;
-	}
+  public StandardAnimationView getView() {
+    return this.view;
+  }
 
-	public void setFrameSpeed(double fps) {
-		this.fps = fps;
-	}
+  public void setFrameSpeed(double fps) {
+    this.fps = fps;
+  }
 
-	public double getFrameSpeed() {
-		return this.fps;
-	}
+  public double getFrameSpeed() {
+    return this.fps;
+  }
 
-	public long getLastTime() {
-		return this.lastTime;
-	}
+  public long getLastTime() {
+    return this.lastTime;
+  }
 
-	public void setLastTime(long t) {
-		this.lastTime = t;
-	}
+  public void setLastTime(long t) {
+    this.lastTime = t;
+  }
 
-	public void setRotation(double theta) {
-		this.rotation = theta;
-	}
+  public void setRotation(double theta) {
+    this.rotation = theta;
+  }
 
-	public void setFrameHaltPosition(int frame) {
-		this.frameHaltPosition = frame;
-	}
+  public void setFrameHaltPosition(int frame) {
+    this.frameHaltPosition = frame;
+  }
 
-	public double getRotation() {
-		return this.rotation;
-	}
+  public double getRotation() {
+    return this.rotation;
+  }
 
-	/**
-	 * Mirrors the image along the y-axis. BE AWARE, this is very buggy. It is best
-	 * to just manually create the reversed images.
-	 * 
-	 * @param mirror
-	 */
-	public void setMirrored(boolean mirror) {
-		this.mirror = mirror;
-	}
+  /**
+   * Mirrors the image along the y-axis. BE AWARE, this is very buggy. It is best
+   * to just manually create the reversed images.
+   * 
+   * @param mirror
+   */
+  public void setMirrored(boolean mirror) {
+    this.mirror = mirror;
+  }
 
-	public boolean isMirrored() {
-		return this.mirror;
-	}
+  public boolean isMirrored() {
+    return this.mirror;
+  }
 
 }

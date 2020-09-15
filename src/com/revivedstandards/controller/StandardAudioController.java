@@ -39,83 +39,83 @@ import java.util.LinkedList;
  * it's necessary to start another (shooting bullets for instance).
  */
 public class StandardAudioController {
-	//
-	// Underlying HashMap which maps the hashCode() of the file's location
-	// in the system (/res/audio/...wav) to a LinkedList of StandardAudio
-	// objects. This acts as the buffer; when the user plays a track
-	// specified by the file name (and location), it will look up the
-	// corresponding list and find a track that is not playing.
-	//
-	private static HashMap<Integer, LinkedList<StandardAudio>> audioBuffer;
+  //
+  // Underlying HashMap which maps the hashCode() of the file's location
+  // in the system (/res/audio/...wav) to a LinkedList of StandardAudio
+  // objects. This acts as the buffer; when the user plays a track
+  // specified by the file name (and location), it will look up the
+  // corresponding list and find a track that is not playing.
+  //
+  private static HashMap<Integer, LinkedList<StandardAudio>> audioBuffer;
 
-	/**
-	 * Initializes the Audio buffer. This cannot be called twice.
-	 *
-	 * @param buffers
-	 */
-	public static void init(int buffers) {
-		if (buffers <= 0) {
-			throw new IllegalArgumentException("The amount of buffers cannot be less than or equal to 0.");
-		} else if (StandardAudioController.audioBuffer != null) {
-			throw new IllegalStateException("The audio buffer already exists!");
-		}
+  /**
+   * Initializes the Audio buffer. This cannot be called twice.
+   *
+   * @param buffers
+   */
+  public static void init(int buffers) {
+    if (buffers <= 0) {
+      throw new IllegalArgumentException("The amount of buffers cannot be less than or equal to 0.");
+    } else if (StandardAudioController.audioBuffer != null) {
+      throw new IllegalStateException("The audio buffer already exists!");
+    }
 
-		StandardAudioController.audioBuffer = new HashMap<>(buffers);
-	}
+    StandardAudioController.audioBuffer = new HashMap<>(buffers);
+  }
 
-	/**
-	 * Attempts to add the fileName if the key exists in the hashmap.
-	 *
-	 * @param fileName
-	 * @param n        - amount of times to buffer the file
-	 */
-	public static void load(String fileName, int n) {
-		int fileHash = fileName.hashCode();
+  /**
+   * Attempts to add the fileName if the key exists in the hashmap.
+   *
+   * @param fileName
+   * @param n        - amount of times to buffer the file
+   */
+  public static void load(String fileName, int n) {
+    int fileHash = fileName.hashCode();
 
-		if (!StandardAudioController.audioBuffer.containsKey(fileHash)) {
-			StandardAudioController.audioBuffer.put(fileName.hashCode(), new LinkedList<>());
-		}
+    if (!StandardAudioController.audioBuffer.containsKey(fileHash)) {
+      StandardAudioController.audioBuffer.put(fileName.hashCode(), new LinkedList<>());
+    }
 
-		LinkedList<StandardAudio> audioList = StandardAudioController.audioBuffer.get(fileHash);
+    LinkedList<StandardAudio> audioList = StandardAudioController.audioBuffer.get(fileHash);
 
-		for (int i = 0; i < n; i++) {
-			audioList.add(new StandardAudio(fileName));
-		}
-	}
+    for (int i = 0; i < n; i++) {
+      audioList.add(new StandardAudio(fileName));
+    }
+  }
 
-	/**
-	 * Attempts to add one instance of the fileName to the buffer.
-	 *
-	 * @param fileName
-	 */
-	public static void load(String fileName) {
-		StandardAudioController.load(fileName, 1);
-	}
+  /**
+   * Attempts to add one instance of the fileName to the buffer.
+   *
+   * @param fileName
+   */
+  public static void load(String fileName) {
+    StandardAudioController.load(fileName, 1);
+  }
 
-	/**
-	 * Plays the file at the supplied path. If the file is not in the hashmap, one
-	 * copy is initialized into it.
-	 *
-	 * @param fileName
-	 */
-	public static void play(String fileName) {
-		int fileHash = fileName.hashCode();
+  /**
+   * Plays the file at the supplied path. If the file is not in the hashmap, one
+   * copy is initialized into it.
+   *
+   * @param fileName
+   */
+  public static void play(String fileName) {
+    int fileHash = fileName.hashCode();
 
-		LinkedList<StandardAudio> audioList;
+    LinkedList<StandardAudio> audioList;
 
-		if (StandardAudioController.audioBuffer.get(fileHash) == null) {
-			StandardAudioController.load(fileName);
-		}
+    if (StandardAudioController.audioBuffer.get(fileHash) == null) {
+      StandardAudioController.load(fileName);
+    }
 
-		audioList = StandardAudioController.audioBuffer.get(fileHash);
+    audioList = StandardAudioController.audioBuffer.get(fileHash);
 
-		for (int i = 0; i < audioList.size(); i++) {
-			StandardAudio audio = audioList.get(i);
-			if (!audio.isPlaying()) {
-				audio.resetFramePosition();
-				audio.start();
-				return;
-			}
-		}
-	}
+    for (int i = 0; i < audioList.size(); i++) {
+      StandardAudio audio = audioList.get(i);
+      if (!audio.isPlaying()) {
+        audio.resetFramePosition();
+        audio.start();
+        return;
+      }
+    }
+  }
 }

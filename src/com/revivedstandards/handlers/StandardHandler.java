@@ -44,162 +44,162 @@ import java.util.ArrayList;
  */
 public class StandardHandler implements Renderable, Updatable {
 
-	//
-	// ArrayList of StandardGameObjects
-	//
-	private ArrayList<StandardGameObject> entities;
+  //
+  // ArrayList of StandardGameObjects
+  //
+  private ArrayList<StandardGameObject> entities;
 
-	//
-	// StandardCamera for the StandardHandler
-	//
-	private StandardCamera stdCamera;
+  //
+  // StandardCamera for the StandardHandler
+  //
+  private StandardCamera stdCamera;
 
-	public StandardHandler(StandardCamera stdCamera) {
-		this.entities = new ArrayList();
-		this.stdCamera = stdCamera;
-	}
+  public StandardHandler(StandardCamera stdCamera) {
+    this.entities = new ArrayList();
+    this.stdCamera = stdCamera;
+  }
 
-	public StandardHandler() {
-		this.entities = new ArrayList();
-	}
+  public StandardHandler() {
+    this.entities = new ArrayList();
+  }
 
-	/**
-	 * Calls tick on the respective object.
-	 *
-	 * The purpose of this is to only update one object.
-	 *
-	 * @param obj
-	 */
-	public static void Object(StandardGameObject obj) {
-		obj.tick();
-	}
+  /**
+   * Calls tick on the respective object.
+   *
+   * The purpose of this is to only update one object.
+   *
+   * @param obj
+   */
+  public static void Object(StandardGameObject obj) {
+    obj.tick();
+  }
 
-	/**
-	 * Calls tick() on the supplied handler.
-	 *
-	 * @param handler
-	 */
-	public static void Handler(StandardHandler handler) {
-		handler.tick();
-	}
+  /**
+   * Calls tick() on the supplied handler.
+   *
+   * @param handler
+   */
+  public static void Handler(StandardHandler handler) {
+    handler.tick();
+  }
 
-	/**
-	 * Adds n StandardGameObject obj's to the StandardHandler stdHandler
-	 *
-	 * @param obj
-	 * @param stdHandler
-	 * @param n
-	 */
-	public static void Add(StandardGameObject obj, StandardHandler stdHandler, int n) {
-		for (int i = 0; i < n; i++) {
-			stdHandler.addEntity(obj);
-		}
-	}
+  /**
+   * Adds n StandardGameObject obj's to the StandardHandler stdHandler
+   *
+   * @param obj
+   * @param stdHandler
+   * @param n
+   */
+  public static void Add(StandardGameObject obj, StandardHandler stdHandler, int n) {
+    for (int i = 0; i < n; i++) {
+      stdHandler.addEntity(obj);
+    }
+  }
 
-	@Override
-	public void tick() {
-		for (int i = 0; i < this.entities.size(); i++) {
-			((StandardGameObject) this.entities.get(i)).tick();
-		}
-	}
+  @Override
+  public void tick() {
+    for (int i = 0; i < this.entities.size(); i++) {
+      ((StandardGameObject) this.entities.get(i)).tick();
+    }
+  }
 
-	@Override
-	public void render(Graphics2D g2) {
-		int vpo = 300;
-		Rectangle cam = null;
+  @Override
+  public void render(Graphics2D g2) {
+    int vpo = 300;
+    Rectangle cam = null;
 
-		if (this.stdCamera != null) {
-			cam = new Rectangle((int) (this.stdCamera.getX() - vpo - this.stdCamera.getVpw()),
-					(int) (this.stdCamera.getY() - this.stdCamera.getVph()), this.stdCamera.getVpw() * 2 + vpo * 2,
-					this.stdCamera.getVph() * 2);
-		}
+    if (this.stdCamera != null) {
+      cam = new Rectangle((int) (this.stdCamera.getX() - vpo - this.stdCamera.getVpw()),
+          (int) (this.stdCamera.getY() - this.stdCamera.getVph()), this.stdCamera.getVpw() * 2 + vpo * 2,
+          this.stdCamera.getVph() * 2);
+    }
 
-		for (int i = 0; i < this.entities.size(); i++) {
-			StandardGameObject o = (StandardGameObject) this.entities.get(i);
+    for (int i = 0; i < this.entities.size(); i++) {
+      StandardGameObject o = (StandardGameObject) this.entities.get(i);
 
-			if ((cam != null && (o.getBounds().intersects(cam) || this.stdCamera == null))) {
-				o.render(g2);
-			}
-		}
-	}
+      if ((cam != null && (o.getBounds().intersects(cam) || this.stdCamera == null))) {
+        o.render(g2);
+      }
+    }
+  }
 
-	/**
-	 * Performs a standard render on the SGOs in the handler without worrying about
-	 * translations for the camera.
-	 *
-	 * @param g2
-	 */
-	public void stdRender(Graphics2D g2) {
-		this.entities.forEach((entity) -> {
-			entity.render(g2);
-		});
-	}
+  /**
+   * Performs a standard render on the SGOs in the handler without worrying about
+   * translations for the camera.
+   *
+   * @param g2
+   */
+  public void stdRender(Graphics2D g2) {
+    this.entities.forEach((entity) -> {
+      entity.render(g2);
+    });
+  }
 
-	public void setEntities(ArrayList<StandardGameObject> entities) {
-		this.entities = entities;
-	}
+  public void setEntities(ArrayList<StandardGameObject> entities) {
+    this.entities = entities;
+  }
 
-	public void addEntity(StandardGameObject obj) {
-		this.entities.add(obj);
-	}
+  public void addEntity(StandardGameObject obj) {
+    this.entities.add(obj);
+  }
 
-	public void removeEntity(StandardGameObject obj) {
-		this.entities.remove(obj);
-	}
+  public void removeEntity(StandardGameObject obj) {
+    this.entities.remove(obj);
+  }
 
-	public void clearEntities() {
-		for (int i = 0; i < this.entities.size(); i++) {
-			if (((StandardGameObject) this.entities.get(i)).getId() != StandardID.Player) {
-				this.entities.remove(i);
-				i--;
-			}
-		}
-	}
+  public void clearEntities() {
+    for (int i = 0; i < this.entities.size(); i++) {
+      if (((StandardGameObject) this.entities.get(i)).getId() != StandardID.Player) {
+        this.entities.remove(i);
+        i--;
+      }
+    }
+  }
 
-	public void clearAllEntities() {
-		this.entities.clear();
-	}
+  public void clearAllEntities() {
+    this.entities.clear();
+  }
 
-	public void sort() {
-		for (int i = 0; i < this.entities.size(); i++) {
-			if (((StandardGameObject) this.entities.get(i)).getId() == StandardID.Player) {
-				this.entities.add(0, (StandardGameObject) this.entities.get(i));
-				removeEntity((StandardGameObject) this.entities.get(i));
-			}
+  public void sort() {
+    for (int i = 0; i < this.entities.size(); i++) {
+      if (((StandardGameObject) this.entities.get(i)).getId() == StandardID.Player) {
+        this.entities.add(0, (StandardGameObject) this.entities.get(i));
+        removeEntity((StandardGameObject) this.entities.get(i));
+      }
 
-			if (((StandardGameObject) this.entities.get(i)).getId() == StandardID.Enemy) {
-				this.entities.add(1, (StandardGameObject) this.entities.get(i));
-				removeEntity((StandardGameObject) this.entities.get(i));
-			}
-		}
-	}
+      if (((StandardGameObject) this.entities.get(i)).getId() == StandardID.Enemy) {
+        this.entities.add(1, (StandardGameObject) this.entities.get(i));
+        removeEntity((StandardGameObject) this.entities.get(i));
+      }
+    }
+  }
 
-	private boolean validCollison(StandardGameObject obj2) {
-		return ((obj2.getId() == StandardID.Block || obj2.getId() == StandardID.Brick || obj2.getId() == StandardID.Obstacle
-				|| obj2.getId() == StandardID.NPC || obj2.getId() == StandardID.Powerup) && obj2.getId() != StandardID.Player
-				&& obj2.getId() != StandardID.Enemy);
-	}
+  private boolean validCollison(StandardGameObject obj2) {
+    return ((obj2.getId() == StandardID.Block || obj2.getId() == StandardID.Brick || obj2.getId() == StandardID.Obstacle
+        || obj2.getId() == StandardID.NPC || obj2.getId() == StandardID.Powerup) && obj2.getId() != StandardID.Player
+        && obj2.getId() != StandardID.Enemy);
+  }
 
-	public void checkCollisions() {
-	}
+  public void checkCollisions() {
+  }
 
-	public int size() {
-		return this.entities.size();
-	}
+  public int size() {
+    return this.entities.size();
+  }
 
-	public StandardGameObject get(int i) {
-		return (StandardGameObject) this.entities.get(i);
-	}
+  public StandardGameObject get(int i) {
+    return (StandardGameObject) this.entities.get(i);
+  }
 
-	public ArrayList<StandardGameObject> getEntities() {
-		return this.entities;
-	}
+  public ArrayList<StandardGameObject> getEntities() {
+    return this.entities;
+  }
 
-	public void setCamera(StandardCamera cam) {
-		this.stdCamera = cam;
-	}
+  public void setCamera(StandardCamera cam) {
+    this.stdCamera = cam;
+  }
 
-	public StandardCamera getCamera() {
-		return this.stdCamera;
-	}
+  public StandardCamera getCamera() {
+    return this.stdCamera;
+  }
 }

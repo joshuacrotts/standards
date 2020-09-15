@@ -29,53 +29,53 @@ import java.awt.Graphics2D;
 
 public class StandardAnimatorController {
 
-	//
-	// Model modified by this controller.
-	//
-	private final StandardAnimation animation;
+  //
+  // Model modified by this controller.
+  //
+  private final StandardAnimation animation;
 
-	public StandardAnimatorController(StandardAnimation animation) {
-		this.animation = animation;
-		this.animation.getView().setCurrentFrameIndex(0);
-	}
+  public StandardAnimatorController(StandardAnimation animation) {
+    this.animation = animation;
+    this.animation.getView().setCurrentFrameIndex(0);
+  }
 
-	/**
-	 * Increments the timer based on the delay. If the current animation timer is
-	 * greater than the delay, we move to the next frame of animation.
-	 *
-	 */
-	public void tick() {
-		if (System.nanoTime() > this.animation.getLastTime() + (1_000_000_000 / this.animation.getFrameSpeed())) {
-			this.animation.advanceFrame();
-			this.animation.setLastTime(System.nanoTime());
-		}
-	}
+  /**
+   * Increments the timer based on the delay. If the current animation timer is
+   * greater than the delay, we move to the next frame of animation.
+   *
+   */
+  public void tick() {
+    if (System.nanoTime() > this.animation.getLastTime() + (1_000_000_000 / this.animation.getFrameSpeed())) {
+      this.animation.advanceFrame();
+      this.animation.setLastTime(System.nanoTime());
+    }
+  }
 
-	/**
-	 * Contacts the StandardAnimationView and renders the current frame referenced
-	 * by the model.
-	 *
-	 * @param g2
-	 */
-	public void renderFrame(Graphics2D g2) {
-		StandardGameObject sgo = this.animation.getStandardGameObject();
+  /**
+   * Contacts the StandardAnimationView and renders the current frame referenced
+   * by the model.
+   *
+   * @param g2
+   */
+  public void renderFrame(Graphics2D g2) {
+    StandardGameObject sgo = this.animation.getStandardGameObject();
 
-		if (this.animation.isMirrored()) {
-			this.animation.getView().render(g2, sgo.getX(), sgo.getY(), -sgo.getWidth(), sgo.getHeight(),
-					this.animation.getRotation());
+    if (this.animation.isMirrored()) {
+      this.animation.getView().render(g2, sgo.getX(), sgo.getY(), -sgo.getWidth(), sgo.getHeight(),
+          this.animation.getRotation());
 
-		} else {
-			this.animation.getView().render(g2, sgo.getX(), sgo.getY(), sgo.getWidth(), sgo.getHeight(),
-					this.animation.getRotation());
-		}
-	}
+    } else {
+      this.animation.getView().render(g2, sgo.getX(), sgo.getY(), sgo.getWidth(), sgo.getHeight(),
+          this.animation.getRotation());
+    }
+  }
 
-	public void stopAnimation() {
-		this.animation.stopAnimation();
-	}
+  public void stopAnimation() {
+    this.animation.stopAnimation();
+  }
 
-	public StandardAnimation getStandardAnimation() {
-		return this.animation;
-	}
+  public StandardAnimation getStandardAnimation() {
+    return this.animation;
+  }
 
 }

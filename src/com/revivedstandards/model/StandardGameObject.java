@@ -37,304 +37,304 @@ import java.awt.image.BufferedImage;
 
 public abstract class StandardGameObject implements Renderable, Updatable {
 
-	//
-	// X and Y positions
-	//
-	private double x = 0;
-	private double y = 0;
+  //
+  // X and Y positions
+  //
+  private double x = 0;
+  private double y = 0;
 
-	//
-	// X Velocity and Y Velocity
-	//
-	private double velX;
-	private double velY;
+  //
+  // X Velocity and Y Velocity
+  //
+  private double velX;
+  private double velY;
 
-	//
-	// Object dimensions - these can either be preset by the user,
-	// or the library can automatically set these to the size of the
-	// sprite the user chooses.
-	//
-	private int width;
-	private int height;
+  //
+  // Object dimensions - these can either be preset by the user,
+  // or the library can automatically set these to the size of the
+  // sprite the user chooses.
+  //
+  private int width;
+  private int height;
 
-	//
-	// States for the object; they can either be alive or dead, and they
-	// can have a timer to determine when they should be removed from
-	// the handler.
-	//
-	private boolean alive = true;
-	private boolean interactable = false;
-	private long death = 0L;
+  //
+  // States for the object; they can either be alive or dead, and they
+  // can have a timer to determine when they should be removed from
+  // the handler.
+  //
+  private boolean alive = true;
+  private boolean interactable = false;
+  private long death = 0L;
 
-	//
-	// ID to determine what type of object this is - mostly used in collision
-	// handler.
-	//
-	private StandardID id;
+  //
+  // ID to determine what type of object this is - mostly used in collision
+  // handler.
+  //
+  private StandardID id;
 
-	//
-	// Animation controller for the SGO - this can be null if the user is
-	// only using G2 objects.
-	//
-	private StandardAnimatorController activeAnimation;
+  //
+  // Animation controller for the SGO - this can be null if the user is
+  // only using G2 objects.
+  //
+  private StandardAnimatorController activeAnimation;
 
-	//
-	// Image information - the file location, as well as the current sprite
-	// for the object.
-	//
-	private String fileLocation;
-	private BufferedImage currentSprite;
+  //
+  // Image information - the file location, as well as the current sprite
+  // for the object.
+  //
+  private String fileLocation;
+  private BufferedImage currentSprite;
 
-	//
-	// Collision bounds for the object.
-	//
-	private Rectangle bounds;
+  //
+  // Collision bounds for the object.
+  //
+  private Rectangle bounds;
 
-	public StandardGameObject() {
-	}
+  public StandardGameObject() {
+  }
 
-	public StandardGameObject(double x, double y, StandardID id) {
-		this.x = x;
-		this.y = y;
-		this.id = id;
-	}
+  public StandardGameObject(double x, double y, StandardID id) {
+    this.x = x;
+    this.y = y;
+    this.id = id;
+  }
 
-	public StandardGameObject(double x, double y, StandardID id, boolean interactable) {
-		this.x = x;
-		this.y = y;
-		this.id = id;
-		this.interactable = interactable;
-	}
+  public StandardGameObject(double x, double y, StandardID id, boolean interactable) {
+    this.x = x;
+    this.y = y;
+    this.id = id;
+    this.interactable = interactable;
+  }
 
-	public StandardGameObject(double x, double y, int width, int height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-	}
+  public StandardGameObject(double x, double y, int width, int height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
 
-	public StandardGameObject(double x, double y, int width, int height, StandardID id) {
-		this(x, y, width, height);
-		this.id = id;
-	}
+  public StandardGameObject(double x, double y, int width, int height, StandardID id) {
+    this(x, y, width, height);
+    this.id = id;
+  }
 
-	public StandardGameObject(double x, int y, int width, int height, StandardID id, boolean interactable) {
-		this(x, y, width, height, id);
-		this.interactable = interactable;
-	}
+  public StandardGameObject(double x, int y, int width, int height, StandardID id, boolean interactable) {
+    this(x, y, width, height, id);
+    this.interactable = interactable;
+  }
 
-	public StandardGameObject(double x, double y, String fileLocation) {
-		this.x = x;
-		this.y = y;
-		this.fileLocation = fileLocation;
-		this.currentSprite = StdOps.loadImage(this.fileLocation);
-		this.width = this.currentSprite.getWidth();
-		this.height = this.currentSprite.getHeight();
-	}
+  public StandardGameObject(double x, double y, String fileLocation) {
+    this.x = x;
+    this.y = y;
+    this.fileLocation = fileLocation;
+    this.currentSprite = StdOps.loadImage(this.fileLocation);
+    this.width = this.currentSprite.getWidth();
+    this.height = this.currentSprite.getHeight();
+  }
 
-	public StandardGameObject(double x, double y, String fileLocation, boolean interactable) {
-		this(x, y, fileLocation);
+  public StandardGameObject(double x, double y, String fileLocation, boolean interactable) {
+    this(x, y, fileLocation);
 
-		this.interactable = interactable;
-	}
+    this.interactable = interactable;
+  }
 
-	public StandardGameObject(double x, double y, String fileLocation, StandardID id) {
-		this(x, y, fileLocation);
-		this.id = id;
-	}
+  public StandardGameObject(double x, double y, String fileLocation, StandardID id) {
+    this(x, y, fileLocation);
+    this.id = id;
+  }
 
-	public StandardGameObject(double x, double y, String fileLocation, StandardID id, boolean interactable) {
-		this(x, y, fileLocation, id);
+  public StandardGameObject(double x, double y, String fileLocation, StandardID id, boolean interactable) {
+    this(x, y, fileLocation, id);
 
-		this.interactable = interactable;
-	}
+    this.interactable = interactable;
+  }
 
-	public StandardGameObject(double x, double y, BufferedImage image) {
-		this.x = x;
-		this.y = y;
-		this.currentSprite = image;
-		this.width = this.currentSprite.getWidth();
-		this.height = this.currentSprite.getHeight();
-	}
+  public StandardGameObject(double x, double y, BufferedImage image) {
+    this.x = x;
+    this.y = y;
+    this.currentSprite = image;
+    this.width = this.currentSprite.getWidth();
+    this.height = this.currentSprite.getHeight();
+  }
 
-	public StandardGameObject(double x, double y, BufferedImage image, StandardID id) {
-		this(x, y, image);
+  public StandardGameObject(double x, double y, BufferedImage image, StandardID id) {
+    this(x, y, image);
 
-		this.id = id;
-	}
+    this.id = id;
+  }
 
-	public StandardGameObject(double x, double y, BufferedImage image, StandardID id, boolean interactable) {
-		this(x, y, image, id);
+  public StandardGameObject(double x, double y, BufferedImage image, StandardID id, boolean interactable) {
+    this(x, y, image, id);
 
-		this.interactable = interactable;
-	}
+    this.interactable = interactable;
+  }
 
-	/**
-	 * Updates the position, state, actions, etc. of the StandardGameObject. Any
-	 * logic or physics should be done within the tick() method. Do not put drawing
-	 * functions in here; it will mess up the physics loop.
-	 *
-	 * This method must be implemented in any subclass of SGO.
-	 */
-	@Override
-	public abstract void tick();
+  /**
+   * Updates the position, state, actions, etc. of the StandardGameObject. Any
+   * logic or physics should be done within the tick() method. Do not put drawing
+   * functions in here; it will mess up the physics loop.
+   *
+   * This method must be implemented in any subclass of SGO.
+   */
+  @Override
+  public abstract void tick();
 
-	/**
-	 * Draws the StandardGameObject to the screen however the user defines it as. Do
-	 * not update any game/object logic in here.
-	 *
-	 * This method must be implemented in any subclass of SGO.
-	 *
-	 * @param paramGraphics2D
-	 */
-	@Override
-	public abstract void render(Graphics2D paramGraphics2D);
+  /**
+   * Draws the StandardGameObject to the screen however the user defines it as. Do
+   * not update any game/object logic in here.
+   *
+   * This method must be implemented in any subclass of SGO.
+   *
+   * @param paramGraphics2D
+   */
+  @Override
+  public abstract void render(Graphics2D paramGraphics2D);
 
-	/**
-	 * Short-hand way of typing x += velX; y += velY
-	 */
-	public void updatePosition() {
-		this.setX(this.getX() + this.getVelX());
-		this.setY(this.getY() + this.getVelY());
-	}
+  /**
+   * Short-hand way of typing x += velX; y += velY
+   */
+  public void updatePosition() {
+    this.setX(this.getX() + this.getVelX());
+    this.setY(this.getY() + this.getVelY());
+  }
 
-	public StandardAnimatorController getAnimationController() {
-		return this.activeAnimation;
-	}
+  public StandardAnimatorController getAnimationController() {
+    return this.activeAnimation;
+  }
 
-	public void setAnimation(StandardAnimatorController animation) {
-		this.activeAnimation = animation;
-	}
+  public void setAnimation(StandardAnimatorController animation) {
+    this.activeAnimation = animation;
+  }
 
-	public double getX() {
-		return this.x;
-	}
+  public double getX() {
+    return this.x;
+  }
 
-	public void setX(double x) {
-		this.x = x;
-	}
+  public void setX(double x) {
+    this.x = x;
+  }
 
-	public double getY() {
-		return this.y;
-	}
+  public double getY() {
+    return this.y;
+  }
 
-	public void setY(double y) {
-		this.y = y;
-	}
+  public void setY(double y) {
+    this.y = y;
+  }
 
-	public double getVelX() {
-		return this.velX;
-	}
+  public double getVelX() {
+    return this.velX;
+  }
 
-	public void setVelX(double velX) {
-		this.velX = velX;
-	}
+  public void setVelX(double velX) {
+    this.velX = velX;
+  }
 
-	public double getVelY() {
-		return this.velY;
-	}
+  public double getVelY() {
+    return this.velY;
+  }
 
-	public void setVelY(double velY) {
-		this.velY = velY;
-	}
+  public void setVelY(double velY) {
+    this.velY = velY;
+  }
 
-	public int getWidth() {
-		return this.width;
-	}
+  public int getWidth() {
+    return this.width;
+  }
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
+  public void setWidth(int width) {
+    this.width = width;
+  }
 
-	public int getHeight() {
-		return this.height;
-	}
+  public int getHeight() {
+    return this.height;
+  }
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
+  public void setHeight(int height) {
+    this.height = height;
+  }
 
-	public String getFileLocation() {
-		return this.fileLocation;
-	}
+  public String getFileLocation() {
+    return this.fileLocation;
+  }
 
-	public void setFileLocation(String fileLocation) {
-		this.fileLocation = fileLocation;
-	}
+  public void setFileLocation(String fileLocation) {
+    this.fileLocation = fileLocation;
+  }
 
-	public BufferedImage getCurrentSprite() {
-		return this.currentSprite;
-	}
+  public BufferedImage getCurrentSprite() {
+    return this.currentSprite;
+  }
 
-	public void setCurrentSprite(BufferedImage currentSprite) {
-		this.currentSprite = currentSprite;
-	}
+  public void setCurrentSprite(BufferedImage currentSprite) {
+    this.currentSprite = currentSprite;
+  }
 
-	public StandardID getId() {
-		return this.id;
-	}
+  public StandardID getId() {
+    return this.id;
+  }
 
-	public void setId(StandardID id) {
-		this.id = id;
-	}
+  public void setId(StandardID id) {
+    this.id = id;
+  }
 
-	public void setInteractable(boolean interactable) {
-		this.interactable = interactable;
-	}
+  public void setInteractable(boolean interactable) {
+    this.interactable = interactable;
+  }
 
-	public boolean isInteractable() {
-		return this.interactable;
-	}
+  public boolean isInteractable() {
+    return this.interactable;
+  }
 
-	public void setAlive(boolean alive) {
-		this.alive = alive;
-	}
+  public void setAlive(boolean alive) {
+    this.alive = alive;
+  }
 
-	public long getDeath() {
-		return this.death;
-	}
+  public long getDeath() {
+    return this.death;
+  }
 
-	public void setDeath(long death) {
-		this.death = death;
-	}
+  public void setDeath(long death) {
+    this.death = death;
+  }
 
-	public double getRestitution() {
-		return 1.0D;
-	}
+  public double getRestitution() {
+    return 1.0D;
+  }
 
-	public boolean isAlive() {
-		return this.alive;
-	}
+  public boolean isAlive() {
+    return this.alive;
+  }
 
-	public Rectangle getBounds(int nX, int nY, int nW, int nH) {
-		this.bounds = new Rectangle((int) this.x + nX, (int) this.y + nY, this.width + nW, this.height + nH);
-		return this.bounds;
-	}
+  public Rectangle getBounds(int nX, int nY, int nW, int nH) {
+    this.bounds = new Rectangle((int) this.x + nX, (int) this.y + nY, this.width + nW, this.height + nH);
+    return this.bounds;
+  }
 
-	/**
-	 * Returns a 2D rectangle around the StandardGameObject representing its
-	 * collision boundaries. Good for debugging purposes.
-	 * 
-	 * @return
-	 */
-	public Rectangle getBounds() {
-		this.bounds = new Rectangle((int) this.x, (int) this.y, this.width, this.height);
-		return this.bounds;
-	}
+  /**
+   * Returns a 2D rectangle around the StandardGameObject representing its
+   * collision boundaries. Good for debugging purposes.
+   * 
+   * @return
+   */
+  public Rectangle getBounds() {
+    this.bounds = new Rectangle((int) this.x, (int) this.y, this.width, this.height);
+    return this.bounds;
+  }
 
-	public Rectangle getLeftBounds() {
-		return new Rectangle((int) this.x, (int) this.y, 1, this.height);
-	}
+  public Rectangle getLeftBounds() {
+    return new Rectangle((int) this.x, (int) this.y, 1, this.height);
+  }
 
-	public Rectangle getRightBounds() {
-		return new Rectangle((int) this.x + this.width, (int) this.y, 1, this.height);
-	}
+  public Rectangle getRightBounds() {
+    return new Rectangle((int) this.x + this.width, (int) this.y, 1, this.height);
+  }
 
-	public Rectangle getTopBounds() {
-		return new Rectangle((int) this.x, (int) this.y, this.width, 3);
-	}
+  public Rectangle getTopBounds() {
+    return new Rectangle((int) this.x, (int) this.y, this.width, 3);
+  }
 
-	public Rectangle getBottomBounds() {
-		return new Rectangle((int) this.x, (int) this.y + this.height, this.width, 1);
-	}
+  public Rectangle getBottomBounds() {
+    return new Rectangle((int) this.x, (int) this.y + this.height, this.width, 1);
+  }
 }

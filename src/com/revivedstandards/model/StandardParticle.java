@@ -31,50 +31,50 @@ import com.revivedstandards.handlers.StandardHandler;
 import java.awt.Color;
 
 public abstract class StandardParticle extends StandardGameObject {
-	private Color color = Color.BLACK;
-	private StandardHandler handler;
-	private double rotationAngle;
+  private Color color = Color.BLACK;
+  private StandardHandler handler;
+  private double rotationAngle;
 
-	public StandardParticle(double x, double y, double life) {
-		super((int) x, (int) y, StandardID.Particle);
-		life *= 1.0E9D;
-		this.setDeath(System.nanoTime() + (long) life);
-	}
+  public StandardParticle(double x, double y, double life) {
+    super((int) x, (int) y, StandardID.Particle);
+    life *= 1.0E9D;
+    this.setDeath(System.nanoTime() + (long) life);
+  }
 
-	public StandardParticle(double x, double y, StandardHandler handler) {
-		super((int) x, (int) y, StandardID.Particle);
-		this.handler = handler;
-	}
+  public StandardParticle(double x, double y, StandardHandler handler) {
+    super((int) x, (int) y, StandardID.Particle);
+    this.handler = handler;
+  }
 
-	public StandardParticle(double x, double y, double life, StandardHandler handler) {
-		this(x, y, handler);
-		life *= 1.0E9D;
-		this.setDeath(System.nanoTime() + (long) life);
-	}
+  public StandardParticle(double x, double y, double life, StandardHandler handler) {
+    this(x, y, handler);
+    life *= 1.0E9D;
+    this.setDeath(System.nanoTime() + (long) life);
+  }
 
-	public StandardParticle(double x, double y, double life, StandardHandler handler, Color c) {
-		this(x, y, life, handler);
-		this.color = c;
-	}
+  public StandardParticle(double x, double y, double life, StandardHandler handler, Color c) {
+    this(x, y, life, handler);
+    this.color = c;
+  }
 
-	public StandardParticle(double x, double y, double life, StandardHandler handler, Color c, double rotationAngle) {
-		this(x, y, life, handler, c);
-		this.rotationAngle = rotationAngle;
-	}
+  public StandardParticle(double x, double y, double life, StandardHandler handler, Color c, double rotationAngle) {
+    this(x, y, life, handler, c);
+    this.rotationAngle = rotationAngle;
+  }
 
-	public double getAngle() {
-		return this.rotationAngle;
-	}
+  public double getAngle() {
+    return this.rotationAngle;
+  }
 
-	public StandardHandler getHandler() {
-		return this.handler;
-	}
+  public StandardHandler getHandler() {
+    return this.handler;
+  }
 
-	public void setColor(Color c) {
-		this.color = c;
-	}
+  public void setColor(Color c) {
+    this.color = c;
+  }
 
-	public Color getColor() {
-		return this.color;
-	}
+  public Color getColor() {
+    return this.color;
+  }
 }

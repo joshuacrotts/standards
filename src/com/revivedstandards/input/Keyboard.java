@@ -32,26 +32,26 @@ import java.awt.event.KeyListener;
 
 public class Keyboard extends InputDevice implements KeyListener {
 
-	public static final int MAX_CHARS = 0x10000;
+  public static final int MAX_CHARS = 0x10000;
 
-	public Keyboard() {
-		super("Default Keyboard", MAX_CHARS);
-	}
+  public Keyboard() {
+    super("Default Keyboard", MAX_CHARS);
+  }
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int code = e.getKeyCode();
-		set(code, true);
-	}
+  @Override
+  public void keyPressed(KeyEvent e) {
+    int code = e.getKeyCode();
+    set(code, true);
+  }
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		int code = e.getKeyCode();
-		set(code, false);
-	}
+  @Override
+  public void keyReleased(KeyEvent e) {
+    int code = e.getKeyCode();
+    set(code, false);
+  }
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// add key to log
-	}
+  @Override
+  public void keyTyped(KeyEvent e) {
+    // add key to log
+  }
 }

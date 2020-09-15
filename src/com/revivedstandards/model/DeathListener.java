@@ -34,13 +34,13 @@ package com.revivedstandards.model;
  */
 public interface DeathListener {
 
-	/**
-	 * Method to be overridden in the implementing class. Once the entities is in a
-	 * "death" state, this method should be called but only once via some extra if
-	 * (deathState) uponDeath() deathState = false; clause or something similar.
-	 *
-	 * This is useful for if the enemy/object disperses particles, drops items, etc
-	 * upon their "death".
-	 */
-	public abstract void uponDeath();
+  /**
+   * Method to be overridden in the implementing class. Once the entities is in a
+   * "death" state, this method should be called but only once via some extra if
+   * (deathState) uponDeath() deathState = false; clause or something similar.
+   *
+   * This is useful for if the enemy/object disperses particles, drops items, etc
+   * upon their "death".
+   */
+  public abstract void uponDeath();
 }
