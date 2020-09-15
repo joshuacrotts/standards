@@ -113,7 +113,7 @@ public abstract class StandardConsoleApplication {
 
 		return n;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -121,32 +121,32 @@ public abstract class StandardConsoleApplication {
 	public StandardComplexNumber readComplex() {
 		Pattern pattern = Pattern.compile("([0-9]+)\\s?([+-])\\s?(-?[0-9])i");
 		Matcher matcher = null;
-		
+
 		// Verify that we can actually parse this string.
 		try {
 			String complexString = this.reader.readLine();
 			matcher = pattern.matcher(complexString);
-			
+
 			if (!matcher.matches()) {
 				throw new IllegalArgumentException("Cannot match this as scientific notation!");
 			}
-			
+
 		} catch (IllegalArgumentException | IOException ex) {
 			Logger.getLogger(StandardConsoleApplication.class.getName()).log(Level.SEVERE, null, ex);
 			System.exit(1);
 		}
-		
+
 		// Pull the tokens from the matcher.
 		double real = Double.parseDouble(matcher.group(1));
 		String sign = matcher.group(2);
 		double imaginary = Double.parseDouble(matcher.group(3));
-		
+
 		// If we have a negative as the operator, flip the imaginary number
 		// to fit a + bi.
 		if (sign.equals("-")) {
 			imaginary *= -1;
 		}
-		
+
 		return new StandardComplexNumber(real, imaginary);
 	}
 
@@ -159,15 +159,15 @@ public abstract class StandardConsoleApplication {
 		String scientificNotation = null;
 		Pattern pattern = Pattern.compile("[+-]?[0-9]+[.]?[0-9]*([Ee]-?[0-9]+)?");
 		Matcher matcher = null;
-		
+
 		try {
 			scientificNotation = this.reader.readLine();
 			matcher = pattern.matcher(scientificNotation);
-			
+
 			if (!matcher.matches()) {
 				throw new IllegalArgumentException("Cannot match this as scientific notation!");
 			}
-			
+
 		} catch (IllegalArgumentException | IOException ex) {
 			Logger.getLogger(StandardConsoleApplication.class.getName()).log(Level.SEVERE, null, ex);
 			System.exit(1);

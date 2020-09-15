@@ -99,10 +99,10 @@ public class TriangleGameObject extends StandardGameObject {
 		}
 
 		// Adds random particles to the end of the ship to simulate fuel burning
-		this.sph.addEntity(new StandardBoxParticle(this.getX() + this.getWidth() * 0.5,
-				this.getY() + (this.getHeight() * 0.5) + 20, 6, StdOps.randomDoubleBounds(-7, -0.5, 0.5, 7),
-				StdOps.randomDouble(20, 30.0), new Color(0xFF, StdOps.randomInt(0, 0xFF), 0), 20.0, this.sph,
-				this.angle, ShapeType.CIRCLE, false));
+		this.sph.addEntity(
+				new StandardBoxParticle(this.getX() + this.getWidth() * 0.5, this.getY() + (this.getHeight() * 0.5) + 20, 6,
+						StdOps.randomDoubleBounds(-7, -0.5, 0.5, 7), StdOps.randomDouble(20, 30.0),
+						new Color(0xFF, StdOps.randomInt(0, 0xFF), 0), 20.0, this.sph, this.angle, ShapeType.CIRCLE, false));
 
 		StandardHandler.Handler(this.sph);
 	}

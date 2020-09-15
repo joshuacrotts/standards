@@ -175,9 +175,8 @@ public class StandardHandler implements Renderable, Updatable {
 	}
 
 	private boolean validCollison(StandardGameObject obj2) {
-		return ((obj2.getId() == StandardID.Block || obj2.getId() == StandardID.Brick
-				|| obj2.getId() == StandardID.Obstacle || obj2.getId() == StandardID.NPC
-				|| obj2.getId() == StandardID.Powerup) && obj2.getId() != StandardID.Player
+		return ((obj2.getId() == StandardID.Block || obj2.getId() == StandardID.Brick || obj2.getId() == StandardID.Obstacle
+				|| obj2.getId() == StandardID.NPC || obj2.getId() == StandardID.Powerup) && obj2.getId() != StandardID.Player
 				&& obj2.getId() != StandardID.Enemy);
 	}
 

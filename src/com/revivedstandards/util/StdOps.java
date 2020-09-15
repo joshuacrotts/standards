@@ -186,12 +186,13 @@ public abstract class StdOps {
 		if (n < oldMin || n > oldMax) {
 			throw new IllegalArgumentException("Number cannot be outside the range [" + oldMin + ", " + oldMax + "].");
 		}
-		
+
 		return (((n - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
 	}
 
 	/**
 	 * Normalizes a number between 0.0 and 1.0.
+	 * 
 	 * @param n
 	 * @param oldMin
 	 * @param oldMax
@@ -200,7 +201,7 @@ public abstract class StdOps {
 	public static double normalize(double n, double oldMin, double oldMax) {
 		return normalize(n, oldMin, oldMax, 0.0, 1.0);
 	}
-	
+
 	/**
 	 * 
 	 * @param path

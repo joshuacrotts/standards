@@ -69,8 +69,7 @@ public class StandardDragParticle extends StandardParticle {
 		this.setVelY(h * FastMath.cos(d));
 	}
 
-	public StandardDragParticle(double x, double y, double life, StandardHandler handler, Color c,
-			double rotationAngle) {
+	public StandardDragParticle(double x, double y, double life, StandardHandler handler, Color c, double rotationAngle) {
 		super(x, y, life, handler, c, rotationAngle);
 
 		double d = StdOps.randomDouble(0.0D, 6.283185307179586D);
@@ -97,12 +96,12 @@ public class StandardDragParticle extends StandardParticle {
 		if (!this.isAlive()) {
 			return;
 		}
-		
+
 		int red = this.getColor().getRed();
 		int green = this.getColor().getGreen();
 		int blue = this.getColor().getBlue();
 		int alpha = this.getColor().getAlpha();
-		
+
 		g2.setColor(new Color(red, green, blue, alpha));
 		g2.drawLine((int) this.getX(), (int) this.getY(), (int) (this.getX() + this.getWidth()),
 				(int) (this.getY() + this.getHeight()));

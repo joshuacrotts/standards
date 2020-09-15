@@ -108,7 +108,7 @@ public abstract class StandardDraw {
 		} else {
 			StandardDraw.Renderer.setFont(new Font("Arial", 0, (int) size));
 		}
-		
+
 		StandardDraw.Renderer.setColor(color);
 		StandardDraw.Renderer.drawString(text, x, y);
 
@@ -161,7 +161,7 @@ public abstract class StandardDraw {
 		if (color == null) {
 			color = Color.black;
 		}
-		
+
 		Color old = StandardDraw.Renderer.getColor();
 		StandardDraw.Renderer.setColor(color);
 
@@ -170,7 +170,7 @@ public abstract class StandardDraw {
 		} else {
 			StandardDraw.Renderer.drawOval((int) x, (int) y, (int) width, (int) height);
 		}
-		
+
 		StandardDraw.Renderer.setColor(old);
 	}
 

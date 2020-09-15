@@ -73,7 +73,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
 	private boolean running;
 	private boolean consoleFPS;
 	private boolean titleFPS;
-	
+
 	/* BufferStrategy for double-buffering the JFrame. */
 	private static BufferStrategy bufferStrategy = null;
 
@@ -234,12 +234,10 @@ public abstract class StandardGame extends Canvas implements Runnable {
 				this.currentFPS = frames;
 
 				if (this.titleFPS) {
-					this.window.setTitle(
-							String.valueOf(this.window.getTitle()) + " | " + updates + " ups, " + frames + " fps");
+					this.window.setTitle(String.valueOf(this.window.getTitle()) + " | " + updates + " ups, " + frames + " fps");
 				}
 				if (this.consoleFPS) {
-					System.out.println(
-							String.valueOf(this.window.getTitle()) + " | " + updates + " ups, " + frames + " fps");
+					System.out.println(String.valueOf(this.window.getTitle()) + " | " + updates + " ups, " + frames + " fps");
 				}
 
 				updates = 0;

@@ -37,8 +37,9 @@ public final class StandardAnimation {
 	/* Underlying parent StandardGameObject. */
 	private final StandardGameObject sgo;
 
-	/* View for the animation; renders the current frame pointed by
-	 * frameIndex. */
+	/*
+	 * View for the animation; renders the current frame pointed by frameIndex.
+	 */
 	private final StandardAnimationView view;
 
 	// Current frame index in the array of images

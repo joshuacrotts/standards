@@ -72,8 +72,8 @@ public class UserInterface implements Renderable, Updatable {
 				this.gameFont, 20f, Color.yellow);
 
 		// Actual Player info
-		StandardDraw.text("Ammo: " + this.obj.getBulletCount(), this.renderX + 50, this.renderY + 75, this.gameFont,
-				20f, Color.yellow);
+		StandardDraw.text("Ammo: " + this.obj.getBulletCount(), this.renderX + 50, this.renderY + 75, this.gameFont, 20f,
+				Color.yellow);
 
 		// If the game is paused, we can draw a black square over the screen saying it's
 		// paused
@@ -86,7 +86,7 @@ public class UserInterface implements Renderable, Updatable {
 		Color c = StandardDraw.Renderer.getColor();
 		StandardDraw.Renderer.setColor(new Color(0, 0, 0, 0.5f));
 		StandardDraw.Renderer.fillRect((int) -2000, -2000, 50000, 10000);// Just draws a HUGE rectangle over hopefully
-																			// affected areas
+		// affected areas
 		StandardDraw.text("PAUSED", (int) this.renderX + this.sg.getGameWidth() / 2,
 				this.renderY + this.sg.getGameHeight() / 2, this.gameFont, 24f, Color.white);
 		StandardDraw.Renderer.setColor(c);

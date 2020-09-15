@@ -49,8 +49,7 @@ public class StandardCamera extends StandardGameObject {
 	private StandardGame sg;
 
 	private double snap = 1.0D;
-	private int vpw = 0, vph = 0, maxX, maxY = this.maxX = Integer.MAX_VALUE, minX,
-			minY = this.minX = Integer.MIN_VALUE;
+	private int vpw = 0, vph = 0, maxX, maxY = this.maxX = Integer.MAX_VALUE, minX, minY = this.minX = Integer.MIN_VALUE;
 	private int objectMinXBounds, objectMaxXBounds;
 	private int objectMinYBounds, objectMaxYBounds;
 

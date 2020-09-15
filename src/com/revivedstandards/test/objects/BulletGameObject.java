@@ -127,10 +127,10 @@ public class BulletGameObject extends StandardGameObject implements DeathListene
 	 */
 	private void summonDeathParticles(int n) {
 		for (int i = 0; i < n; i++) {
-			this.explosionHandler.addEntity(new StandardBoxParticle(this.getX(), this.getY(),
-					StdOps.randomDouble(0.5, 2.5), StdOps.randomDoubleBounds(-5, -0.1, 0.1, 5),
-					StdOps.randomDoubleBounds(-5, -1, 1, 5), BulletGameObject.getRandomRGYB(StdOps.randomInt(0, 3)), 4f,
-					this.explosionHandler, 0.0, ShapeType.CIRCLE, true));
+			this.explosionHandler.addEntity(new StandardBoxParticle(this.getX(), this.getY(), StdOps.randomDouble(0.5, 2.5),
+					StdOps.randomDoubleBounds(-5, -0.1, 0.1, 5), StdOps.randomDoubleBounds(-5, -1, 1, 5),
+					BulletGameObject.getRandomRGYB(StdOps.randomInt(0, 3)), 4f, this.explosionHandler, 0.0, ShapeType.CIRCLE,
+					true));
 		}
 
 		this.aliveFlag = false;

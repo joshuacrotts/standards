@@ -166,8 +166,8 @@ public class BitArray {
 			prefB = 'G';
 		}
 		valueB = length / unitB;// size / unitB / 8;
-		System.out.println(
-				"\n\n\nSize: " + valueb + prefb + 'b' + " (" + valueB + prefB + 'B' + " +" + remainder() + 'b' + ")");
+		System.out
+				.println("\n\n\nSize: " + valueb + prefb + 'b' + " (" + valueB + prefB + 'B' + " +" + remainder() + 'b' + ")");
 		System.out.println("Length: " + (int) Math.ceil(valueB) + prefB + 'B');
 		System.out.println("\n\nPosition\tBucket\t\tValue\tIndex\n");
 		for (int i = 0; i < size; i++) {

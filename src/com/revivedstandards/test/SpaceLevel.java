@@ -28,7 +28,7 @@ public class SpaceLevel extends StandardLevel {
 	@Override
 	public void loadLevelData() {
 		throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
-																		// Tools | Templates.
+		// Tools | Templates.
 	}
 
 	@Override
