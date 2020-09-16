@@ -87,17 +87,22 @@ public class StandardComplexNumber {
    * @return
    */
   public StandardComplexNumber pow(int n) {
+    // Cover the simple cases first.
     if (n < 0) {
       throw new IllegalArgumentException("Cannot compute a negative exponent!");
     } else if (n == 0) {
       return ONE;
     } else if (n == 1) {
       return this;
+    } else if (n == 2) {
+      return this.multiply(this);
     }
 
+    // If we have a power higher than 2, we can spin up the
+    // for loop.
     StandardComplexNumber complex = new StandardComplexNumber(this.real, this.imaginary);
 
-    for (int i = 2; i <= n; i++) {
+    for (int i = 3; i <= n; i++) {
       complex = complex.multiply(this);
     }
 
