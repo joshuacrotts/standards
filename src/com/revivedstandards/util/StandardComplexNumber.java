@@ -1,5 +1,13 @@
 package com.revivedstandards.util;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.revivedstandards.platform.StandardConsoleApplication;
+
 public class StandardComplexNumber {
 
   public static final StandardComplexNumber ZERO = new StandardComplexNumber(0, 0);
@@ -111,6 +119,42 @@ public class StandardComplexNumber {
   public StandardComplexNumber abs() {
     double absReal = Math.sqrt(this.real * this.real + this.imaginary * this.imaginary);
     return new StandardComplexNumber(absReal, 1);
+  }
+  
+  /**
+   * 
+   * @param str
+   * @return
+   */
+  public static StandardComplexNumber parseComplexNumber(String str) {
+    Pattern pattern = Pattern.compile("(-?\\d*(.\\d+)?)\\s?([+-])\\s?(-?[\\d]*(.[\\d]*)?)i");
+    Matcher matcher = null;
+
+    // Verify that we can actually parse this string.
+    try {
+      matcher = pattern.matcher(str);
+
+      if (!matcher.matches()) {
+        throw new IllegalArgumentException("Cannot match this as a complex number!");
+      }
+
+    } catch (IllegalArgumentException ex) {
+      Logger.getLogger(StandardConsoleApplication.class.getName()).log(Level.SEVERE, null, ex);
+      System.exit(1);
+    }
+
+    // Pull the tokens from the matcher.
+    double real = Double.parseDouble(matcher.group(1));
+    String sign = matcher.group(3);
+    double imaginary = Double.parseDouble(matcher.group(4));
+
+    // If we have a negative as the operator, flip the imaginary number
+    // to fit a + bi.
+    if (sign.equals("-")) {
+      imaginary *= -1;
+    }
+
+    return new StandardComplexNumber(real, imaginary);
   }
 
   public double getReal() {

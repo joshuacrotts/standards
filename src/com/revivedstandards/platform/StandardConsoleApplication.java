@@ -128,7 +128,7 @@ public abstract class StandardConsoleApplication {
       matcher = pattern.matcher(complexString);
 
       if (!matcher.matches()) {
-        throw new IllegalArgumentException("Cannot match this as scientific notation!");
+        throw new IllegalArgumentException("Cannot match this as a complex number!");
       }
 
     } catch (IllegalArgumentException | IOException ex) {
