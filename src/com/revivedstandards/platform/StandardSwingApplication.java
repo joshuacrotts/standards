@@ -31,11 +31,8 @@ public abstract class StandardSwingApplication {
   public StandardSwingApplication(int width, int height, int fps, String title) {
     this.FRAME = new JFrame(title);
     this.FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.FRAME.setPreferredSize(new Dimension(width, height));
+    this.FRAME.setSize(width, height);
     this.FRAME.setResizable(false);
-    this.FRAME.setVisible(true);
-    this.FRAME.pack();
-    this.FRAME.setLocationRelativeTo(null);
 
     this.setFPS(fps);
 
@@ -59,7 +56,6 @@ public abstract class StandardSwingApplication {
    */
   public void addComponent(Component component) {
     this.FRAME.getContentPane().add(component);
-    this.FRAME.pack();
   }
 
   /**
@@ -68,7 +64,6 @@ public abstract class StandardSwingApplication {
    */
   public void addComponent(Component component, int index) {
     this.FRAME.getContentPane().add(component, index);
-    this.FRAME.pack();
   }
 
   /**
@@ -77,7 +72,6 @@ public abstract class StandardSwingApplication {
    */
   public void addComponent(Component component, Object constraints) {
     this.FRAME.getContentPane().add(component, constraints);
-    this.FRAME.pack();
   }
 
   /**
@@ -86,6 +80,14 @@ public abstract class StandardSwingApplication {
    */
   public void addComponent(Component component, Object constraints, int index) {
     this.FRAME.getContentPane().add(component, constraints, index);
+  }
+
+  /**
+   * Sets the location of the frame to the center of the screen, and packs all
+   * components together, updating their dimensions.
+   */
+  public void packComponents() {
+    this.FRAME.setLocationRelativeTo(null);
     this.FRAME.pack();
   }
 
@@ -152,6 +154,14 @@ public abstract class StandardSwingApplication {
 
   public void setRunning(boolean running) {
     this.isRunning = running;
+  }
+
+  public void isVisible() {
+    this.FRAME.isVisible();
+  }
+
+  public void setVisible(boolean visible) {
+    this.FRAME.setVisible(true);
   }
 
   public JFrame getFrame() {
