@@ -87,8 +87,8 @@ public abstract class StandardSwingApplication {
    * components together, updating their dimensions.
    */
   public void packComponents() {
-    this.FRAME.setLocationRelativeTo(null);
     this.FRAME.pack();
+    this.FRAME.setLocationRelativeTo(null);
   }
 
   /**
