@@ -31,8 +31,10 @@ import com.revivedstandards.handlers.StandardHandler;
 import java.awt.Color;
 
 public abstract class StandardParticle extends StandardGameObject {
+  
   private Color color = Color.BLACK;
   private StandardHandler handler;
+  
   private double rotationAngle;
 
   public StandardParticle(double x, double y, double life) {

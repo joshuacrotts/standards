@@ -73,16 +73,7 @@ public final class StandardAnimation {
   private int frameHaltPosition = -1;
 
   public StandardAnimation(StandardGameObject sgo, BufferedImage[] frames, double fps) {
-    this.sgo = sgo;
-    this.fps = fps;
-    this.view = new StandardAnimationView(frames, sgo);
-
-    // By default, the end frame index is just the end of the frame index's array
-    // length.
-    this.endFrameIndex = frames.length;
-
-    this.setCurrentFrameIndex(0);
-    this.setDefaultDimensions();
+    this(sgo, frames, fps, -1);
   }
 
   public StandardAnimation(StandardGameObject sgo, BufferedImage[] frames, double fps, int frameHaltPosition) {

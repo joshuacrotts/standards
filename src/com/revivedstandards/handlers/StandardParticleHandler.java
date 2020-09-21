@@ -54,7 +54,7 @@ public class StandardParticleHandler extends StandardHandler {
     this.oldest = 0;
     this.replace = this.MAX_PARTICLES;
 
-    this.setEntities(new ArrayList(this.MAX_PARTICLES + 1));
+    this.setEntities(new ArrayList<StandardGameObject>(this.MAX_PARTICLES + 1));
 
     for (int i = 0; i < this.MAX_PARTICLES; i++) {
       this.getEntities().add(null);

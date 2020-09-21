@@ -27,28 +27,19 @@
  */
 package com.revivedstandards.main;
 
-import com.revivedstandards.handlers.StandardHandler;
-import com.revivedstandards.model.StandardGameObject;
-import com.revivedstandards.util.StdOps;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.image.BufferedImage;
+
+import com.revivedstandards.handlers.StandardHandler;
+import com.revivedstandards.model.StandardGameObject;
+import com.revivedstandards.util.StdOps;
 
 public abstract class StandardDraw {
 
   public static Graphics2D Renderer;
-
-  /**
-   * Draws an image to the screen using doubles that are downcasted to ints.
-   *
-   * @param image
-   * @param x
-   * @param y
-   */
-  public static void image(BufferedImage image, double x, double y) {
-    StandardDraw.Renderer.drawImage(image, (int) x, (int) y, null);
-  }
 
   /**
    * Draws an image to the screen with integer parameters.
@@ -61,6 +52,33 @@ public abstract class StandardDraw {
     StandardDraw.Renderer.drawImage(image, x, y, null);
   }
 
+  /**
+   * Draws a generic awt shape to the screen. These can be Ellipses, Rectangles,
+   * Polygons, etc.
+   * 
+   * @param shape
+   * @param x
+   * @param y
+   * @param color
+   * @param fill
+   */
+  public static void shape(Shape shape, int x, int y, Color color, boolean fill) {
+    if (color == null) {
+      color = Color.black;
+    }
+
+    Color old = StandardDraw.Renderer.getColor();
+    StandardDraw.Renderer.setColor(color);
+    
+    if (fill) {
+      StandardDraw.Renderer.draw(shape);
+    } else {
+      StandardDraw.Renderer.fill(shape);
+    }
+    
+    StandardDraw.Renderer.setColor(old);
+  }
+  
   /**
    * Draws a string of text to the screen with a specific font, font size, and
    * color.
@@ -128,26 +146,25 @@ public abstract class StandardDraw {
    * @param fill   - if true, will fill the rectangle with color. Otherwise, will
    *               draw the outline only
    */
-  public static void rect(double x, double y, double width, double height, Color color, boolean fill) {
+  public static void rect(int x, int y, int width, int height, Color color, boolean fill) {
     if (color == null) {
       color = Color.black;
     }
 
+    Color old = StandardDraw.Renderer.getColor();
+    StandardDraw.Renderer.setColor(color);
+    
     if (fill) {
-      Color old = StandardDraw.Renderer.getColor();
-      StandardDraw.Renderer.setColor(color);
-      StandardDraw.Renderer.fillRect((int) x, (int) y, (int) width, (int) height);
-      StandardDraw.Renderer.setColor(old);
+      StandardDraw.Renderer.fillRect(x, y, width, height);
     } else {
-      Color old = StandardDraw.Renderer.getColor();
-      StandardDraw.Renderer.setColor(color);
-      StandardDraw.Renderer.drawRect((int) x, (int) y, (int) width, (int) height);
-      StandardDraw.Renderer.setColor(old);
+      StandardDraw.Renderer.drawRect(x, y, width, height);
     }
+    
+    StandardDraw.Renderer.setColor(old);
   }
 
   /**
-   * Draws an ellipse at x, y, dim width,height, Color color to the screen.
+   * Draws an ellipse at x, y, dim width, height, Color color to the screen.
    *
    * @param x
    * @param y
@@ -157,7 +174,7 @@ public abstract class StandardDraw {
    * @param fill   - if true, will fill the ellipse with color. Otherwise, will
    *               draw the outline only
    */
-  public static void ellipse(double x, double y, double width, double height, Color color, boolean fill) {
+  public static void ellipse(int x, int y, int width, int height, Color color, boolean fill) {
     if (color == null) {
       color = Color.black;
     }
@@ -166,11 +183,40 @@ public abstract class StandardDraw {
     StandardDraw.Renderer.setColor(color);
 
     if (fill) {
-      StandardDraw.Renderer.fillOval((int) x, (int) y, (int) width, (int) height);
+      StandardDraw.Renderer.fillOval(x, y, width, height);
     } else {
-      StandardDraw.Renderer.drawOval((int) x, (int) y, (int) width, (int) height);
+      StandardDraw.Renderer.drawOval(x, y, width, height);
     }
 
+    StandardDraw.Renderer.setColor(old);
+  }
+  
+  /**
+   * 
+   * @param xPoints
+   * @param yPoints
+   * @param color
+   * @param fill
+   */
+  public static void polygon(int[] xPoints, int[] yPoints, Color color, boolean fill) {
+    if (xPoints.length != yPoints.length) {
+      throw new IllegalArgumentException("Error, your polygon arrays must have the same length.");
+    }
+    
+    if (color == null) {
+      color = Color.black;
+    }
+    
+    Color old = StandardDraw.Renderer.getColor();
+    StandardDraw.Renderer.setColor(color);
+    int nPoints = xPoints.length;
+    
+    if (fill) {
+      StandardDraw.Renderer.fillPolygon(xPoints, yPoints, nPoints);
+    } else {
+      StandardDraw.Renderer.drawPolygon(xPoints, yPoints, nPoints);
+    }
+    
     StandardDraw.Renderer.setColor(old);
   }
 
