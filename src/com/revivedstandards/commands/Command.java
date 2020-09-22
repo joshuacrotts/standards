@@ -1,6 +1,6 @@
 /*
  * ===========================================================================
- * Standards Java Game Library Source Code
+  * Standards Java Game Library Source Code
  * Copyright (C) 2017-2019 Joshua Crotts & Andrew Matzureff
  * Standards is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software

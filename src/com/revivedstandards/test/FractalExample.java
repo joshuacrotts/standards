@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class FractalExample extends JPanel {
-  private static final int MAX_ITERATIONS = 300;
+  private static final int MAX_ITERATIONS = 5000;
   private static final double ZOOM = 1;
   private static final double CX = -0.7;
   private static final double CY = 0.27015;
@@ -13,7 +13,7 @@ public class FractalExample extends JPanel {
   private static final double MOVE_Y = 0;
 
   public FractalExample() {
-    setPreferredSize(new Dimension(800, 600));
+    setPreferredSize(new Dimension(800, 800));
     setBackground(Color.white);
   }
 

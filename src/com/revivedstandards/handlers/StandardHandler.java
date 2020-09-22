@@ -55,12 +55,12 @@ public class StandardHandler implements Renderable, Updatable {
   private StandardCamera stdCamera;
 
   public StandardHandler(StandardCamera stdCamera) {
-    this.entities = new ArrayList();
+    this.entities = new ArrayList<StandardGameObject>();
     this.stdCamera = stdCamera;
   }
 
   public StandardHandler() {
-    this.entities = new ArrayList();
+    this.entities = new ArrayList<StandardGameObject>();
   }
 
   /**

@@ -23,6 +23,7 @@ public class SwingTest extends StandardSwingApplication {
   private SwingTest(int width, int height, int fps, String title) {
     super(width, height, fps, title);
 
+
     this.panel = new SwingPanel(this);
 
     super.addComponent(panel);

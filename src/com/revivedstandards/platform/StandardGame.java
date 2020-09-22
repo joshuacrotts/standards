@@ -68,14 +68,14 @@ public abstract class StandardGame extends Canvas implements Runnable {
   /* Game loop thread. */
   private Thread thread;
 
+  /* BufferStrategy for double-buffering the JFrame. */
+  private static BufferStrategy bufferStrategy = null;
+
   /* Debugging variables. */
   private int currentFPS;
   private boolean running;
   private boolean consoleFPS;
   private boolean titleFPS;
-
-  /* BufferStrategy for double-buffering the JFrame. */
-  private static BufferStrategy bufferStrategy = null;
 
   /**
    * Creates a StandardGame object with size width x height, and title.
@@ -111,24 +111,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
    * @param title
    */
   public StandardGame(int width, String title) {
-    this.window = null;
-    this.thread = null;
-    this.running = false;
-    this.currentFPS = 0;
-    this.consoleFPS = true;
-    this.titleFPS = true;
-    this.window = new StandardWindowView(width, (width / 16 * 9), title, this);
-
-    this.createBufferStrategy(3);
-
-    StandardGame.bufferStrategy = this.getBufferStrategy();
-
-    this.mouse = new Mouse();
-    this.keyboard = new Keyboard();
-
-    this.addMouseListener(this.mouse);
-    this.addMouseMotionListener(this.mouse);
-    this.addKeyListener(this.keyboard);
+    this(width, width / 16 * 9, title);
   }
 
   /**
@@ -138,22 +121,7 @@ public abstract class StandardGame extends Canvas implements Runnable {
    * @param title
    */
   public StandardGame(String title) {
-    this.thread = null;
-    this.running = false;
-    this.currentFPS = 0;
-    this.consoleFPS = true;
-    this.titleFPS = true;
-    this.window = new StandardWindowView(this.getScreenWidth(), this.getScreenHeight(), title, this);
-    this.createBufferStrategy(3);
-
-    StandardGame.bufferStrategy = this.getBufferStrategy();
-
-    this.mouse = new Mouse();
-    this.keyboard = new Keyboard();
-
-    this.addMouseListener(this.mouse);
-    this.addMouseMotionListener(this.mouse);
-    this.addKeyListener(this.keyboard);
+    this(StandardGame.getScreenWidth(), StandardGame.getScreenHeight(), title);
   }
 
   /**
@@ -303,11 +271,11 @@ public abstract class StandardGame extends Canvas implements Runnable {
     this.mouse = mouse;
   }
 
-  private int getScreenWidth() {
+  public static int getScreenWidth() {
     return (int) StandardGame.SCREEN_DIMENSION.getWidth();
   }
 
-  public int getScreenHeight() {
+  public static int getScreenHeight() {
     return (int) StandardGame.SCREEN_DIMENSION.getHeight();
   }
 }
